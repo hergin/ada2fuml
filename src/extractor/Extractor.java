@@ -6,7 +6,11 @@ import model.UML;
 public class Extractor {
 
     public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) {
-        return null;
+        UML resultingUML = new UML(compilationUnit.getUnitFullName());
+
+
+
+        return resultingUML;
     }
 
 }
