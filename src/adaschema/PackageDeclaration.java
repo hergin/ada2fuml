@@ -87,6 +87,19 @@ public class PackageDeclaration
     }
 
     /**
+     * HELPER_METHOD
+     * @return
+     */
+    public String getName() {
+        for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+            if(thing instanceof DefiningIdentifier) {
+                return ((DefiningIdentifier)thing).getDefName();
+            }
+        }
+        throw new RuntimeException("Package has some weird naming methodology!");
+    }
+
+    /**
      * Gets the value of the sloc property.
      * 
      * @return

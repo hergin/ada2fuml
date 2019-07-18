@@ -75,6 +75,19 @@ public class OrdinaryTypeDeclaration
     }
 
     /**
+     * HELPER_METHOD
+     * @return
+     */
+    public String getName() {
+        for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+            if(thing instanceof DefiningIdentifier) {
+                return ((DefiningIdentifier)thing).getDefName();
+            }
+        }
+        throw new RuntimeException("Ordinary type has some weird naming methodology!");
+    }
+
+    /**
      * Gets the value of the sloc property.
      * 
      * @return
