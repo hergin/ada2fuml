@@ -18,32 +18,14 @@ public class Extractor {
 
             // packageX + typeX => classX
             if(packageName.equals(typeName)) {
-                Class sameNamedClass = null;
-                if(resultingUML.hasClass(typeName)) {
-                    sameNamedClass = resultingUML.getClassByName(typeName);
-                } else {
-                    sameNamedClass = new Class(typeName);
-                    resultingUML.addClass(sameNamedClass);
-                }
+                resultingUML.createOrGetClassByName(typeName);
             }
 
             // packageX + typeY => packageX + classY
             if(!packageName.equals(typeName)) {
-                Package packageNamedAfterAdaPackage = null;
-                if(resultingUML.hasPackage(packageName)) {
-                    packageNamedAfterAdaPackage = resultingUML.getPackageByName(packageName);
-                } else {
-                    packageNamedAfterAdaPackage = new Package(packageName);
-                    resultingUML.addPackage(packageNamedAfterAdaPackage);
-                }
+                Package packageNamedAfterAdaPackage = resultingUML.createOrGetPackageByName(packageName);
 
-                Class typeNamedClass = null;
-                if(packageNamedAfterAdaPackage.hasClass(typeName)) {
-                    typeNamedClass = packageNamedAfterAdaPackage.getClassByName(typeName);
-                } else {
-                    typeNamedClass = new Class(typeName);
-                    packageNamedAfterAdaPackage.addClass(typeNamedClass);
-                }
+                Class typeNamedClass = packageNamedAfterAdaPackage.createOrGetClassByName(typeName);
             }
         }
 
