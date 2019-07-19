@@ -40,4 +40,18 @@ class ExtractorTests {
         Assertions.assertEquals(1,resultingUML.getClasses().size());
         Assertions.assertEquals("SomeClass",resultingUML.getClasses().get(0).getName());
     }
+
+    @Test
+    void packageX_and_typeY_yields_packageX_and_classY() {
+        var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
+
+        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+
+        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+
+        Assertions.assertEquals(1,resultingUML.getPackages().size());
+        Assertions.assertEquals("SomeClass",resultingUML.getPackages().get(0).getName());
+
+        Assertions.assertEquals(2,resultingUML.getPackages().get(0).getClasses().size());
+    }
 }
