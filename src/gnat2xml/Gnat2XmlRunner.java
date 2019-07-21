@@ -1,16 +1,17 @@
 package gnat2xml;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Gnat2XmlRunner {
 
-    public static String ConvertAdaCodeToXml(String resourceName) {
+    public static String ConvertAdaCodeToXml(File adaFile) {
         StringBuilder result = new StringBuilder();
         Process p;
         try {
-            p = Runtime.getRuntime().exec("cmd /c gnat2xml "+resourceName);
+            p = Runtime.getRuntime().exec("cmd /c gnat2xml "+adaFile.getAbsolutePath());
 
             //p.waitFor();
             BufferedReader reader=new BufferedReader(new InputStreamReader(
