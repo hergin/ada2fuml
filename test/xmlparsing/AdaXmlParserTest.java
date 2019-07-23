@@ -3,8 +3,11 @@ package xmlparsing;
 import adaschema.CompilationUnit;
 import adaschema.DefiningIdentifier;
 import adaschema.OrdinaryTypeDeclaration;
+import adaschema.PackageDeclaration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -140,10 +143,21 @@ class AdaXmlParserTest {
         Assertions.assertEquals("A_Package", result.getUnitKind());
         Assertions.assertEquals(14, result.getSloc().getEndcol().intValue());
 
+        PackageDeclaration thePackage = result.getUnitDeclarationQ().getPackageDeclaration();
+
         // Name of the package
-        Assertions.assertEquals("SomeClass", (((DefiningIdentifier) (result.getUnitDeclarationQ().getPackageDeclaration().getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral().get(0))).getDefName()));
+        Assertions.assertEquals("SomeClass", (((DefiningIdentifier) (thePackage.getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral().get(0))).getDefName()));
+
+        OrdinaryTypeDeclaration theClass = (OrdinaryTypeDeclaration) result.getUnitDeclarationQ().getPackageDeclaration().getVisiblePartDeclarativeItemsQl().getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration().get(0);
 
         // Name of the class
-        Assertions.assertEquals("SomeClass", (((DefiningIdentifier) ((OrdinaryTypeDeclaration) result.getUnitDeclarationQ().getPackageDeclaration().getVisiblePartDeclarativeItemsQl().getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration().get(0)).getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral().get(0)).getDefName()));
+        Assertions.assertEquals("SomeClass", (((DefiningIdentifier) (theClass.getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral().get(0))).getDefName()));
+
+        // Name of the parent package of the class
+        Assertions.assertEquals("SomeClass",((DefiningIdentifier)theClass.getParentPackage().getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral().get(0)).getDefName());
+
+        List<OrdinaryTypeDeclaration> ordinaryTypeDeclarations = thePackage.getOrdinaryTypes();
+
+        Assertions.assertEquals(1,ordinaryTypeDeclarations.size());
     }
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<compilation_unit unit_kind="A_Procedure_Body" unit_class="A_Public_Declaration_And_Body" unit_origin="An_Application_Unit" unit_full_name="Main" def_name="Main" source_file="main.adb">
+   <sloc line="1" col="1" endline="8" endcol="9"/>
+   <context_clause_elements_ql>
+      <with_clause>
+         <sloc line="1" col="1" endline="1" endcol="15"/>
+         <has_limited_q>
+            <not_an_element>
+               <sloc line="1" col="1" endline="0" endcol="0"/>
+            </not_an_element>
+         </has_limited_q>
+         <has_private_q>
+            <not_an_element>
+               <sloc line="1" col="1" endline="0" endcol="0"/>
+            </not_an_element>
+         </has_private_q>
+         <clause_names_ql>
+            <identifier ref_name="SomeClass" ref="ada://package/SomeClass-1:9" type="null">
+               <sloc line="1" col="6" endline="1" endcol="14"/>
+            </identifier>
+         </clause_names_ql>
+      </with_clause>
+   </context_clause_elements_ql>
+   <unit_declaration_q>
+      <procedure_body_declaration>
+         <sloc line="3" col="1" endline="8" endcol="9"/>
+         <is_overriding_declaration_q>
+            <not_an_element>
+               <sloc line="1" col="1" endline="0" endcol="0"/>
+            </not_an_element>
+         </is_overriding_declaration_q>
+         <is_not_overriding_declaration_q>
+            <not_an_element>
+               <sloc line="1" col="1" endline="0" endcol="0"/>
+            </not_an_element>
+         </is_not_overriding_declaration_q>
+         <names_ql>
+            <defining_identifier def_name="Main" def="ada://procedure_body/Main+3:11" type="null">
+               <sloc line="3" col="11" endline="3" endcol="14"/>
+            </defining_identifier>
+         </names_ql>
+         <parameter_profile_ql>
+         </parameter_profile_ql>
+         <aspect_specifications_ql>
+         </aspect_specifications_ql>
+         <body_declarative_items_ql>
+         </body_declarative_items_ql>
+         <body_statements_ql>
+            <null_statement>
+               <sloc line="6" col="1" endline="6" endcol="5"/>
+               <label_names_ql>
+               </label_names_ql>
+            </null_statement>
+         </body_statements_ql>
+         <body_exception_handlers_ql>
+         </body_exception_handlers_ql>
+      </procedure_body_declaration>
+   </unit_declaration_q>
+   <pragmas_after_ql>
+   </pragmas_after_ql>
+</compilation_unit>

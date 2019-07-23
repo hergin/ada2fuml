@@ -19,8 +19,46 @@ public class Package {
         subPackages = new ArrayList<>();
     }
 
+    public boolean hasClass(String inputClassName) {
+        return classes.stream().filter(c->c.getName()==inputClassName).count()!=0;
+    }
+
+    public Class createOrGetClassByName(String className) {
+        Class resultingClass = null;
+        if(this.hasClass(className)) {
+            resultingClass = this.getClassByName(className);
+        } else {
+            resultingClass = new Class(className);
+            this.addClass(resultingClass);
+        }
+        return resultingClass;
+    }
+
+    public Class getClassByName(String className) {
+        return classes.stream().filter(c->c.getName()==className).findFirst().get();
+    }
+
     public void addClass(Class inputClass) {
         classes.add(inputClass);
+    }
+
+    public boolean hasSubPackage(String inputPackageName) {
+        return subPackages.stream().filter(p->p.getName()==inputPackageName).count()!=0;
+    }
+
+    public Package createOrGetSubPackageByName(String packageName) {
+        Package resultingPackage = null;
+        if(this.hasSubPackage(packageName)) {
+            resultingPackage = this.getSubPackageByName(packageName);
+        } else {
+            resultingPackage = new Package(packageName);
+            this.addSubPackage(resultingPackage);
+        }
+        return resultingPackage;
+    }
+
+    public Package getSubPackageByName(String packageName) {
+        return subPackages.stream().filter(p->p.getName()==packageName).findFirst().get();
     }
 
     public void addSubPackage(Package inputPackage) { subPackages.add(inputPackage); }

@@ -2,6 +2,7 @@ package xmlparsing;
 
 import adaschema.CompilationUnit;
 import adaschema.DefiningIdentifier;
+import adaschema.JaxBSuperclass;
 import adaschema.OrdinaryTypeDeclaration;
 import org.xml.sax.SAXException;
 
@@ -25,6 +26,13 @@ public class AdaXmlParser {
         try {
             jaxbContext = JAXBContext.newInstance(CompilationUnit.class);
             jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            jaxbUnmarshaller.setListener(new Unmarshaller.Listener() {
+                @Override
+                public void afterUnmarshal(Object target, Object parent) {
+                    super.afterUnmarshal(target, parent);
+                    ((JaxBSuperclass)target).setParent((JaxBSuperclass) parent);
+                }
+            });
             jaxbUnmarshaller.setEventHandler(new ValidationEventHandler() {
                 @Override
                 public boolean handleEvent(ValidationEvent event) {

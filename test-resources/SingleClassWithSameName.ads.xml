@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<compilation_unit unit_kind="A_Package" unit_class="A_Public_Declaration" unit_origin="An_Application_Unit" unit_full_name="SomeClass" def_name="SomeClass" source_file="someclass.ads">
+    <sloc line="1" col="1" endline="5" endcol="14"/>
+    <context_clause_elements_ql>
+    </context_clause_elements_ql>
+    <unit_declaration_q>
+        <package_declaration>
+            <sloc line="1" col="1" endline="5" endcol="14"/>
+            <names_ql>
+                <defining_identifier def_name="SomeClass" def="ada://package/SomeClass-1:9" type="null">
+                    <sloc line="1" col="9" endline="1" endcol="17"/>
+                </defining_identifier>
+            </names_ql>
+            <aspect_specifications_ql>
+            </aspect_specifications_ql>
+            <visible_part_declarative_items_ql>
+                <ordinary_type_declaration>
+                    <sloc line="3" col="5" endline="3" endcol="34"/>
+                    <names_ql>
+                        <defining_identifier def_name="SomeClass" def="ada://ordinary_type/SomeClass-1:9/SomeClass-3:10" type="null">
+                            <sloc line="3" col="10" endline="3" endcol="18"/>
+                        </defining_identifier>
+                    </names_ql>
+                    <discriminant_part_q>
+                        <not_an_element>
+                            <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                    </discriminant_part_q>
+                    <type_declaration_view_q>
+                        <record_type_definition>
+                            <sloc line="3" col="23" endline="3" endcol="33"/>
+                            <has_abstract_q>
+                                <not_an_element>
+                                    <sloc line="1" col="1" endline="0" endcol="0"/>
+                                </not_an_element>
+                            </has_abstract_q>
+                            <has_limited_q>
+                                <not_an_element>
+                                    <sloc line="1" col="1" endline="0" endcol="0"/>
+                                </not_an_element>
+                            </has_limited_q>
+                            <record_definition_q>
+                                <null_record_definition>
+                                    <sloc line="3" col="23" endline="3" endcol="33"/>
+                                </null_record_definition>
+                            </record_definition_q>
+                        </record_type_definition>
+                    </type_declaration_view_q>
+                    <aspect_specifications_ql>
+                    </aspect_specifications_ql>
+                </ordinary_type_declaration>
+            </visible_part_declarative_items_ql>
+            <private_part_declarative_items_ql>
+            </private_part_declarative_items_ql>
+        </package_declaration>
+    </unit_declaration_q>
+    <pragmas_after_ql>
+    </pragmas_after_ql>
+</compilation_unit>
