@@ -21,6 +21,20 @@ public class UML {
         associations = new ArrayList<>();
     }
 
+    public void combine(UML theOther) {
+        for (var theClass:theOther.getClasses()){
+            addClass(theClass);
+        }
+
+        for (var thePackage:theOther.getPackages()) {
+            addPackage(thePackage);
+        }
+
+        for (var theAssociation:theOther.getAssociations()) {
+            addAssociation(theAssociation);
+        }
+    }
+
     public boolean hasClass(String inputClassName) {
         return classes.stream().filter(c->c.getName()==inputClassName).count()!=0;
     }

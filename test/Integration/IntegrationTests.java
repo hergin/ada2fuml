@@ -14,7 +14,7 @@ public class IntegrationTests {
 
     @Test
     public void Integrate_All() throws URISyntaxException {
-        var adaFile = Paths.get(Gnat2XmlRunnerTests.class.getClassLoader().getResource("CombinedTypesAndVariables.ads").toURI()).toFile();
+        var adaFile = Paths.get(Gnat2XmlRunnerTests.class.getClassLoader().getResource("CombinedTypesAndVariables.adb").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
         var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
