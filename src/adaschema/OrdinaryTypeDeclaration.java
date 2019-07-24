@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -85,6 +87,34 @@ public class OrdinaryTypeDeclaration
             }
         }
         throw new RuntimeException("Ordinary type has some weird naming methodology!");
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public List<ComponentDeclaration> getComponentDeclarations() {
+        List<ComponentDeclaration> result = new ArrayList<>();
+
+        List<JaxBSuperclass> componentList = null;
+
+        if(getTypeDeclarationViewQ().getRecordTypeDefinition()!=null && getTypeDeclarationViewQ().getRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition()!=null) {
+            if(getTypeDeclarationViewQ().getRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition().getRecordComponentsQl().getNotAnElementOrComponentDeclarationOrNullComponent().size()>0) {
+                componentList = getTypeDeclarationViewQ().getRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition().getRecordComponentsQl().getNotAnElementOrComponentDeclarationOrNullComponent();
+            }
+        } else if(getTypeDeclarationViewQ().getTaggedRecordTypeDefinition()!=null && getTypeDeclarationViewQ().getTaggedRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition()!=null) {
+            if(getTypeDeclarationViewQ().getTaggedRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition().getRecordComponentsQl().getNotAnElementOrComponentDeclarationOrNullComponent().size()>0) {
+                componentList = getTypeDeclarationViewQ().getTaggedRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition().getRecordComponentsQl().getNotAnElementOrComponentDeclarationOrNullComponent();
+            }
+        }
+
+        for (var component:componentList) {
+            if(component instanceof ComponentDeclaration) {
+                result.add((ComponentDeclaration) component);
+            }
+        }
+
+        return result;
     }
 
     /**
