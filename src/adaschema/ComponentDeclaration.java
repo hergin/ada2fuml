@@ -80,6 +80,30 @@ public class ComponentDeclaration
     protected String checks;
 
     /**
+     * HELPER_METHOD
+     * @return
+     */
+    public String getName() {
+        for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+            if(thing instanceof DefiningIdentifier) {
+                return ((DefiningIdentifier)thing).getDefName();
+            }
+        }
+        throw new RuntimeException("Component has some weird naming methodology!");
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public String getType() {
+        if(getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication()!=null) {
+            return getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+        }
+        throw new RuntimeException("Component has some weird typing methodology!");
+    }
+
+    /**
      * Gets the value of the sloc property.
      * 
      * @return

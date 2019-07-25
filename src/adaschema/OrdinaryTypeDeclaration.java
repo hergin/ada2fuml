@@ -96,7 +96,7 @@ public class OrdinaryTypeDeclaration
     public List<ComponentDeclaration> getComponentDeclarations() {
         List<ComponentDeclaration> result = new ArrayList<>();
 
-        List<JaxBSuperclass> componentList = null;
+        List<JaxBSuperclass> componentList = new ArrayList<>();
 
         if(getTypeDeclarationViewQ().getRecordTypeDefinition()!=null && getTypeDeclarationViewQ().getRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition()!=null) {
             if(getTypeDeclarationViewQ().getRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition().getRecordComponentsQl().getNotAnElementOrComponentDeclarationOrNullComponent().size()>0) {
