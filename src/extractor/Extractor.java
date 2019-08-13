@@ -6,6 +6,7 @@ import model.Package;
 import model.UML;
 import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
+import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 
 public class Extractor {
@@ -49,6 +50,9 @@ public class Extractor {
                             var typeEnum = convertToTypeEnum(type);
                             var primitiveProperty = new PrimitiveProperty(name, VisibilityEnum.Public,typeEnum,null);
                             theClass.addProperty(primitiveProperty);
+                        } else {
+                            var classProperty = new ClassProperty(name,VisibilityEnum.Public,type);
+                            theClass.addProperty(classProperty);
                         }
                     }
                 }

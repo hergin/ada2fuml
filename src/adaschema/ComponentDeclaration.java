@@ -98,7 +98,12 @@ public class ComponentDeclaration
      */
     public String getType() {
         if(getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication()!=null) {
-            return getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+            if(getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier()!=null) {
+                return getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+            } else if(getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent()!=null) {
+                return getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getPrefixQ().getIdentifier().getRefName() + "." +
+                        getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+            }
         }
         throw new RuntimeException("Component has some weird typing methodology!");
     }

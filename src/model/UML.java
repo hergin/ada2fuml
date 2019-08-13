@@ -1,6 +1,7 @@
 package model;
 
 import exporter.Processor;
+import model.properties.ClassProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,44 @@ public class UML {
         associations = new ArrayList<>();
     }
 
+    public void replacePlaceholders() {
+        traverseClasses(classes);
+        for(var packagee:packages) {
+            traverseClasses(packagee.getClasses());
+        }
+    }
+
+    private void traverseClasses(List<Class> incomingClasses) {
+        for (var theClass:incomingClasses) {
+            for (var theProperty:theClass.getProperties()) {
+                if(theProperty instanceof ClassProperty) {
+                    var castedProperty = ((ClassProperty) theProperty);
+                    if(castedProperty.getPlaceholder() != null
+                            && !castedProperty.getPlaceholder().isEmpty()
+                            && !castedProperty.getPlaceholder().contains(".")) {
+                        for(var expectedClass:classes) {
+                            if(expectedClass.getName().equals(castedProperty.getPlaceholder())) {
+                                castedProperty.fixType(expectedClass);
+                                break;
+                            }
+                        }
+                        for(var packagee:packages) {
+                            for (var expectedClass : packagee.getClasses()) {
+                                if (expectedClass.getName().equals(castedProperty.getPlaceholder())) {
+                                    castedProperty.fixType(expectedClass);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void combine(UML theOther) {
+        // TODO what will happen if same named classes and packages exist!!
+        // TODO probably we dont need to combine, skip this and find a structure where placeholders among different UMLs can be fixed as well.
         for (var theClass:theOther.getClasses()){
             addClass(theClass);
         }
