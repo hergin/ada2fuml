@@ -92,6 +92,10 @@ public class VariableDeclaration
         throw new RuntimeException("Variable has some weird naming methodology!");
     }
 
+    /**
+     * HELPER_METHOD
+     * @return
+     */
     public String getType() {
         return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
     }

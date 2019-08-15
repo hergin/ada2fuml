@@ -59,7 +59,7 @@ class ExtractorTests {
 
         Assertions.assertEquals(2,resultingUML.getPackages().get(0).getClasses().size());
 
-        Assertions.assertEquals(1,resultingUML.getClasses().get(0).getProperties().size());
+        Assertions.assertEquals(2,resultingUML.getClasses().get(0).getProperties().size());
         Assertions.assertEquals("someAttribute",resultingUML.getClasses().get(0).getProperties().get(0).getName());
         Assertions.assertEquals(TypeEnum.Integer, ((PrimitiveProperty) resultingUML.getClasses().get(0).getProperties().get(0)).getType());
 
@@ -77,5 +77,7 @@ class ExtractorTests {
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
 
         var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+
+        Assertions.assertEquals(2,resultingUML.getClassByName("SomeClass").getProperties().size());
     }
 }

@@ -94,6 +94,23 @@ public class ParameterSpecification
     protected String checks;
 
     /**
+     * HELPER_METHOD
+     * @return
+     */
+    public String getName() {
+        for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+            if(thing instanceof DefiningIdentifier) {
+                return ((DefiningIdentifier)thing).getDefName();
+            }
+        }
+        throw new RuntimeException("Parameter has some weird naming methodology!");
+    }
+
+    public String getType() {
+        return getObjectDeclarationViewQ().getIdentifier().getRefName();
+    }
+
+    /**
      * Gets the value of the sloc property.
      * 
      * @return

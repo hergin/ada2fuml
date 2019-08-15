@@ -2,10 +2,14 @@ package extractor;
 
 import adaschema.CompilationUnit;
 import model.Class;
+import model.Operation;
 import model.Package;
 import model.UML;
+import model.enums.DirectionEnum;
 import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
+import model.parameters.ClassParameter;
+import model.parameters.PrimitiveParameter;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 
@@ -67,6 +71,7 @@ public class Extractor {
                 if(isPrimitive(variableType)) {
                     var typeEnum = convertToTypeEnum(variableType);
                     var primitiveProperty = new PrimitiveProperty(variableName,VisibilityEnum.Public,typeEnum,null);
+                    // Put the variable without any type to a class same named with the package
                     var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
                     classNamedAfterAdaPackage.addProperty(primitiveProperty);
                 } else {
@@ -75,7 +80,77 @@ public class Extractor {
             }
 
             for (var theFunction : thePackage.getFunctionDeclarations()) {
-                //var functionName =
+                var functionName = theFunction.getName();
+                var returnType = theFunction.getReturnType();
+
+                var theOperation = new Operation(functionName,VisibilityEnum.Public);
+
+                // Identify return type and add it as parameter
+                if(isPrimitive(returnType)) {
+                    var typeEnum = convertToTypeEnum(returnType);
+                    var primitiveParameter = new PrimitiveParameter("return", DirectionEnum.Return,typeEnum);
+                    theOperation.addParameter(primitiveParameter);
+                } else {
+                    // TODO
+                }
+
+                // Process regular parameters of the function
+                for (var theParameter:theFunction.getParameterSpecifications()) {
+                    var parameterName = theParameter.getName();
+                    var parameterMode = theParameter.getMode();
+                    var directionEnum = convertToDirectionEnum(parameterMode);
+                    var parameterType = theParameter.getType();
+                    // var defaultValue // TODO if applicable
+
+                    if(isPrimitive(parameterType)) {
+                        var typeEnum = convertToTypeEnum(parameterType);
+                        var primitiveParameter = new PrimitiveParameter(parameterName,directionEnum,typeEnum);
+                        theOperation.addParameter(primitiveParameter);
+                    } else {
+                        var classParameter = new ClassParameter(parameterName,directionEnum,parameterType);
+                        theOperation.addParameter(classParameter);
+                    }
+                }
+
+                // IDENTIFY WHERE TO PUT THIS OPERATION
+
+                // If there is only 1 parameter, it is just return.
+                // Should be put to the class named after the package
+                if(theOperation.getParameters().size()==1) {
+                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                    classNamedAfterAdaPackage.addOperation(theOperation);
+                }
+
+                // If there are more than 1 parameter, let's check the type of the first parameter.
+                // first parameter is the one after return parameter, so index is 1
+                if(theOperation.getParameters().size()>1) {
+                    var firstParameter = theOperation.getParameters().get(1);
+
+                    // If first parameter is primitive, then it is like no parameter than return.
+                    // Else, fix the class of the first parameter and put it to that class as an operation
+                    if(firstParameter instanceof PrimitiveParameter) {
+                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                        classNamedAfterAdaPackage.addOperation(theOperation);
+                    } else {
+                        var castedParameter = ((ClassParameter) firstParameter);
+                        for (var aClass:resultingUML.getClasses()) {
+                            if(aClass.getName().equals(castedParameter.getPlaceholder())) {
+                                castedParameter.fixType(aClass);
+                            }
+                        }
+                        if(castedParameter.getType()==null) {
+                            for (var aPackage : resultingUML.getPackages()) {
+                                for (var theClass : aPackage.getClasses()) {
+                                    if (theClass.getName().equals(castedParameter.getPlaceholder())) {
+                                        castedParameter.fixType(theClass);
+                                    }
+                                }
+                            }
+                        }
+                        castedParameter.getType().addOperation(theOperation);
+                    }
+                }
+
             }
 
         }
@@ -94,6 +169,19 @@ public class Extractor {
 
     public static TypeEnum convertToTypeEnum(String type) {
         return TypeEnum.valueOf(type);
+    }
+
+    public static DirectionEnum convertToDirectionEnum(String direction) {
+        switch (direction) {
+            case "AN_IN_MODE":
+                return DirectionEnum.In;
+            case "AN_OUT_MODE":
+                return DirectionEnum.Out;
+            case "AN_IN_OUT_MODE":
+                return DirectionEnum.InOut;
+            default:
+                return DirectionEnum.In;
+        }
     }
 
 }

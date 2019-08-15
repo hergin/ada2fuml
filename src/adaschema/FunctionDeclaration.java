@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -123,6 +125,43 @@ public class FunctionDeclaration
     protected ElementList aspectSpecificationsQl;
     @XmlAttribute(name = "checks")
     protected String checks;
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public String getName() {
+        for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+            if(thing instanceof DefiningIdentifier) {
+                return ((DefiningIdentifier)thing).getDefName();
+            }
+        }
+        throw new RuntimeException("Function has some weird naming methodology!");
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public String getReturnType() {
+        return getResultProfileQ().getIdentifier().getRefName();
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public List<ParameterSpecification> getParameterSpecifications() {
+        List<ParameterSpecification> parameterSpecifications = new ArrayList<>();
+
+        for(var element:getParameterProfileQl().getNotAnElementOrParameterSpecificationOrAllCallsRemotePragma()) {
+            if(element instanceof ParameterSpecification) {
+                parameterSpecifications.add(((ParameterSpecification) element));
+            }
+        }
+
+        return parameterSpecifications;
+    }
 
     /**
      * Gets the value of the sloc property.
