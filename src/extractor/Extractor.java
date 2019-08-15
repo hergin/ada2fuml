@@ -58,6 +58,26 @@ public class Extractor {
                 }
             }
 
+            for (var theVariable : thePackage.getVariableDeclarations()) {
+                var variableName = theVariable.getName();
+                var variableType = theVariable.getType();
+                //var variableDefaultValue = null; // TODO FIND IT
+                //var variableVisibility = null; // TODO FIND IT
+
+                if(isPrimitive(variableType)) {
+                    var typeEnum = convertToTypeEnum(variableType);
+                    var primitiveProperty = new PrimitiveProperty(variableName,VisibilityEnum.Public,typeEnum,null);
+                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                    classNamedAfterAdaPackage.addProperty(primitiveProperty);
+                } else {
+                    // TODO class variable
+                }
+            }
+
+            for (var theFunction : thePackage.getFunctionDeclarations()) {
+                //var functionName =
+            }
+
         }
 
         return resultingUML;

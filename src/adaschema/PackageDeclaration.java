@@ -90,6 +90,66 @@ public class PackageDeclaration
      * HELPER_METHOD
      * @return
      */
+    public List<VariableDeclaration> getVariableDeclarations() {
+        List<VariableDeclaration> variableDeclarations = new ArrayList<>();
+
+        for (Object o: visiblePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof VariableDeclaration)
+                variableDeclarations.add((VariableDeclaration) o);
+        }
+
+        for (Object o: privatePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof VariableDeclaration)
+                variableDeclarations.add((VariableDeclaration) o);
+        }
+
+        return variableDeclarations;
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public List<FunctionDeclaration> getFunctionDeclarations() {
+        List<FunctionDeclaration> functionDeclarations = new ArrayList<>();
+
+        for (Object o: visiblePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof FunctionDeclaration)
+                functionDeclarations.add((FunctionDeclaration) o);
+        }
+
+        for (Object o: privatePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof FunctionDeclaration)
+                functionDeclarations.add((FunctionDeclaration) o);
+        }
+
+        return functionDeclarations;
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public List<ProcedureDeclaration> getProcedureDeclarations() {
+        List<ProcedureDeclaration> procedureDeclarations = new ArrayList<>();
+
+        for (Object o: visiblePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof ProcedureDeclaration)
+                procedureDeclarations.add((ProcedureDeclaration) o);
+        }
+
+        for (Object o: privatePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof ProcedureDeclaration)
+                procedureDeclarations.add((ProcedureDeclaration) o);
+        }
+
+        return procedureDeclarations;
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
     public String getName() {
         for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
             if(thing instanceof DefiningIdentifier) {

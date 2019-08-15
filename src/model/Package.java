@@ -20,7 +20,7 @@ public class Package {
     }
 
     public boolean hasClass(String inputClassName) {
-        return classes.stream().filter(c->c.getName()==inputClassName).count()!=0;
+        return classes.stream().filter(c->c.getName().equals(inputClassName)).count()!=0;
     }
 
     public Class createOrGetClassByName(String className) {
@@ -35,7 +35,7 @@ public class Package {
     }
 
     public Class getClassByName(String className) {
-        return classes.stream().filter(c->c.getName()==className).findFirst().get();
+        return classes.stream().filter(c->c.getName().equals(className)).findFirst().get();
     }
 
     public void addClass(Class inputClass) {
@@ -43,7 +43,7 @@ public class Package {
     }
 
     public boolean hasSubPackage(String inputPackageName) {
-        return subPackages.stream().filter(p->p.getName()==inputPackageName).count()!=0;
+        return subPackages.stream().filter(p->p.getName().equals(inputPackageName)).count()!=0;
     }
 
     public Package createOrGetSubPackageByName(String packageName) {
@@ -58,7 +58,7 @@ public class Package {
     }
 
     public Package getSubPackageByName(String packageName) {
-        return subPackages.stream().filter(p->p.getName()==packageName).findFirst().get();
+        return subPackages.stream().filter(p->p.getName().equals(packageName)).findFirst().get();
     }
 
     public void addSubPackage(Package inputPackage) { subPackages.add(inputPackage); }

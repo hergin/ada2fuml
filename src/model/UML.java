@@ -74,11 +74,21 @@ public class UML {
     }
 
     public boolean hasClass(String inputClassName) {
-        return classes.stream().filter(c->c.getName()==inputClassName).count()!=0;
+        for (var theClass:classes) {
+            if(theClass.getName().equals(inputClassName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Class getClassByName(String className) {
-        return classes.stream().filter(c->c.getName()==className).findFirst().get();
+        for (var theClass:classes) {
+            if(theClass.getName().equals(className)) {
+                return theClass;
+            }
+        }
+        return null;
     }
 
     public Class createOrGetClassByName(String className) {
@@ -101,7 +111,12 @@ public class UML {
     }
 
     public boolean hasPackage(String inputPackageName) {
-        return packages.stream().filter(p->p.getName()==inputPackageName).count()!=0;
+        for (var thePackage:packages) {
+            if(thePackage.getName().equals(inputPackageName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Package createOrGetPackageByName(String packageName) {
@@ -116,7 +131,12 @@ public class UML {
     }
 
     public Package getPackageByName(String packageName) {
-        return packages.stream().filter(p->p.getName()==packageName).findFirst().get();
+        for (var thePackage:packages) {
+            if(thePackage.getName().equals(packageName)) {
+                return thePackage;
+            }
+        }
+        return null;
     }
 
     public void addPackage(Package inputPackage) {

@@ -69,4 +69,13 @@ class ExtractorTests {
         Assertions.assertEquals("someAttribute3",resultingUML.getPackages().get(0).getClasses().get(1).getProperties().get(0).getName());
         Assertions.assertEquals(TypeEnum.Integer, ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(1).getProperties().get(0)).getType());
     }
+
+    @Test
+    void variableAssignmentTests() {
+        var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
+
+        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+
+        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+    }
 }
