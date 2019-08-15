@@ -153,6 +153,75 @@ public class Extractor {
 
             }
 
+
+            for (var theProcedure : thePackage.getProcedureDeclarations()) {
+                var functionName = theProcedure.getName();
+
+                var theOperation = new Operation(functionName,VisibilityEnum.Public);
+
+                // void return type
+                var primitiveParameter = new PrimitiveParameter("return", DirectionEnum.Return,TypeEnum.Void);
+                theOperation.addParameter(primitiveParameter);
+
+                // Process regular parameters of the function
+                for (var theParameter:theProcedure.getParameterSpecifications()) {
+                    var parameterName = theParameter.getName();
+                    var parameterMode = theParameter.getMode();
+                    var directionEnum = convertToDirectionEnum(parameterMode);
+                    var parameterType = theParameter.getType();
+                    // var defaultValue // TODO if applicable
+
+                    if(isPrimitive(parameterType)) {
+                        var typeEnum = convertToTypeEnum(parameterType);
+                        primitiveParameter = new PrimitiveParameter(parameterName,directionEnum,typeEnum);
+                        theOperation.addParameter(primitiveParameter);
+                    } else {
+                        var classParameter = new ClassParameter(parameterName,directionEnum,parameterType);
+                        theOperation.addParameter(classParameter);
+                    }
+                }
+
+                // IDENTIFY WHERE TO PUT THIS OPERATION
+
+                // If there is only 1 parameter, it is just return.
+                // Should be put to the class named after the package
+                if(theOperation.getParameters().size()==1) {
+                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                    classNamedAfterAdaPackage.addOperation(theOperation);
+                }
+
+                // If there are more than 1 parameter, let's check the type of the first parameter.
+                // first parameter is the one after return parameter, so index is 1
+                if(theOperation.getParameters().size()>1) {
+                    var firstParameter = theOperation.getParameters().get(1);
+
+                    // If first parameter is primitive, then it is like no parameter than return.
+                    // Else, fix the class of the first parameter and put it to that class as an operation
+                    if(firstParameter instanceof PrimitiveParameter) {
+                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                        classNamedAfterAdaPackage.addOperation(theOperation);
+                    } else {
+                        var castedParameter = ((ClassParameter) firstParameter);
+                        for (var aClass:resultingUML.getClasses()) {
+                            if(aClass.getName().equals(castedParameter.getPlaceholder())) {
+                                castedParameter.fixType(aClass);
+                            }
+                        }
+                        if(castedParameter.getType()==null) {
+                            for (var aPackage : resultingUML.getPackages()) {
+                                for (var theClass : aPackage.getClasses()) {
+                                    if (theClass.getName().equals(castedParameter.getPlaceholder())) {
+                                        castedParameter.fixType(theClass);
+                                    }
+                                }
+                            }
+                        }
+                        castedParameter.getType().addOperation(theOperation);
+                    }
+                }
+
+            }
+
         }
 
         return resultingUML;
