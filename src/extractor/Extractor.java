@@ -13,6 +13,8 @@ import model.parameters.PrimitiveParameter;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 
+import java.util.Arrays;
+
 public class Extractor {
 
     public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) {
@@ -232,12 +234,16 @@ public class Extractor {
                 || type.equals("String")
                 || type.equals("Boolean")
                 || type.equals("UnlimitedNatural")
+                || type.equals("Natural")
                 || type.equals("Real")
                 || type.equals("Void");
     }
 
     public static TypeEnum convertToTypeEnum(String type) {
-        return TypeEnum.valueOf(type);
+        if(type.equals("Natural"))
+            return TypeEnum.UnlimitedNatural;
+        else
+            return TypeEnum.valueOf(type);
     }
 
     public static DirectionEnum convertToDirectionEnum(String direction) {

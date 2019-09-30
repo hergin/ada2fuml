@@ -39,18 +39,19 @@ public class Main {
                 var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
                 System.out.println(" OK");
 
-                // TODO check if the resultUML has placeholders, don't produce XMI yet if so.
+                if(resultUml.hasPlaceholders()) {
+                    // TODO
+                } else {
+                    System.out.print("Exporting overall UML to XMI...");
+                    var resultingXMI = Processor.processUML(resultUml);
+                    System.out.println(" OK");
 
-                System.out.print("Exporting overall UML to XMI...");
-                var resultingXMI = Processor.processUML(resultUml);
-                System.out.println(" OK");
+                    System.out.print("Writing to file: " + resultUml.getName() + ".xmi");
+                    Files.write(Paths.get(resultUml.getName() + ".xmi"), resultingXMI.getBytes());
+                    System.out.println(" OK");
 
-                System.out.print("Writing to file: " + resultUml.getName() + ".xmi");
-                Files.write(Paths.get(resultUml.getName() + ".xmi"), resultingXMI.getBytes());
-                System.out.println(" OK");
-
-                System.out.println("File: " + resultUml.getName() + ".xmi is successfully created!\n");
-
+                    System.out.println("File: " + resultUml.getName() + ".xmi is successfully created!\n");
+                }
             } catch (Exception e) {
                 System.out.println("\nEXCEPTION THROWN, SKIPPING TO NEXT FILE. Below is the message:\n"+e.getMessage()+"\n");
             }
