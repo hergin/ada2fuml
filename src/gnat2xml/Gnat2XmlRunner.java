@@ -1,5 +1,7 @@
 package gnat2xml;
 
+import exceptions.Gnat2XmlException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import java.io.InputStreamReader;
 
 public class Gnat2XmlRunner {
 
-    public static String ConvertAdaCodeToXml(File adaFile) {
+    public static String ConvertAdaCodeToXml(File adaFile) throws Gnat2XmlException {
         StringBuilder result = new StringBuilder();
         Process p;
         try {
@@ -21,8 +23,7 @@ public class Gnat2XmlRunner {
                 result.append(line);
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new Gnat2XmlException("An exception occured while trying to execute gnat2xml command: "+e.getMessage());
         }
 
         return result.toString();

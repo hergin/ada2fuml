@@ -16,7 +16,7 @@ import model.properties.PrimitiveProperty;
 public class Extractor {
 
     public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) {
-        UML resultingUML = new UML(compilationUnit.getUnitFullName());
+        UML resultingUML = new UML(compilationUnit.getSourceFile());
 
         if (compilationUnit.getUnitDeclarationQ().getPackageDeclaration()!=null) {
 
