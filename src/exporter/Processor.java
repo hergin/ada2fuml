@@ -1,5 +1,8 @@
 package exporter;
 
+import exceptions.StillHavePlaceHolderException;
+import exceptions.UnknownParameterException;
+import exceptions.UnknownPropertyException;
 import model.*;
 import model.Class;
 import model.Package;
@@ -11,7 +14,11 @@ import model.properties.PrimitiveProperty;
 
 public class Processor {
 
-    public static String processUML(UML inputUML) throws Exception {
+    public static String processUML(UML inputUML) throws StillHavePlaceHolderException, UnknownParameterException, UnknownPropertyException {
+
+        if(inputUML.hasPlaceholders())
+            throw new StillHavePlaceHolderException(inputUML.getName()+" still has placeholders!");
+            // TODO collect and report the Props and Params that have placeholders for reporting purposes.
 
         StringBuilder string = new StringBuilder();
         string.append("<?xml version='1.0' encoding='UTF-8'?>");
@@ -47,7 +54,7 @@ public class Processor {
         return string.toString();
     }
 
-    private static String processPackage(Package p) throws Exception {
+    private static String processPackage(Package p) throws UnknownParameterException, UnknownPropertyException {
         StringBuilder string = new StringBuilder();
 
         string.append("<packagedElement xmi:type='uml:Package' xmi:id='").append(p.getId()).append("' name='").append(p.getName()).append("'>");
@@ -62,7 +69,7 @@ public class Processor {
         return string.toString();
     }
 
-    private static String processClass(Class c) throws Exception {
+    private static String processClass(Class c) throws UnknownParameterException, UnknownPropertyException {
 
         StringBuilder string = new StringBuilder();
 
@@ -85,7 +92,7 @@ public class Processor {
         return string.toString();
     }
 
-    private static String processesNestedClass(Class c) throws Exception {
+    private static String processesNestedClass(Class c) throws UnknownParameterException, UnknownPropertyException {
         StringBuilder string = new StringBuilder();
 
         string.append("<nestedClassifier xmi:type='uml:Class' xmi:id='" + c.getId() + "' name='" + c.getName() + "'>");
@@ -97,7 +104,7 @@ public class Processor {
         return string.toString();
     }
 
-    private static void processClassContents(Class c, StringBuilder string) throws Exception {
+    private static void processClassContents(Class c, StringBuilder string) throws UnknownPropertyException, UnknownParameterException {
         for (Property p : c.getProperties()) {
             string.append(processProperty(p));
         }
@@ -109,7 +116,7 @@ public class Processor {
         }
     }
 
-    private static String processOperation(Operation o) throws Exception {
+    private static String processOperation(Operation o) throws UnknownParameterException {
         StringBuilder string = new StringBuilder();
 
         string.append("<ownedOperation xmi:type='uml:Operation' xmi:id='" + o.getId() + "' name='" + o.getName() + "' visibility='" + o.getVisibility().toString().toLowerCase() + "'>");
@@ -123,7 +130,7 @@ public class Processor {
         return string.toString();
     }
 
-    private static String processParameter(Parameter param) throws Exception {
+    private static String processParameter(Parameter param) throws UnknownParameterException {
         StringBuilder string = new StringBuilder();
 
         if (param instanceof PrimitiveParameter) {
@@ -138,13 +145,13 @@ public class Processor {
             ClassParameter cParam = (ClassParameter) param;
             string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + cParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
         } else {
-            throw new Exception("A new type of parameter that you need to handle in processParameter!");
-
+            throw new UnknownParameterException("An unknown parameter (than Primitive or Class) showed up!");
+            // TODO report where is this, give more info about this param
         }
         return string.toString();
     }
 
-    private static String processProperty(Property p) throws Exception {
+    private static String processProperty(Property p) throws UnknownPropertyException {
         StringBuilder string = new StringBuilder();
 
         if (p instanceof PrimitiveProperty) {
@@ -162,7 +169,8 @@ public class Processor {
             ClassProperty cp = (ClassProperty) p;
             string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getType().getId() + "'/>");
         } else {
-            throw new Exception("A new type of property that you need to handle in processProperty!");
+            throw new UnknownPropertyException("An unknown parameter (than Primitive, Class, or Association) showed up!");
+            // TODO report where is this, give more info about this propoerty
         }
 
         return string.toString();
