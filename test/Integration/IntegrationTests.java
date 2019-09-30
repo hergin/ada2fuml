@@ -5,7 +5,6 @@ import exporter.Processor;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import gnat2xml.Gnat2XmlRunnerTests;
-import model.Property;
 import model.enums.TypeEnum;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
@@ -41,8 +40,6 @@ public class IntegrationTests {
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
         var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
 
-        resultUml.replacePlaceholders();
-
         Assertions.assertEquals(1,resultUml.getPackages().size());
         Assertions.assertEquals("SomeClass",resultUml.getPackages().get(0).getName());
 
@@ -68,8 +65,6 @@ public class IntegrationTests {
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
         var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
-
-        //resultUml.replacePlaceholders();
 
         Assertions.assertEquals(1,resultUml.getPackages().size());
 

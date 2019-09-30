@@ -37,7 +37,7 @@ public class UML {
         return false;
     }
 
-    public void replacePlaceholders() {
+    public void replaceLocalPlaceholders() {
         traverseClasses(classes);
         for(var packagee:packages) {
             traverseClasses(packagee.getClasses());

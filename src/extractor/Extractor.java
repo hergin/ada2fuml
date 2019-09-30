@@ -47,7 +47,10 @@ public class Extractor {
                 if(theClass!=null) {
                     var components = theType.getComponentDeclarations();
 
-                    if(components.isEmpty()) {
+                    if(components.isEmpty() && false) {
+                        // TODO this means it is an unhandled type in TypeDeclarationViewQ.
+                        //      Class will be in the resulting UML but will probably be empty.
+                        //      These are still OrdinaryTypeDeclarations, so to fill the details one might need to go into more details.
                         var classDef = theType.getTypeDeclarationViewQ().getClass();
                         var fieldDefs = classDef.getDeclaredFields();
 
@@ -248,6 +251,9 @@ public class Extractor {
             }
 
         }
+
+        // Try to fix the local placeholders because if they don't have . in their place holder, probably these classes are in the same UML.
+        resultingUML.replaceLocalPlaceholders();
 
         return resultingUML;
     }
