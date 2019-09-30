@@ -115,12 +115,35 @@ public class Extractor {
             for (var theVariable : thePackage.getVariableDeclarations()) {
                 var variableName = theVariable.getName();
                 var variableType = theVariable.getType();
-                //var variableDefaultValue = null; // TODO FIND IT
+
                 //var variableVisibility = null; // TODO FIND IT
 
                 if(isPrimitive(variableType)) {
                     var typeEnum = convertToTypeEnum(variableType);
-                    var primitiveProperty = new PrimitiveProperty(variableName,VisibilityEnum.Public,typeEnum,null);
+
+                    Object variableDefaultValue = null;
+
+                    switch (typeEnum) {
+                        case Integer:
+                            variableDefaultValue = Integer.parseInt(theVariable.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                            break;
+                        case Boolean:
+                            variableDefaultValue = Boolean.parseBoolean(theVariable.getInitializationExpressionQ().getEnumerationLiteral().getRefName().toLowerCase());
+                            break;
+                        case Real:
+                            variableDefaultValue = Double.parseDouble(theVariable.getInitializationExpressionQ().getRealLiteral().getLitVal());
+                            break;
+                        case UnlimitedNatural:
+                            variableDefaultValue = Integer.parseInt(theVariable.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                            break;
+                        case String:
+                            variableDefaultValue = theVariable.getInitializationExpressionQ().getStringLiteral().getLitVal();
+                            break;
+                        default:
+                            variableDefaultValue = null;
+                    }
+
+                    var primitiveProperty = new PrimitiveProperty(variableName,VisibilityEnum.Public,typeEnum,variableDefaultValue);
                     // Put the variable without any type to a class same named with the package
                     var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
                     classNamedAfterAdaPackage.addProperty(primitiveProperty);

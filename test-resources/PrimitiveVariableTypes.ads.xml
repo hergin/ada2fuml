@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<compilation_unit unit_kind="A_Package" unit_class="A_Public_Declaration" unit_origin="An_Application_Unit" unit_full_name="PrimitivePropertyTypes" def_name="PrimitivePropertyTypes" source_file="primitivevariabletypes.ads">
+   <sloc line="1" col="1" endline="10" endcol="27"/>
+   <context_clause_elements_ql>
+   </context_clause_elements_ql>
+   <unit_declaration_q>
+      <package_declaration>
+         <sloc line="1" col="1" endline="10" endcol="27"/>
+         <names_ql>
+            <defining_identifier def_name="PrimitivePropertyTypes" def="ada://package/PrimitivePropertyTypes-1:9" type="null">
+               <sloc line="1" col="9" endline="1" endcol="30"/>
+            </defining_identifier>
+         </names_ql>
+         <aspect_specifications_ql>
+         </aspect_specifications_ql>
+         <visible_part_declarative_items_ql>
+            <variable_declaration>
+               <sloc line="3" col="7" endline="3" endcol="33"/>
+               <names_ql>
+                  <defining_identifier def_name="someInteger" def="ada://variable/PrimitivePropertyTypes-1:9/someInteger-3:7" type="ada://ordinary_type/Standard-1:1/Integer-1:1">
+                     <sloc line="3" col="7" endline="3" endcol="17"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="3" col="21" endline="3" endcol="27"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Integer" ref="ada://ordinary_type/Standard-1:1/Integer-1:1" type="null">
+                           <sloc line="3" col="21" endline="3" endcol="27"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <integer_literal type="universal integer" lit_val="1">
+                     <sloc line="3" col="32" endline="3" endcol="32"/>
+                  </integer_literal>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </variable_declaration>
+            <variable_declaration>
+               <sloc line="4" col="7" endline="4" endcol="33"/>
+               <names_ql>
+                  <defining_identifier def_name="someNatural" def="ada://variable/PrimitivePropertyTypes-1:9/someNatural-4:7" type="ada://subtype/Standard-1:1/Natural-1:1">
+                     <sloc line="4" col="7" endline="4" endcol="17"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="4" col="21" endline="4" endcol="27"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Natural" ref="ada://subtype/Standard-1:1/Natural-1:1" type="null">
+                           <sloc line="4" col="21" endline="4" endcol="27"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <integer_literal type="universal integer" lit_val="2">
+                     <sloc line="4" col="32" endline="4" endcol="32"/>
+                  </integer_literal>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </variable_declaration>
+            <variable_declaration>
+               <sloc line="5" col="7" endline="5" endcol="37"/>
+               <names_ql>
+                  <defining_identifier def_name="someBoolean" def="ada://variable/PrimitivePropertyTypes-1:9/someBoolean-5:7" type="ada://ordinary_type/Standard-1:1/Boolean-1:1">
+                     <sloc line="5" col="7" endline="5" endcol="17"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="5" col="21" endline="5" endcol="27"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Boolean" ref="ada://ordinary_type/Standard-1:1/Boolean-1:1" type="null">
+                           <sloc line="5" col="21" endline="5" endcol="27"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <enumeration_literal ref_name="False" ref="ada://enumeration_literal/Standard-1:1/Boolean-1:1/False-1:1" type="ada://ordinary_type/Standard-1:1/Boolean-1:1">
+                     <sloc line="5" col="32" endline="5" endcol="36"/>
+                  </enumeration_literal>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </variable_declaration>
+            <variable_declaration>
+               <sloc line="6" col="7" endline="6" endcol="45"/>
+               <names_ql>
+                  <defining_identifier def_name="someString" def="ada://variable/PrimitivePropertyTypes-1:9/someString-6:7" type="ada://ordinary_type/Standard-1:1/String-1:1">
+                     <sloc line="6" col="7" endline="6" endcol="16"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="6" col="20" endline="6" endcol="33"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="String" ref="ada://ordinary_type/Standard-1:1/String-1:1" type="null">
+                           <sloc line="6" col="20" endline="6" endcol="25"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <index_constraint>
+                           <sloc line="6" col="26" endline="6" endcol="33"/>
+                           <discrete_ranges_ql>
+                              <discrete_simple_expression_range>
+                                 <sloc line="6" col="27" endline="6" endcol="32"/>
+                                 <lower_bound_q>
+                                    <integer_literal type="universal integer" lit_val="1">
+                                       <sloc line="6" col="27" endline="6" endcol="27"/>
+                                    </integer_literal>
+                                 </lower_bound_q>
+                                 <upper_bound_q>
+                                    <integer_literal type="universal integer" lit_val="5">
+                                       <sloc line="6" col="32" endline="6" endcol="32"/>
+                                    </integer_literal>
+                                 </upper_bound_q>
+                              </discrete_simple_expression_range>
+                           </discrete_ranges_ql>
+                        </index_constraint>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <string_literal type="ada://ordinary_type/Standard-1:1/String-1:1" lit_val="&quot;hello&quot;">
+                     <sloc line="6" col="38" endline="6" endcol="44"/>
+                  </string_literal>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </variable_declaration>
+            <variable_declaration>
+               <sloc line="7" col="7" endline="7" endcol="31"/>
+               <names_ql>
+                  <defining_identifier def_name="someFloat" def="ada://variable/PrimitivePropertyTypes-1:9/someFloat-7:7" type="ada://ordinary_type/Standard-1:1/Float-1:1">
+                     <sloc line="7" col="7" endline="7" endcol="15"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="7" col="19" endline="7" endcol="23"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Float" ref="ada://ordinary_type/Standard-1:1/Float-1:1" type="null">
+                           <sloc line="7" col="19" endline="7" endcol="23"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <real_literal type="universal real" lit_val="1.1">
+                     <sloc line="7" col="28" endline="7" endcol="30"/>
+                  </real_literal>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </variable_declaration>
+         </visible_part_declarative_items_ql>
+         <private_part_declarative_items_ql>
+         </private_part_declarative_items_ql>
+      </package_declaration>
+   </unit_declaration_q>
+   <pragmas_after_ql>
+   </pragmas_after_ql>
+</compilation_unit>

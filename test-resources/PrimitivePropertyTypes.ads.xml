@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<compilation_unit unit_kind="A_Package" unit_class="A_Public_Declaration" unit_origin="An_Application_Unit" unit_full_name="VariableTypes" def_name="VariableTypes" source_file="variabletypes.ads">
-   <sloc line="1" col="1" endline="11" endcol="18"/>
+<compilation_unit unit_kind="A_Package" unit_class="A_Public_Declaration" unit_origin="An_Application_Unit" unit_full_name="PrimitivePropertyTypes" def_name="PrimitivePropertyTypes" source_file="primitivepropertytypes.ads">
+   <sloc line="1" col="1" endline="11" endcol="27"/>
    <context_clause_elements_ql>
    </context_clause_elements_ql>
    <unit_declaration_q>
       <package_declaration>
-         <sloc line="1" col="1" endline="11" endcol="18"/>
+         <sloc line="1" col="1" endline="11" endcol="27"/>
          <names_ql>
-            <defining_identifier def_name="VariableTypes" def="ada://package/VariableTypes-1:9" type="null">
-               <sloc line="1" col="9" endline="1" endcol="21"/>
+            <defining_identifier def_name="PrimitivePropertyTypes" def="ada://package/PrimitivePropertyTypes-1:9" type="null">
+               <sloc line="1" col="9" endline="1" endcol="30"/>
             </defining_identifier>
          </names_ql>
          <aspect_specifications_ql>
@@ -17,7 +17,7 @@
             <ordinary_type_declaration>
                <sloc line="3" col="4" endline="9" endcol="14"/>
                <names_ql>
-                  <defining_identifier def_name="SomeClass" def="ada://ordinary_type/VariableTypes-1:9/SomeClass-3:9" type="null">
+                  <defining_identifier def_name="SomeClass" def="ada://ordinary_type/PrimitivePropertyTypes-1:9/SomeClass-3:9" type="null">
                      <sloc line="3" col="9" endline="3" endcol="17"/>
                   </defining_identifier>
                </names_ql>
@@ -51,7 +51,7 @@
                               <component_declaration>
                                  <sloc line="4" col="7" endline="4" endcol="33"/>
                                  <names_ql>
-                                    <defining_identifier def_name="someInteger" def="ada://component/VariableTypes-1:9/SomeClass-3:9/someInteger-4:7" type="null">
+                                    <defining_identifier def_name="someInteger" def="ada://component/PrimitivePropertyTypes-1:9/SomeClass-3:9/someInteger-4:7" type="null">
                                        <sloc line="4" col="7" endline="4" endcol="17"/>
                                     </defining_identifier>
                                  </names_ql>
@@ -106,7 +106,7 @@
                               <component_declaration>
                                  <sloc line="5" col="7" endline="5" endcol="33"/>
                                  <names_ql>
-                                    <defining_identifier def_name="someNatural" def="ada://component/VariableTypes-1:9/SomeClass-3:9/someNatural-5:7" type="null">
+                                    <defining_identifier def_name="someNatural" def="ada://component/PrimitivePropertyTypes-1:9/SomeClass-3:9/someNatural-5:7" type="null">
                                        <sloc line="5" col="7" endline="5" endcol="17"/>
                                     </defining_identifier>
                                  </names_ql>
@@ -161,7 +161,7 @@
                               <component_declaration>
                                  <sloc line="6" col="7" endline="6" endcol="37"/>
                                  <names_ql>
-                                    <defining_identifier def_name="someBoolean" def="ada://component/VariableTypes-1:9/SomeClass-3:9/someBoolean-6:7" type="null">
+                                    <defining_identifier def_name="someBoolean" def="ada://component/PrimitivePropertyTypes-1:9/SomeClass-3:9/someBoolean-6:7" type="null">
                                        <sloc line="6" col="7" endline="6" endcol="17"/>
                                     </defining_identifier>
                                  </names_ql>
@@ -216,7 +216,7 @@
                               <component_declaration>
                                  <sloc line="7" col="7" endline="7" endcol="45"/>
                                  <names_ql>
-                                    <defining_identifier def_name="someString" def="ada://component/VariableTypes-1:9/SomeClass-3:9/someString-7:7" type="null">
+                                    <defining_identifier def_name="someString" def="ada://component/PrimitivePropertyTypes-1:9/SomeClass-3:9/someString-7:7" type="null">
                                        <sloc line="7" col="7" endline="7" endcol="16"/>
                                     </defining_identifier>
                                  </names_ql>
@@ -286,7 +286,7 @@
                               <component_declaration>
                                  <sloc line="8" col="7" endline="8" endcol="31"/>
                                  <names_ql>
-                                    <defining_identifier def_name="someFloat" def="ada://component/VariableTypes-1:9/SomeClass-3:9/someFloat-8:7" type="null">
+                                    <defining_identifier def_name="someFloat" def="ada://component/PrimitivePropertyTypes-1:9/SomeClass-3:9/someFloat-8:7" type="null">
                                        <sloc line="8" col="7" endline="8" endcol="15"/>
                                     </defining_identifier>
                                  </names_ql>

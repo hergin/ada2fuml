@@ -1,4 +1,4 @@
-package VariableTypes is
+package PrimitivePropertyTypes is
 
    type SomeClass is record
       someInteger : Integer := 1;
@@ -8,4 +8,4 @@ package VariableTypes is
       someFloat : Float := 1.1;
    end record;
 
-end VariableTypes;
+end PrimitivePropertyTypes;
