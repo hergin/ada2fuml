@@ -15,10 +15,8 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+
         var files = listAdaSourceFiles(".");
-
-//        var overallUml = new UML(Paths.get(new File(".").toURI()).getParent().getFileName().toString());
-
         System.out.println("Found "+files.size()+" ada source files in the current directory!\n");
 
         for (var file : files) {

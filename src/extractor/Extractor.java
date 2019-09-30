@@ -75,12 +75,34 @@ public class Extractor {
                     for(var component : components) {
                         var name = component.getName();
                         var type = component.getType();
-                        //var defaultValue = null; // TODO FIND IT
+
                         //var visibility = null; // TODO FIND IT
 
                         if(isPrimitive(type)) {
                             var typeEnum = convertToTypeEnum(type);
-                            var primitiveProperty = new PrimitiveProperty(name, VisibilityEnum.Public,typeEnum,null);
+                            Object defaultValue = null;
+
+                            switch (typeEnum) {
+                                case Integer:
+                                    defaultValue = Integer.parseInt(component.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                    break;
+                                case Boolean:
+                                    defaultValue = Boolean.parseBoolean(component.getInitializationExpressionQ().getEnumerationLiteral().getRefName().toLowerCase());
+                                    break;
+                                case Real:
+                                    defaultValue = Double.parseDouble(component.getInitializationExpressionQ().getRealLiteral().getLitVal());
+                                    break;
+                                case UnlimitedNatural:
+                                    defaultValue = Integer.parseInt(component.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                    break;
+                                case String:
+                                    defaultValue = component.getInitializationExpressionQ().getStringLiteral().getLitVal();
+                                    break;
+                                default:
+                                    defaultValue = null;
+                            }
+
+                            var primitiveProperty = new PrimitiveProperty(name, VisibilityEnum.Public,typeEnum,defaultValue);
                             theClass.addProperty(primitiveProperty);
                         } else {
                             var classProperty = new ClassProperty(name,VisibilityEnum.Public,type);
@@ -265,12 +287,15 @@ public class Extractor {
                 || type.equals("UnlimitedNatural")
                 || type.equals("Natural")
                 || type.equals("Real")
+                || type.equals("Float")
                 || type.equals("Void");
     }
 
     public static TypeEnum convertToTypeEnum(String type) {
         if(type.equals("Natural"))
             return TypeEnum.UnlimitedNatural;
+        else if(type.equals("Float"))
+            return TypeEnum.Real;
         else
             return TypeEnum.valueOf(type);
     }

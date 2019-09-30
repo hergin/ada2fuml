@@ -81,4 +81,31 @@ class ExtractorTests {
 
         Assertions.assertEquals(2,resultingUML.getClassByName("SomeClass").getProperties().size());
     }
+
+    @Test
+    void differentVariableTypesDefaultValuesTests() throws UnhandledTypeException {
+        var adaXML = GetAdaXMLFromResource("VariableTypes.ads.xml");
+        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+
+        Assertions.assertEquals(1,resultingUML.getPackages().size());
+        Assertions.assertEquals(1,resultingUML.getPackages().get(0).getClasses().size());
+
+        Assertions.assertEquals(5,resultingUML.getPackages().get(0).getClasses().get(0).getProperties().size());
+
+        Assertions.assertEquals(TypeEnum.Integer, ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(0)).getType());
+        Assertions.assertEquals(1, ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(0)).getDefaultValue());
+
+        Assertions.assertEquals(TypeEnum.UnlimitedNatural, ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(1)).getType());
+        Assertions.assertEquals(2, ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(1)).getDefaultValue());
+
+        Assertions.assertEquals(TypeEnum.Boolean, ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(2)).getType());
+        Assertions.assertEquals(false, ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(2)).getDefaultValue());
+
+        Assertions.assertEquals(TypeEnum.String, ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(3)).getType());
+        Assertions.assertEquals("\"hello\"", ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(3)).getDefaultValue());
+
+        Assertions.assertEquals(TypeEnum.Real, ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(4)).getType());
+        Assertions.assertEquals(1.1, ((Double) ((PrimitiveProperty) resultingUML.getPackages().get(0).getClasses().get(0).getProperties().get(4)).getDefaultValue()),0.000001);
+    }
 }

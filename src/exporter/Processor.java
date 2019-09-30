@@ -145,8 +145,7 @@ public class Processor {
             ClassParameter cParam = (ClassParameter) param;
             string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + cParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
         } else {
-            throw new UnknownParameterException("An unknown parameter (than Primitive or Class) showed up!");
-            // TODO report where is this, give more info about this param
+            throw new UnknownParameterException("An unknown parameter (than Primitive or Class) showed up. Signature: "+param.getSignature());
         }
         return string.toString();
     }
@@ -169,8 +168,7 @@ public class Processor {
             ClassProperty cp = (ClassProperty) p;
             string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getType().getId() + "'/>");
         } else {
-            throw new UnknownPropertyException("An unknown parameter (than Primitive, Class, or Association) showed up!");
-            // TODO report where is this, give more info about this propoerty
+            throw new UnknownPropertyException("An unknown parameter (than Primitive, Class, or Association) showed up. Signature: "+p.getSignature());
         }
 
         return string.toString();
