@@ -91,7 +91,7 @@ public class Extractor {
                     var primitiveParameter = new PrimitiveParameter("return", DirectionEnum.Return,typeEnum);
                     theOperation.addParameter(primitiveParameter);
                 } else {
-                    // TODO
+                    // TODO class return type
                 }
 
                 // Process regular parameters of the function

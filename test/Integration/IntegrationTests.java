@@ -1,5 +1,6 @@
 package Integration;
 
+import exporter.Processor;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import gnat2xml.Gnat2XmlRunnerTests;
@@ -58,6 +59,22 @@ public class IntegrationTests {
         Assertions.assertEquals("someAttribute2",resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(0).getName());
         Assertions.assertEquals("SomeClass1", ((ClassProperty) resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(0)).getType().getName());
 
+    }
+
+    @Test
+    public void Integrate_All_Class2_File() throws Exception {
+        var adaFile = Paths.get(Gnat2XmlRunnerTests.class.getClassLoader().getResource("Class2.ads").toURI()).toFile();
+        var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
+        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
+        var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
+
+        resultUml.replacePlaceholders();
+
+        Assertions.assertEquals(1,resultUml.getPackages().size());
+
+        var resultingXMI = Processor.processUML(resultUml);
+
+        Assertions.assertEquals("",resultingXMI);
     }
 
 }

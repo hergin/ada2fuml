@@ -22,6 +22,21 @@ public class UML {
         associations = new ArrayList<>();
     }
 
+    public boolean hasPlaceholders() {
+
+        for(var aClass:classes) {
+            if(aClass.hasPlaceholders())
+                return true;
+        }
+
+        for(var aPackage:packages) {
+            if(aPackage.hasPlaceholders())
+                return true;
+        }
+        
+        return false;
+    }
+
     public void replacePlaceholders() {
         traverseClasses(classes);
         for(var packagee:packages) {

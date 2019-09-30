@@ -1,6 +1,8 @@
 package model;
 
 import exporter.Processor;
+import model.parameters.ClassParameter;
+import model.properties.ClassProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,29 @@ public class Class {
         operations = new ArrayList<>();
         superClasses = new ArrayList<>();
         nestedClasses = new ArrayList<>();
+    }
+
+    public boolean hasPlaceholders() {
+        for (var property:properties) {
+            if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
+                return true;
+        }
+
+        for (var operation:operations) {
+            for (var parameter:operation.getParameters()) {
+                if (parameter instanceof ClassParameter && ((ClassParameter) parameter).getPlaceholder() != null && !((ClassParameter) parameter).getPlaceholder().isEmpty())
+                    return true;
+            }
+        }
+
+        for(var classs:nestedClasses) {
+            if(classs.hasPlaceholders())
+                return true;
+        }
+
+
+
+        return false;
     }
 
     public void addProperty(Property someProperty) {

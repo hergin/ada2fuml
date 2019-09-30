@@ -19,6 +19,20 @@ public class Package {
         subPackages = new ArrayList<>();
     }
 
+    public boolean hasPlaceholders() {
+        for(var classs:classes) {
+            if(classs.hasPlaceholders())
+                return true;
+        }
+
+        for(var packagee:subPackages) {
+            if(packagee.hasPlaceholders())
+                return true;
+        }
+
+        return false;
+    }
+
     public boolean hasClass(String inputClassName) {
         return classes.stream().filter(c->c.getName().equals(inputClassName)).count()!=0;
     }
