@@ -33,7 +33,7 @@ public class UML {
             if(aPackage.hasPlaceholders())
                 return true;
         }
-        
+
         return false;
     }
 
@@ -69,22 +69,6 @@ public class UML {
                     }
                 }
             }
-        }
-    }
-
-    public void combine(UML theOther) {
-        // TODO what will happen if same named classes and packages exist!!
-        // TODO probably we dont need to combine, skip this and find a structure where placeholders among different UMLs can be fixed as well.
-        for (var theClass:theOther.getClasses()){
-            addClass(theClass);
-        }
-
-        for (var thePackage:theOther.getPackages()) {
-            addPackage(thePackage);
-        }
-
-        for (var theAssociation:theOther.getAssociations()) {
-            addAssociation(theAssociation);
         }
     }
 
