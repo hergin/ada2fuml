@@ -6,20 +6,25 @@ import model.properties.ClassProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UML {
+public class UML extends HierarchicalElement {
 
     private String id;
+    private String fileName;
     private List<Class> classes;
     private List<Package> packages;
     private List<Association> associations;
-    private String name;
 
     public UML(String name) {
+        super(name);
         id = Processor.uuidGenerator();
-        this.name = name;
         classes = new ArrayList<>();
         packages = new ArrayList<>();
         associations = new ArrayList<>();
+    }
+
+    public UML(String name, String fileName) {
+        this(name);
+        this.fileName = fileName;
     }
 
     public boolean hasPlaceholders() {
@@ -102,10 +107,12 @@ public class UML {
     }
 
     public void addClass(Class inputClass) {
+        inputClass.setParent(this);
         classes.add(inputClass);
     }
 
     public void addAssociation(Association association) {
+        association.setParent(this);
         associations.add(association);
     }
 
@@ -139,15 +146,16 @@ public class UML {
     }
 
     public void addPackage(Package inputPackage) {
+        inputPackage.setParent(this);
         packages.add(inputPackage);
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 
     public String getId() {
         return id;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public List<Class> getClasses() {

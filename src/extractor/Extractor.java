@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class Extractor {
 
     public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) throws UnhandledTypeException {
-        UML resultingUML = new UML(compilationUnit.getSourceFile());
+        UML resultingUML = new UML(compilationUnit.getDefName(),compilationUnit.getSourceFile());
 
         if (compilationUnit.getUnitDeclarationQ().getPackageDeclaration()!=null) {
 

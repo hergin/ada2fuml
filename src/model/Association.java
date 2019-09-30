@@ -6,24 +6,24 @@ import model.properties.AssociationProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Association {
+public class Association extends HierarchicalElement {
 
     private String id;
-    private String name;
     private Class source;
     private Class target;
 
     private List<AssociationProperty> properties;
 
     public Association(String name, Class source, Class target) {
+        super(name);
         id = Processor.uuidGenerator();
-        this.name = name;
         this.source = source;
         this.target = target;
         properties = new ArrayList<>();
     }
 
     public void addProperty(AssociationProperty property) {
+        property.setParent(this);
         properties.add(property);
     }
 

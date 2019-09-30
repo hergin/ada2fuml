@@ -5,16 +5,15 @@ import exporter.Processor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Package {
+public class Package extends HierarchicalElement {
 
     private List<Class> classes;
     private List<Package> subPackages;
-    private String name;
     private String id;
 
     public Package(String name) {
+        super(name);
         id = Processor.uuidGenerator();
-        this.name = name;
         classes = new ArrayList<>();
         subPackages = new ArrayList<>();
     }
@@ -53,6 +52,7 @@ public class Package {
     }
 
     public void addClass(Class inputClass) {
+        inputClass.setParent(this);
         classes.add(inputClass);
     }
 
@@ -75,7 +75,10 @@ public class Package {
         return subPackages.stream().filter(p->p.getName().equals(packageName)).findFirst().get();
     }
 
-    public void addSubPackage(Package inputPackage) { subPackages.add(inputPackage); }
+    public void addSubPackage(Package inputPackage) {
+        inputPackage.setParent(this);
+        subPackages.add(inputPackage);
+    }
 
     public List<Class> getClasses() {
         return classes;
@@ -83,10 +86,6 @@ public class Package {
 
     public List<Package> getSubPackages() {
         return subPackages;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getId() {

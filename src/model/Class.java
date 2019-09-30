@@ -7,18 +7,17 @@ import model.properties.ClassProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Class {
+public class Class extends HierarchicalElement {
 
     private List<Property> properties;
     private List<Operation> operations;
     private List<Class> superClasses;
     private List<Class> nestedClasses;
-    private String name;
     private String id;
 
     public Class(String name) {
+        super(name);
         id = Processor.uuidGenerator();
-        this.name = name;
         properties = new ArrayList<>();
         operations = new ArrayList<>();
         superClasses = new ArrayList<>();
@@ -43,16 +42,16 @@ public class Class {
                 return true;
         }
 
-
-
         return false;
     }
 
     public void addProperty(Property someProperty) {
+        someProperty.setParent(this);
         properties.add(someProperty);
     }
 
     public void addOperation(Operation someOperation) {
+        someOperation.setParent(this);
         operations.add(someOperation);
     }
 
@@ -60,7 +59,10 @@ public class Class {
         superClasses.add(someClass);
     }
 
-    public void addNestedClass (Class someClass) {nestedClasses.add(someClass); }
+    public void addNestedClass (Class someClass) {
+        someClass.setParent(this);
+        nestedClasses.add(someClass);
+    }
 
     public List<Property> getProperties() {
         return properties;
@@ -72,10 +74,6 @@ public class Class {
 
     public List<Class> getSuperClasses() {
         return superClasses;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getId() {

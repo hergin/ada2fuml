@@ -46,11 +46,11 @@ public class Main {
                     var resultingXMI = Processor.processUML(resultUml);
                     System.out.println(" OK");
 
-                    System.out.print("Writing to file: " + resultUml.getName() + ".xmi");
-                    Files.write(Paths.get(resultUml.getName() + ".xmi"), resultingXMI.getBytes());
+                    System.out.print("Writing to file: " + resultUml.getFileName() + ".xmi");
+                    Files.write(Paths.get(resultUml.getFileName() + ".xmi"), resultingXMI.getBytes());
                     System.out.println(" OK");
 
-                    System.out.println("File: " + resultUml.getName() + ".xmi is successfully created!\n");
+                    System.out.println("File: " + resultUml.getFileName() + ".xmi is successfully created!\n");
                 }
             } catch (Exception e) {
                 System.out.println("\nEXCEPTION THROWN, SKIPPING TO NEXT FILE. Below is the message:\n"+e.getMessage()+"\n");

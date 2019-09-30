@@ -3,20 +3,15 @@ package model;
 import exporter.Processor;
 import model.enums.VisibilityEnum;
 
-public abstract class Property {
+public abstract class Property extends HierarchicalElement {
 
-    private String name;
     private VisibilityEnum visibility;
     private String id;
 
     public Property(String name, VisibilityEnum visibility) {
+        super(name);
         id = Processor.uuidGenerator();
-        this.name = name;
         this.visibility = visibility;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public VisibilityEnum getVisibility() {
