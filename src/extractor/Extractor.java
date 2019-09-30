@@ -1,6 +1,7 @@
 package extractor;
 
 import adaschema.CompilationUnit;
+import exceptions.UnhandledTypeException;
 import model.Class;
 import model.Operation;
 import model.Package;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 
 public class Extractor {
 
-    public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) {
+    public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) throws UnhandledTypeException {
         UML resultingUML = new UML(compilationUnit.getSourceFile());
 
         if (compilationUnit.getUnitDeclarationQ().getPackageDeclaration()!=null) {
@@ -45,6 +46,28 @@ public class Extractor {
 
                 if(theClass!=null) {
                     var components = theType.getComponentDeclarations();
+
+                    if(components.isEmpty()) {
+                        var classDef = theType.getTypeDeclarationViewQ().getClass();
+                        var fieldDefs = classDef.getDeclaredFields();
+
+                        for(var fieldDef:fieldDefs) {
+                            Object value = null;
+                            fieldDef.setAccessible(true);
+                            try {
+                                value = fieldDef.get(theType.getTypeDeclarationViewQ());
+                            } catch (IllegalAccessException e) {
+                                //e.printStackTrace();
+                            }
+                            if(value!=null) {
+                                if(!fieldDef.getName().equals("recordTypeDefinition")
+                                    && !fieldDef.getName().equals("taggedRecordTypeDefinition")) {
+                                    throw new UnhandledTypeException("An unhandled type is found in TypeDeclarationViewQ: "+fieldDef.getName());
+                                }
+                            }
+                        }
+
+                    }
 
                     for(var component : components) {
                         var name = component.getName();

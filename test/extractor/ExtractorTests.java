@@ -1,5 +1,6 @@
 package extractor;
 
+import exceptions.UnhandledTypeException;
 import model.Property;
 import model.enums.TypeEnum;
 import model.properties.PrimitiveProperty;
@@ -21,7 +22,7 @@ class ExtractorTests {
     }
 
     @Test
-    void packageX_and_typeX_yields_classX() {
+    void packageX_and_typeX_yields_classX() throws UnhandledTypeException {
         var adaXML = GetAdaXMLFromResource("SingleClassWithSameName.ads.xml");
 
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
@@ -33,7 +34,7 @@ class ExtractorTests {
     }
 
     @Test
-    void packageX_and_typeY_yields_packageX_and_classY() {
+    void packageX_and_typeY_yields_packageX_and_classY() throws UnhandledTypeException {
         var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
 
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
@@ -47,7 +48,7 @@ class ExtractorTests {
     }
 
     @Test
-    void primitivePropertyTests() {
+    void primitivePropertyTests() throws UnhandledTypeException {
         var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
 
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
@@ -71,7 +72,7 @@ class ExtractorTests {
     }
 
     @Test
-    void variableAssignmentTests() {
+    void variableAssignmentTests() throws UnhandledTypeException {
         var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
 
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
