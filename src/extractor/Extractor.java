@@ -80,26 +80,34 @@ public class Extractor {
 
                         if(isPrimitive(type)) {
                             var typeEnum = convertToTypeEnum(type);
+
                             Object defaultValue = null;
 
-                            switch (typeEnum) {
-                                case Integer:
-                                    defaultValue = Integer.parseInt(component.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
-                                    break;
-                                case Boolean:
-                                    defaultValue = Boolean.parseBoolean(component.getInitializationExpressionQ().getEnumerationLiteral().getRefName().toLowerCase());
-                                    break;
-                                case Real:
-                                    defaultValue = Double.parseDouble(component.getInitializationExpressionQ().getRealLiteral().getLitVal());
-                                    break;
-                                case UnlimitedNatural:
-                                    defaultValue = Integer.parseInt(component.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
-                                    break;
-                                case String:
-                                    defaultValue = component.getInitializationExpressionQ().getStringLiteral().getLitVal();
-                                    break;
-                                default:
-                                    defaultValue = null;
+                            if(component.getInitializationExpressionQ()!=null) {
+                                switch (typeEnum) {
+                                    case Integer:
+                                        if(component.getInitializationExpressionQ().getIntegerLiteral()!=null)
+                                            defaultValue = Integer.parseInt(component.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                        break;
+                                    case Boolean:
+                                        if(component.getInitializationExpressionQ().getEnumerationLiteral()!=null)
+                                            defaultValue = Boolean.parseBoolean(component.getInitializationExpressionQ().getEnumerationLiteral().getRefName().toLowerCase());
+                                        break;
+                                    case Real:
+                                        if(component.getInitializationExpressionQ().getRealLiteral()!=null)
+                                            defaultValue = Double.parseDouble(component.getInitializationExpressionQ().getRealLiteral().getLitVal());
+                                        break;
+                                    case UnlimitedNatural:
+                                        if(component.getInitializationExpressionQ().getIntegerLiteral()!=null)
+                                            defaultValue = Integer.parseInt(component.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                        break;
+                                    case String:
+                                        if(component.getInitializationExpressionQ().getStringLiteral()!=null)
+                                            defaultValue = component.getInitializationExpressionQ().getStringLiteral().getLitVal();
+                                        break;
+                                    default:
+                                        defaultValue = null;
+                                }
                             }
 
                             var primitiveProperty = new PrimitiveProperty(name, VisibilityEnum.Public,typeEnum,defaultValue);
@@ -123,24 +131,31 @@ public class Extractor {
 
                     Object variableDefaultValue = null;
 
-                    switch (typeEnum) {
-                        case Integer:
-                            variableDefaultValue = Integer.parseInt(theVariable.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
-                            break;
-                        case Boolean:
-                            variableDefaultValue = Boolean.parseBoolean(theVariable.getInitializationExpressionQ().getEnumerationLiteral().getRefName().toLowerCase());
-                            break;
-                        case Real:
-                            variableDefaultValue = Double.parseDouble(theVariable.getInitializationExpressionQ().getRealLiteral().getLitVal());
-                            break;
-                        case UnlimitedNatural:
-                            variableDefaultValue = Integer.parseInt(theVariable.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
-                            break;
-                        case String:
-                            variableDefaultValue = theVariable.getInitializationExpressionQ().getStringLiteral().getLitVal();
-                            break;
-                        default:
-                            variableDefaultValue = null;
+                    if(theVariable.getInitializationExpressionQ()!=null) {
+                        switch (typeEnum) {
+                            case Integer:
+                                if(theVariable.getInitializationExpressionQ().getIntegerLiteral()!=null)
+                                    variableDefaultValue = Integer.parseInt(theVariable.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                break;
+                            case Boolean:
+                                if(theVariable.getInitializationExpressionQ().getEnumerationLiteral()!=null)
+                                    variableDefaultValue = Boolean.parseBoolean(theVariable.getInitializationExpressionQ().getEnumerationLiteral().getRefName().toLowerCase());
+                                break;
+                            case Real:
+                                if(theVariable.getInitializationExpressionQ().getRealLiteral()!=null)
+                                    variableDefaultValue = Double.parseDouble(theVariable.getInitializationExpressionQ().getRealLiteral().getLitVal());
+                                break;
+                            case UnlimitedNatural:
+                                if(theVariable.getInitializationExpressionQ().getIntegerLiteral()!=null)
+                                    variableDefaultValue = Integer.parseInt(theVariable.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                break;
+                            case String:
+                                if(theVariable.getInitializationExpressionQ().getStringLiteral()!=null)
+                                    variableDefaultValue = theVariable.getInitializationExpressionQ().getStringLiteral().getLitVal();
+                                break;
+                            default:
+                                variableDefaultValue = null;
+                        }
                     }
 
                     var primitiveProperty = new PrimitiveProperty(variableName,VisibilityEnum.Public,typeEnum,variableDefaultValue);
@@ -149,6 +164,10 @@ public class Extractor {
                     classNamedAfterAdaPackage.addProperty(primitiveProperty);
                 } else {
                     // TODO class variable
+                    var classProperty = new ClassProperty(variableName,VisibilityEnum.Public,variableType);
+                    // Put the variable without any type to a class same named with the package
+                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                    classNamedAfterAdaPackage.addProperty(classProperty);
                 }
             }
 
@@ -173,11 +192,40 @@ public class Extractor {
                     var parameterMode = theParameter.getMode();
                     var directionEnum = convertToDirectionEnum(parameterMode);
                     var parameterType = theParameter.getType();
-                    // var defaultValue // TODO if applicable
 
                     if(isPrimitive(parameterType)) {
                         var typeEnum = convertToTypeEnum(parameterType);
-                        var primitiveParameter = new PrimitiveParameter(parameterName,directionEnum,typeEnum);
+
+                        Object parameterDefaultValue = null;
+
+                        if(theParameter.getInitializationExpressionQ()!=null) {
+                            switch (typeEnum) {
+                                case Integer:
+                                    if(theParameter.getInitializationExpressionQ().getIntegerLiteral()!=null)
+                                        parameterDefaultValue = Integer.parseInt(theParameter.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                    break;
+                                case Boolean:
+                                    if(theParameter.getInitializationExpressionQ().getEnumerationLiteral()!=null)
+                                        parameterDefaultValue = Boolean.parseBoolean(theParameter.getInitializationExpressionQ().getEnumerationLiteral().getRefName().toLowerCase());
+                                    break;
+                                case Real:
+                                    if(theParameter.getInitializationExpressionQ().getRealLiteral()!=null)
+                                        parameterDefaultValue = Double.parseDouble(theParameter.getInitializationExpressionQ().getRealLiteral().getLitVal());
+                                    break;
+                                case UnlimitedNatural:
+                                    if(theParameter.getInitializationExpressionQ().getIntegerLiteral()!=null)
+                                        parameterDefaultValue = Integer.parseInt(theParameter.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                    break;
+                                case String:
+                                    if(theParameter.getInitializationExpressionQ().getStringLiteral()!=null)
+                                        parameterDefaultValue = theParameter.getInitializationExpressionQ().getStringLiteral().getLitVal();
+                                    break;
+                                default:
+                                    parameterDefaultValue = null;
+                            }
+                        }
+
+                        var primitiveParameter = new PrimitiveParameter(parameterName,directionEnum,typeEnum,parameterDefaultValue);
                         theOperation.addParameter(primitiveParameter);
                     } else {
                         var classParameter = new ClassParameter(parameterName,directionEnum,parameterType);
@@ -242,11 +290,40 @@ public class Extractor {
                     var parameterMode = theParameter.getMode();
                     var directionEnum = convertToDirectionEnum(parameterMode);
                     var parameterType = theParameter.getType();
-                    // var defaultValue // TODO if applicable
 
                     if(isPrimitive(parameterType)) {
                         var typeEnum = convertToTypeEnum(parameterType);
-                        primitiveParameter = new PrimitiveParameter(parameterName,directionEnum,typeEnum);
+
+                        Object parameterDefaultValue = null;
+
+                        if(theParameter.getInitializationExpressionQ()!=null) {
+                            switch (typeEnum) {
+                                case Integer:
+                                    if(theParameter.getInitializationExpressionQ().getIntegerLiteral()!=null)
+                                        parameterDefaultValue = Integer.parseInt(theParameter.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                    break;
+                                case Boolean:
+                                    if(theParameter.getInitializationExpressionQ().getEnumerationLiteral()!=null)
+                                        parameterDefaultValue = Boolean.parseBoolean(theParameter.getInitializationExpressionQ().getEnumerationLiteral().getRefName().toLowerCase());
+                                    break;
+                                case Real:
+                                    if(theParameter.getInitializationExpressionQ().getRealLiteral()!=null)
+                                        parameterDefaultValue = Double.parseDouble(theParameter.getInitializationExpressionQ().getRealLiteral().getLitVal());
+                                    break;
+                                case UnlimitedNatural:
+                                    if(theParameter.getInitializationExpressionQ().getIntegerLiteral()!=null)
+                                        parameterDefaultValue = Integer.parseInt(theParameter.getInitializationExpressionQ().getIntegerLiteral().getLitVal());
+                                    break;
+                                case String:
+                                    if(theParameter.getInitializationExpressionQ().getStringLiteral()!=null)
+                                        parameterDefaultValue = theParameter.getInitializationExpressionQ().getStringLiteral().getLitVal();
+                                    break;
+                                default:
+                                    parameterDefaultValue = null;
+                            }
+                        }
+
+                        primitiveParameter = new PrimitiveParameter(parameterName,directionEnum,typeEnum,parameterDefaultValue);
                         theOperation.addParameter(primitiveParameter);
                     } else {
                         var classParameter = new ClassParameter(parameterName,directionEnum,parameterType);

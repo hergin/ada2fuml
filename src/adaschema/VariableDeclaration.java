@@ -8,6 +8,7 @@
 
 package adaschema;
 
+import javax.lang.model.type.UnknownTypeException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -97,7 +98,14 @@ public class VariableDeclaration
      * @return
      */
     public String getType() {
-        return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+        if(getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier()!=null) {
+            return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+        }
+        if (getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getPrefixQ() != null)
+            return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getPrefixQ().getIdentifier().getRefName()
+                    + "."
+                    + getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+        return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
     }
 
     /**

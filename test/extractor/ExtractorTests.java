@@ -1,8 +1,11 @@
 package extractor;
 
 import exceptions.UnhandledTypeException;
+import model.Operation;
 import model.Property;
 import model.enums.TypeEnum;
+import model.parameters.PrimitiveParameter;
+import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -117,7 +120,7 @@ class ExtractorTests {
 
         Assertions.assertEquals(1,resultingUML.getClasses().size());
 
-        Assertions.assertEquals(5,resultingUML.getClasses().get(0).getProperties().size());
+        Assertions.assertEquals(7,resultingUML.getClasses().get(0).getProperties().size());
 
         Assertions.assertEquals(TypeEnum.Integer, ((PrimitiveProperty) resultingUML.getClasses().get(0).getProperties().get(0)).getType());
         Assertions.assertEquals(1, ((PrimitiveProperty) resultingUML.getClasses().get(0).getProperties().get(0)).getDefaultValue());
@@ -133,5 +136,27 @@ class ExtractorTests {
 
         Assertions.assertEquals(TypeEnum.Real, ((PrimitiveProperty) resultingUML.getClasses().get(0).getProperties().get(4)).getType());
         Assertions.assertEquals(1.1, ((Double) ((PrimitiveProperty) resultingUML.getClasses().get(0).getProperties().get(4)).getDefaultValue()),0.000001);
+
+        Assertions.assertEquals(TypeEnum.Real, ((PrimitiveProperty) resultingUML.getClasses().get(0).getProperties().get(5)).getType());
+        Assertions.assertEquals(null, ((Double) ((PrimitiveProperty) resultingUML.getClasses().get(0).getProperties().get(5)).getDefaultValue()));
+
+        Assertions.assertEquals("Class1.Class1", ((ClassProperty) resultingUML.getClasses().get(0).getProperties().get(6)).getPlaceholder());
+    }
+
+    @Test
+    void parameterDefaultValueTesting() throws UnhandledTypeException {
+        var adaXML = GetAdaXMLFromResource("ParameterDefaultValue.ads.xml");
+        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+
+        Assertions.assertEquals(1,resultingUML.getClasses().size());
+
+        Assertions.assertEquals(2,resultingUML.getClasses().get(0).getOperations().size());
+
+        Assertions.assertEquals(2,resultingUML.getClasses().get(0).getOperations().get(0).getParameters().size()); // One real param, one return param
+
+        Assertions.assertEquals(2, ((PrimitiveParameter) resultingUML.getClasses().get(0).getOperations().get(0).getParameters().get(1)).getDefaultValue());
+
+        Assertions.assertEquals(null, ((PrimitiveParameter) resultingUML.getClasses().get(0).getOperations().get(1).getParameters().get(1)).getDefaultValue());
     }
 }

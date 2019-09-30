@@ -1,3 +1,5 @@
+with Class1; use Class1;
+
 package PrimitivePropertyTypes is
 
       someInteger : Integer := 1;
@@ -5,6 +7,8 @@ package PrimitivePropertyTypes is
       someBoolean : Boolean := False;
       someString : String(1 .. 5) := "hello";
       someFloat : Float := 1.1;
+      anotherFloat : Float;
 
+      someClass1 : Class1.Class1;
 
 end PrimitivePropertyTypes;
