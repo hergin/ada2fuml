@@ -45,7 +45,11 @@ public class Main {
                     System.out.println(" OK");
 
                     System.out.print("Writing to file: " + resultUml.getFileName() + ".xmi");
-                    Files.write(Paths.get(resultUml.getFileName() + ".xmi"), resultingXMI.getBytes());
+                    if(!Files.exists(Paths.get("xmi-files"))) {
+                        System.out.print("\nCreating xmi-files directory for the first time!");
+                        Files.createDirectory(Paths.get("xmi-files"));
+                    }
+                    Files.write(Paths.get("xmi-files\\"+resultUml.getFileName() + ".xmi"), resultingXMI.getBytes());
                     System.out.println(" OK");
 
                     System.out.println("File: " + resultUml.getFileName() + ".xmi is successfully created!\n");
