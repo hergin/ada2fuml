@@ -2,8 +2,10 @@ package extractor;
 
 import exceptions.UnhandledTypeException;
 import model.Operation;
+import model.Parameter;
 import model.Property;
 import model.enums.TypeEnum;
+import model.parameters.ClassParameter;
 import model.parameters.PrimitiveParameter;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
@@ -141,6 +143,10 @@ class ExtractorTests {
         Assertions.assertEquals(null, ((Double) ((PrimitiveProperty) resultingUML.getClasses().get(0).getProperties().get(5)).getDefaultValue()));
 
         Assertions.assertEquals("Class1.Class1", ((ClassProperty) resultingUML.getClasses().get(0).getProperties().get(6)).getPlaceholder());
+
+        Assertions.assertEquals(1, resultingUML.getClasses().get(0).getOperations().size());
+        Assertions.assertEquals(2, resultingUML.getClasses().get(0).getOperations().get(0).getParameters().size());
+        Assertions.assertEquals("Class1.Class1", ((ClassParameter) resultingUML.getClasses().get(0).getOperations().get(0).getParameters().get(0)).getPlaceholder());
     }
 
     @Test

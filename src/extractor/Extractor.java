@@ -163,7 +163,6 @@ public class Extractor {
                     var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
                     classNamedAfterAdaPackage.addProperty(primitiveProperty);
                 } else {
-                    // TODO class variable
                     var classProperty = new ClassProperty(variableName,VisibilityEnum.Public,variableType);
                     // Put the variable without any type to a class same named with the package
                     var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
@@ -183,7 +182,8 @@ public class Extractor {
                     var primitiveParameter = new PrimitiveParameter("return", DirectionEnum.Return,typeEnum);
                     theOperation.addParameter(primitiveParameter);
                 } else {
-                    // TODO class return type
+                    var classParameter = new ClassParameter(functionName+"_Return",DirectionEnum.Return,returnType);
+                    theOperation.addParameter(classParameter);
                 }
 
                 // Process regular parameters of the function

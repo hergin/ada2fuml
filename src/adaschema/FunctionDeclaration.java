@@ -144,7 +144,14 @@ public class FunctionDeclaration
      * @return
      */
     public String getReturnType() {
-        return getResultProfileQ().getIdentifier().getRefName();
+        if(getResultProfileQ().getIdentifier()!=null)
+            return getResultProfileQ().getIdentifier().getRefName();
+
+        if (getResultProfileQ().getSelectedComponent().getPrefixQ() != null)
+            return getResultProfileQ().getSelectedComponent().getPrefixQ().getIdentifier().getRefName()
+                    + "."
+                    + getResultProfileQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+        return getResultProfileQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
     }
 
     /**
