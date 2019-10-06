@@ -6,6 +6,8 @@ import xmlparsing.AdaXmlParser;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -55,7 +57,10 @@ public class Main {
                     System.out.println("File: " + resultUml.getFileName() + ".xmi is successfully created!\n");
                 }
             } catch (Exception e) {
-                System.out.println("\nEXCEPTION THROWN, SKIPPING TO NEXT FILE. Below is the message:\n"+e.getMessage()+"\n");
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                System.out.println("\nEXCEPTION THROWN, SKIPPING TO NEXT FILE. Below is the message and the stacktrace:\n"+e.getMessage()+"\n"+sw.toString()+"\n");
             }
 
         }

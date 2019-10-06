@@ -8,6 +8,9 @@
 
 package adaschema;
 
+import exceptions.NamingException;
+import exceptions.UnknownTypeException;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -97,17 +100,25 @@ public class ParameterSpecification
      * HELPER_METHOD
      * @return
      */
-    public String getName() {
-        for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
-            if(thing instanceof DefiningIdentifier) {
-                return ((DefiningIdentifier)thing).getDefName();
+    public String getName() throws NamingException {
+        try {
+            for (var thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+                if (thing instanceof DefiningIdentifier) {
+                    return ((DefiningIdentifier) thing).getDefName();
+                }
             }
+        } catch(Exception e) {
+            throw new NamingException("Parameter has some different naming structure than expected!", e);
         }
-        throw new RuntimeException("Parameter has some weird naming methodology!");
+        throw new NamingException("Parameter has some different naming structure than expected!");
     }
 
-    public String getType() {
-        return getObjectDeclarationViewQ().getIdentifier().getRefName();
+    public String getType() throws UnknownTypeException {
+        try {
+            return getObjectDeclarationViewQ().getIdentifier().getRefName();
+        } catch (Exception e) {
+            throw new UnknownTypeException("Parameter has some different type structure than excepted!", e);
+        }
     }
 
     /**

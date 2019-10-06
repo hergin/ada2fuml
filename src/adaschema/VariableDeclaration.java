@@ -8,7 +8,9 @@
 
 package adaschema;
 
-import javax.lang.model.type.UnknownTypeException;
+import exceptions.NamingException;
+import exceptions.UnknownTypeException;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -84,28 +86,36 @@ public class VariableDeclaration
      * HELPER_METHOD
      * @return
      */
-    public String getName() {
-        for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
-            if(thing instanceof DefiningIdentifier) {
-                return ((DefiningIdentifier)thing).getDefName();
+    public String getName() throws NamingException {
+        try {
+            for (var thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+                if (thing instanceof DefiningIdentifier) {
+                    return ((DefiningIdentifier) thing).getDefName();
+                }
             }
+        } catch (Exception e) {
+            throw new NamingException("Variable has some different naming structure than expected!",e);
         }
-        throw new RuntimeException("Variable has some weird naming methodology!");
+        throw new NamingException("Variable has some different naming structure than expected!");
     }
 
     /**
      * HELPER_METHOD
      * @return
      */
-    public String getType() {
-        if(getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier()!=null) {
-            return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+    public String getType() throws UnknownTypeException {
+        try {
+            if (getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier() != null) {
+                return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+            }
+            if (getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getPrefixQ() != null)
+                return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getPrefixQ().getIdentifier().getRefName()
+                        + "."
+                        + getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+            return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+        } catch (Exception e) {
+            throw new UnknownTypeException("Variable has a different type structure than expected!",e);
         }
-        if (getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getPrefixQ() != null)
-            return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getPrefixQ().getIdentifier().getRefName()
-                    + "."
-                    + getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
-        return getObjectDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
     }
 
     /**

@@ -8,6 +8,8 @@
 
 package adaschema;
 
+import exceptions.NamingException;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -111,13 +113,17 @@ public class ProcedureDeclaration
      * HELPER_METHOD
      * @return
      */
-    public String getName() {
-        for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
-            if(thing instanceof DefiningIdentifier) {
-                return ((DefiningIdentifier)thing).getDefName();
+    public String getName() throws NamingException {
+        try {
+            for (var thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+                if (thing instanceof DefiningIdentifier) {
+                    return ((DefiningIdentifier) thing).getDefName();
+                }
             }
+        }catch (Exception e) {
+            throw new NamingException("Function has some different naming structure than expected!", e);
         }
-        throw new RuntimeException("Function has some weird naming methodology!");
+        throw new NamingException("Function has some different naming structure than expected!");
     }
 
     /**

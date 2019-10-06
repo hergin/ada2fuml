@@ -1,6 +1,8 @@
 package extractor;
 
+import exceptions.NamingException;
 import exceptions.UnhandledTypeException;
+import exceptions.UnknownTypeException;
 import model.Operation;
 import model.Parameter;
 import model.Property;
@@ -27,7 +29,7 @@ class ExtractorTests {
     }
 
     @Test
-    void packageX_and_typeX_yields_classX() throws UnhandledTypeException {
+    void packageX_and_typeX_yields_classX() throws UnhandledTypeException, NamingException, UnknownTypeException {
         var adaXML = GetAdaXMLFromResource("SingleClassWithSameName.ads.xml");
 
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
@@ -39,7 +41,7 @@ class ExtractorTests {
     }
 
     @Test
-    void packageX_and_typeY_yields_packageX_and_classY() throws UnhandledTypeException {
+    void packageX_and_typeY_yields_packageX_and_classY() throws UnhandledTypeException, NamingException, UnknownTypeException {
         var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
 
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
@@ -53,7 +55,7 @@ class ExtractorTests {
     }
 
     @Test
-    void primitivePropertyTests() throws UnhandledTypeException {
+    void primitivePropertyTests() throws UnhandledTypeException, NamingException, UnknownTypeException {
         var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
 
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
@@ -77,7 +79,7 @@ class ExtractorTests {
     }
 
     @Test
-    void variableAssignmentTests() throws UnhandledTypeException {
+    void variableAssignmentTests() throws UnhandledTypeException, NamingException, UnknownTypeException {
         var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
 
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
@@ -88,7 +90,7 @@ class ExtractorTests {
     }
 
     @Test
-    void differentPropertyTypesDefaultValuesTests() throws UnhandledTypeException {
+    void differentPropertyTypesDefaultValuesTests() throws UnhandledTypeException, NamingException, UnknownTypeException {
         var adaXML = GetAdaXMLFromResource("PrimitivePropertyTypes.ads.xml");
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
         var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
@@ -115,7 +117,7 @@ class ExtractorTests {
     }
 
     @Test
-    void differentVariableTypesDefaultValuesTests() throws UnhandledTypeException {
+    void differentVariableTypesDefaultValuesTests() throws UnhandledTypeException, NamingException, UnknownTypeException {
         var adaXML = GetAdaXMLFromResource("PrimitiveVariableTypes.ads.xml");
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
         var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
@@ -150,7 +152,7 @@ class ExtractorTests {
     }
 
     @Test
-    void parameterDefaultValueTesting() throws UnhandledTypeException {
+    void parameterDefaultValueTesting() throws UnhandledTypeException, NamingException, UnknownTypeException {
         var adaXML = GetAdaXMLFromResource("ParameterDefaultValue.ads.xml");
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
         var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);

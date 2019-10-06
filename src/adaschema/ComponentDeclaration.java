@@ -8,6 +8,9 @@
 
 package adaschema;
 
+import exceptions.NamingException;
+import exceptions.UnknownTypeException;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -83,29 +86,37 @@ public class ComponentDeclaration
      * HELPER_METHOD
      * @return
      */
-    public String getName() {
-        for (var thing:getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
-            if(thing instanceof DefiningIdentifier) {
-                return ((DefiningIdentifier)thing).getDefName();
+    public String getName() throws NamingException {
+        try {
+            for (var thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+                if (thing instanceof DefiningIdentifier) {
+                    return ((DefiningIdentifier) thing).getDefName();
+                }
             }
+        } catch(Exception e) {
+            throw new NamingException("Component has some different naming structure than expected!",e);
         }
-        throw new RuntimeException("Component has some weird naming methodology!");
+        throw new NamingException("Component has some different naming structure than expected!");
     }
 
     /**
      * HELPER_METHOD
      * @return
      */
-    public String getType() {
-        if(getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication()!=null) {
-            if(getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier()!=null) {
-                return getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
-            } else if(getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent()!=null) {
-                return getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getPrefixQ().getIdentifier().getRefName() + "." +
-                        getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+    public String getType() throws UnknownTypeException {
+        try {
+            if (getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication() != null) {
+                if (getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier() != null) {
+                    return getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+                } else if (getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent() != null) {
+                    return getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getPrefixQ().getIdentifier().getRefName() + "." +
+                            getObjectDeclarationViewQ().getComponentDefinition().getComponentDefinitionViewQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+                }
             }
+        } catch (Exception e) {
+            throw new UnknownTypeException("Component has some different typing structure than expected!", e);
         }
-        throw new RuntimeException("Component has some weird typing methodology!");
+        throw new UnknownTypeException("Component has some different typing structure than expected!");
     }
 
     /**

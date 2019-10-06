@@ -1,7 +1,9 @@
 package extractor;
 
 import adaschema.CompilationUnit;
+import exceptions.NamingException;
 import exceptions.UnhandledTypeException;
+import exceptions.UnknownTypeException;
 import model.Class;
 import model.Operation;
 import model.Package;
@@ -18,7 +20,7 @@ import java.util.Arrays;
 
 public class Extractor {
 
-    public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) throws UnhandledTypeException {
+    public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) throws UnhandledTypeException, NamingException, UnknownTypeException {
         UML resultingUML = new UML(compilationUnit.getDefName(),compilationUnit.getSourceFile());
 
         if (compilationUnit.getUnitDeclarationQ().getPackageDeclaration()!=null) {
