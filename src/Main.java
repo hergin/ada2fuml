@@ -1,3 +1,4 @@
+import exceptions.PartialUMLException;
 import exceptions.StillHavePlaceHolderException;
 import exceptions.UnknownParameterException;
 import exceptions.UnknownPropertyException;
@@ -39,7 +40,17 @@ public class Main {
                 System.out.println(" OK");
 
                 System.out.print("Extracting UML concepts...");
-                var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
+                UML resultUml = null;
+                try {
+                    resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
+                } catch (PartialUMLException pue) {
+                    resultUml = pue.getPartialUML();
+                    System.out.println("WARNING: SOME EXCEPTIONS ARE THROWN WHILE PRODUCING THIS UML! Below are the exceptions and the messages:\n");
+                    for(var exception:pue.getCauses()) {
+                        System.out.println(exception.getMessage());
+                        exception.printStackTrace();
+                    }
+                }
                 System.out.println(" OK");
 
                 overallUML.combine(resultUml);

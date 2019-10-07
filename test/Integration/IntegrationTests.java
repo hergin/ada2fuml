@@ -5,6 +5,7 @@ import exporter.Processor;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import gnat2xml.Gnat2XmlRunnerTests;
+import model.UML;
 import model.enums.TypeEnum;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
@@ -19,7 +20,7 @@ import java.nio.file.Paths;
 public class IntegrationTests {
 
     @Test
-    public void Integrate_All() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    public void Integrate_All() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(Gnat2XmlRunnerTests.class.getClassLoader().getResource("CombinedTypesAndVariables.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -35,7 +36,7 @@ public class IntegrationTests {
     }
 
     @Test
-    public void Integrate_All_2() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    public void Integrate_All_2() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(Gnat2XmlRunnerTests.class.getClassLoader().getResource("SimpleInFileAssociation/ClassProperty.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -61,13 +62,19 @@ public class IntegrationTests {
     }
 
     @Test
-    public void Integrate_All_Class2_File() throws Gnat2XmlException, UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException, URISyntaxException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    public void Integrate_All_Class2_File() throws Gnat2XmlException, UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException, URISyntaxException, NamingException, JAXBException {
         Processor.ID_COUNTER = 0;
 
         var adaFile = Paths.get(Gnat2XmlRunnerTests.class.getClassLoader().getResource("Class2.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
-        var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
+
+        UML resultUml = null;
+        try {
+            resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
+        } catch (PartialUMLException pmu) {
+            resultUml = pmu.getPartialUML();
+        }
 
         Assertions.assertEquals(1,resultUml.getPackages().size());
 

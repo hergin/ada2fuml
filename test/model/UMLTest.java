@@ -1,10 +1,7 @@
 package model;
 
 import Integration.RoyTests;
-import exceptions.Gnat2XmlException;
-import exceptions.NamingException;
-import exceptions.UnhandledTypeException;
-import exceptions.UnknownTypeException;
+import exceptions.*;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import model.enums.PlaceholderPreferenceEnum;
@@ -19,7 +16,7 @@ import java.nio.file.Paths;
 public class UMLTest {
 
     @Test
-    void test_fixGlobalPlaceholders() throws Gnat2XmlException, JAXBException, UnknownTypeException, NamingException, UnhandledTypeException, URISyntaxException {
+    void test_fixGlobalPlaceholders() throws Gnat2XmlException, JAXBException, UnknownTypeException, NamingException, UnhandledTypeException, URISyntaxException, PartialUMLException {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("SimpleInterFileAssociation/Class1.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);

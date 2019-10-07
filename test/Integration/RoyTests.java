@@ -1,9 +1,6 @@
 package Integration;
 
-import exceptions.Gnat2XmlException;
-import exceptions.NamingException;
-import exceptions.UnhandledTypeException;
-import exceptions.UnknownTypeException;
+import exceptions.*;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import gnat2xml.Gnat2XmlRunnerTests;
@@ -22,14 +19,17 @@ public class RoyTests {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/globals_example1.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
-        var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
-
-        Assertions.assertEquals(1,resultUml.getPackages().size());
-        // TODO check other stuff in UML. This UML is success.
+        try {
+            var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
+            // TODO check other stuff in UML. This UML is success.
+        } catch (PartialUMLException pmu) {
+            var resultUml = pmu.getPartialUML();
+            Assertions.assertEquals(1, resultUml.getPackages().size());
+        }
     }
 
     @Test
-    void test_globals_example2() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    void test_globals_example2() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/globals_example2.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -40,7 +40,7 @@ public class RoyTests {
     }
 
     @Test
-    void test_globals_example3() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    void test_globals_example3() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/globals_example3.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -51,7 +51,7 @@ public class RoyTests {
     }
 
     @Test
-    void test_md_example1() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    void test_md_example1() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/md_example1.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -62,7 +62,7 @@ public class RoyTests {
     }
 
     @Test
-    void test_md_example2() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    void test_md_example2() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/md_example2.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -76,7 +76,7 @@ public class RoyTests {
     }
 
     @Test
-    void test_md_example3() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    void test_md_example3() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/md_example3.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -92,7 +92,7 @@ public class RoyTests {
     }
 
     @Test
-    void test_md_example4() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    void test_md_example4() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/md_example4.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -108,7 +108,7 @@ public class RoyTests {
     }
 
     @Test
-    void test_md_example4_nested() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    void test_md_example4_nested() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/md_example4-nested.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -124,7 +124,7 @@ public class RoyTests {
     }
 
     @Test
-    void test_md_example5() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException {
+    void test_md_example5() throws URISyntaxException, Gnat2XmlException, UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
         var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/md_example5.ads").toURI()).toFile();
         var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
