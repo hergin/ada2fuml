@@ -2,7 +2,9 @@ package model;
 
 import exporter.Processor;
 import model.enums.PlaceholderPreferenceEnum;
+import model.enums.VisibilityEnum;
 import model.parameters.ClassParameter;
+import model.properties.AssociationProperty;
 import model.properties.ClassProperty;
 
 import java.util.ArrayList;
@@ -64,10 +66,26 @@ public class UML extends HierarchicalElement {
                 for (var someClass:allClasses) {
                     if ((preference.equals(PlaceholderPreferenceEnum.Global) && someClass.getSignature().equals(placeholder))
                         || (preference.equals(PlaceholderPreferenceEnum.Local) && !placeholder.contains(".") && someClass.getName().equals(placeholder))) {
-                        if(anElement instanceof ClassProperty)
-                            ((ClassProperty) anElement).fixType(someClass);
-                        else
-                            ((ClassParameter) anElement).fixType(someClass);
+                        if(anElement instanceof ClassProperty) {
+                            var castedProperty = ((ClassProperty) anElement);
+                            castedProperty.fixType(someClass);
+
+                            if(preference.equals(PlaceholderPreferenceEnum.Global)) {
+                                Association association = new Association("associationOf" + castedProperty.getName(), ((Class) castedProperty.getParent()), someClass);
+                                addAssociation(association);
+
+                                AssociationProperty associationPropertyInSource = new AssociationProperty("assocationPropertyOf" + castedProperty.getName(), VisibilityEnum.Public, association);
+                                ((Class) castedProperty.getParent()).addProperty(associationPropertyInSource);
+                                association.addProperty(associationPropertyInSource);
+
+                                AssociationProperty associationPropertyInTarget = new AssociationProperty("associationPropertyOf" + castedProperty.getName(), VisibilityEnum.Public, association);
+                                someClass.addProperty(associationPropertyInTarget);
+                                association.addProperty(associationPropertyInTarget);
+                            }
+                        } else {
+                            var castedParameter = ((ClassParameter)anElement);
+                            castedParameter.fixType(someClass);
+                        }
                     }
                 }
             }
@@ -89,10 +107,23 @@ public class UML extends HierarchicalElement {
 
                     for (var someClass:allClasses) {
                         if (placeholder.endsWith(someClass.getName())) {
-                            if(anElement instanceof ClassProperty)
-                                ((ClassProperty) anElement).fixType(someClass);
-                            else
-                                ((ClassParameter) anElement).fixType(someClass);
+                            if(anElement instanceof ClassProperty) {
+                                var castedProperty = ((ClassProperty) anElement);
+                                castedProperty.fixType(someClass);
+                                Association association = new Association("associationOf"+castedProperty.getName(), ((Class) castedProperty.getParent()),someClass);
+                                addAssociation(association);
+
+                                AssociationProperty associationPropertyInSource = new AssociationProperty("assocationPropertyOf"+castedProperty.getName(), VisibilityEnum.Public,association);
+                                ((Class) castedProperty.getParent()).addProperty(associationPropertyInSource);
+                                association.addProperty(associationPropertyInSource);
+
+                                AssociationProperty associationPropertyInTarget = new AssociationProperty("associationPropertyOf"+castedProperty.getName(),VisibilityEnum.Public,association);
+                                someClass.addProperty(associationPropertyInTarget);
+                                association.addProperty(associationPropertyInTarget);
+                            } else {
+                                var castedParameter = ((ClassParameter)anElement);
+                                castedParameter.fixType(someClass);
+                            }
                         }
                     }
                 }

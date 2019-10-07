@@ -12,6 +12,8 @@ import model.properties.AssociationProperty;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 
+import java.util.stream.Collectors;
+
 public class Processor {
 
     public static String processUML(UML inputUML) throws StillHavePlaceHolderException, UnknownParameterException, UnknownPropertyException {
@@ -47,8 +49,9 @@ public class Processor {
         StringBuilder string = new StringBuilder();
 
         string.append("<packagedElement xmi:type='uml:Association' xmi:id='" + a.getId() + "'>");
-        string.append("<memberEnd xmi:idref='" + a.getSource().getId() + "'/>");
-        string.append("<memberEnd xmi:idref='" + a.getTarget().getId() + "'/>");
+        for(var aProperty:a.getProperties()) {
+            string.append("<memberEnd xmi:idref='" + aProperty.getId() + "'/>");
+        }
         string.append("</packagedElement>");
 
         return string.toString();
@@ -163,7 +166,9 @@ public class Processor {
             string.append("</ownedAttribute>");
         } else if (p instanceof AssociationProperty) {
             AssociationProperty ap = (AssociationProperty) p;
-            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + ap.getAssociation().getTarget().getId() + "' association='" + ap.getAssociation().getId() + "'/>");
+            var selfId = ((Class) ap.getParent()).getId();
+            var typeIds = ap.getAssociation().getProperties().stream().map(prop-> ((Class) prop.getParent()).getId()).filter(prop->!prop.equals(selfId)).collect(Collectors.toList());
+            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + typeIds.get(0) + "' association='" + ap.getAssociation().getId() + "'/>");
         } else if (p instanceof ClassProperty) {
             ClassProperty cp = (ClassProperty) p;
             string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getType().getId() + "'/>");

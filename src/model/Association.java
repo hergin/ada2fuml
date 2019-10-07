@@ -23,8 +23,11 @@ public class Association extends HierarchicalElement {
     }
 
     public void addProperty(AssociationProperty property) {
-        property.setParent(this);
         properties.add(property);
+    }
+
+    public List<AssociationProperty> getProperties() {
+        return properties;
     }
 
     public Class getSource() {
