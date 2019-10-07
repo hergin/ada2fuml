@@ -30,6 +30,10 @@ public class Extractor {
             var packageName = thePackage.getName();
 
             for (var theType : thePackage.getOrdinaryTypes()) {
+
+                // TODO find a way to collect exceptions for individual types and continue the process for the rest at least.
+                //       Otherwise the whole extraction of the ADS file stops.
+
                 var typeName = theType.getName();
 
                 Class theClass = null;
@@ -53,7 +57,7 @@ public class Extractor {
                 if(theClass!=null) {
                     var components = theType.getComponentDeclarations();
 
-                    if(components.isEmpty() && false) {
+                    if(components.isEmpty()) {
                         // TODO this means it is an unhandled type in TypeDeclarationViewQ.
                         //      Class will be in the resulting UML but will probably be empty.
                         //      These are still OrdinaryTypeDeclarations, so to fill the details one might need to go into more details.
