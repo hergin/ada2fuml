@@ -48,7 +48,10 @@ public class Main {
                     System.out.println("WARNING: SOME EXCEPTIONS ARE THROWN WHILE PRODUCING THIS UML! Below are the exceptions and the messages:\n");
                     for(var exception:pue.getCauses()) {
                         System.out.println(exception.getMessage());
-                        exception.printStackTrace();
+                        StringWriter sw = new StringWriter();
+                        PrintWriter pw = new PrintWriter(sw);
+                        exception.printStackTrace(pw);
+                        System.out.println(sw.toString());
                     }
                 }
                 System.out.println(" OK");
