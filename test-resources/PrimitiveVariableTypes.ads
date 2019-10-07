@@ -13,4 +13,6 @@ package PrimitivePropertyTypes is
 
       function someFunction (Self : in Integer) return Class1.Class1;
 
+      function someFunction2 (Self : in Class1.Class1) return Integer;
+
 end PrimitivePropertyTypes;

@@ -115,7 +115,15 @@ public class ParameterSpecification
 
     public String getType() throws UnknownTypeException {
         try {
-            return getObjectDeclarationViewQ().getIdentifier().getRefName();
+            if(getObjectDeclarationViewQ().getIdentifier()!=null)
+                return getObjectDeclarationViewQ().getIdentifier().getRefName();
+            else {
+                if(getObjectDeclarationViewQ().getSelectedComponent().getPrefixQ()!=null) {
+                    return getObjectDeclarationViewQ().getSelectedComponent().getPrefixQ() + "." + getObjectDeclarationViewQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+                } else {
+                    return getObjectDeclarationViewQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+                }
+            }
         } catch (Exception e) {
             throw new UnknownTypeException("Parameter has some different type structure than excepted!", e);
         }

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<compilation_unit unit_kind="A_Package" unit_class="A_Public_Declaration" unit_origin="An_Application_Unit" unit_full_name="Globals_Example2" def_name="Globals_Example2" source_file="globals_example2.ads">
+   <sloc line="1" col="1" endline="9" endcol="21"/>
+   <context_clause_elements_ql>
+      <with_clause>
+         <sloc line="1" col="1" endline="1" endcol="22"/>
+         <has_limited_q>
+            <not_an_element>
+               <sloc line="1" col="1" endline="0" endcol="0"/>
+            </not_an_element>
+         </has_limited_q>
+         <has_private_q>
+            <not_an_element>
+               <sloc line="1" col="1" endline="0" endcol="0"/>
+            </not_an_element>
+         </has_private_q>
+         <clause_names_ql>
+            <identifier ref_name="Globals_Example1" ref="ada://package/Globals_Example1-1:9" type="null">
+               <sloc line="1" col="6" endline="1" endcol="21"/>
+            </identifier>
+         </clause_names_ql>
+      </with_clause>
+   </context_clause_elements_ql>
+   <unit_declaration_q>
+      <package_declaration>
+         <sloc line="3" col="1" endline="9" endcol="21"/>
+         <names_ql>
+            <defining_identifier def_name="Globals_Example2" def="ada://package/Globals_Example2-3:9" type="null">
+               <sloc line="3" col="9" endline="3" endcol="24"/>
+            </defining_identifier>
+         </names_ql>
+         <aspect_specifications_ql>
+         </aspect_specifications_ql>
+         <visible_part_declarative_items_ql>
+            <ordinary_type_declaration>
+               <sloc line="5" col="4" endline="7" endcol="14"/>
+               <names_ql>
+                  <defining_identifier def_name="Record2" def="ada://ordinary_type/Globals_Example2-3:9/Record2-5:9" type="null">
+                     <sloc line="5" col="9" endline="5" endcol="15"/>
+                  </defining_identifier>
+               </names_ql>
+               <discriminant_part_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </discriminant_part_q>
+               <type_declaration_view_q>
+                  <record_type_definition>
+                     <sloc line="5" col="20" endline="7" endcol="13"/>
+                     <has_abstract_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_abstract_q>
+                     <has_limited_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_limited_q>
+                     <record_definition_q>
+                        <record_definition>
+                           <sloc line="5" col="20" endline="7" endcol="13"/>
+                           <has_limited_q>
+                              <not_an_element>
+                                 <sloc line="1" col="1" endline="0" endcol="0"/>
+                              </not_an_element>
+                           </has_limited_q>
+                           <record_components_ql>
+                              <component_declaration>
+                                 <sloc line="6" col="7" endline="6" endcol="43"/>
+                                 <names_ql>
+                                    <defining_identifier def_name="I_Attribute" def="ada://component/Globals_Example2-3:9/Record2-5:9/I_Attribute-6:7" type="null">
+                                       <sloc line="6" col="7" endline="6" endcol="17"/>
+                                    </defining_identifier>
+                                 </names_ql>
+                                 <has_aliased_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </has_aliased_q>
+                                 <object_declaration_view_q>
+                                    <component_definition>
+                                       <sloc line="6" col="21" endline="6" endcol="42"/>
+                                       <has_aliased_q>
+                                          <not_an_element>
+                                             <sloc line="1" col="1" endline="0" endcol="0"/>
+                                          </not_an_element>
+                                       </has_aliased_q>
+                                       <component_definition_view_q>
+                                          <subtype_indication>
+                                             <sloc line="6" col="21" endline="6" endcol="42"/>
+                                             <has_aliased_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_aliased_q>
+                                             <has_null_exclusion_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_null_exclusion_q>
+                                             <subtype_mark_q>
+                                                <selected_component type="null">
+                                                   <sloc line="6" col="21" endline="6" endcol="42"/>
+                                                   <prefix_q>
+                                                      <identifier ref_name="Globals_Example1" ref="ada://package/Globals_Example1-1:9" type="null">
+                                                         <sloc line="6" col="21" endline="6" endcol="36"/>
+                                                      </identifier>
+                                                   </prefix_q>
+                                                   <selector_q>
+                                                      <identifier ref_name="Itype" ref="ada://ordinary_type/Globals_Example1-1:9/Itype-2:9" type="null">
+                                                         <sloc line="6" col="38" endline="6" endcol="42"/>
+                                                      </identifier>
+                                                   </selector_q>
+                                                </selected_component>
+                                             </subtype_mark_q>
+                                             <subtype_constraint_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </subtype_constraint_q>
+                                          </subtype_indication>
+                                       </component_definition_view_q>
+                                    </component_definition>
+                                 </object_declaration_view_q>
+                                 <initialization_expression_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </initialization_expression_q>
+                                 <aspect_specifications_ql>
+                                 </aspect_specifications_ql>
+                              </component_declaration>
+                           </record_components_ql>
+                        </record_definition>
+                     </record_definition_q>
+                  </record_type_definition>
+               </type_declaration_view_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </ordinary_type_declaration>
+         </visible_part_declarative_items_ql>
+         <private_part_declarative_items_ql>
+         </private_part_declarative_items_ql>
+      </package_declaration>
+   </unit_declaration_q>
+   <pragmas_after_ql>
+   </pragmas_after_ql>
+</compilation_unit>

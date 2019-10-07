@@ -41,6 +41,7 @@ public class Main {
 
                 if(resultUml.hasPlaceholders()) {
                     // TODO
+                    System.out.println("CAN'T EXPORT: THIS UML HAS EXTERNAL PLACEHOLDERS THAT NEEDS TO BE RESOLVED!\n");
                 } else {
                     System.out.print("Exporting overall UML to XMI...");
                     var resultingXMI = Processor.processUML(resultUml);

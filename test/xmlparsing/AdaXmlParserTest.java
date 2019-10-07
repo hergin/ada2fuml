@@ -7,6 +7,7 @@ import adaschema.PackageDeclaration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.xml.bind.JAXBException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AdaXmlParserTest {
 
     @Test
-    public void parseAndProduceCompilationUnit() {
+    public void parseAndProduceCompilationUnit() throws JAXBException {
         String SomeClassWithBooleanAttribute = "<?xml version='1.0' encoding='UTF-8' ?>\n" +
                 "<compilation_unit unit_kind='A_Package' unit_class='A_Public_Declaration' unit_origin='An_Application_Unit' unit_full_name='SomeClass' def_name='SomeClass' source_file='someclass.ads'>\n" +
                 "   <sloc line='1' col='1' endline='7' endcol='14'/>\n" +

@@ -251,6 +251,7 @@ public class Extractor {
 
                     // If first parameter is primitive, then it is like no parameter than return.
                     // Else, fix the class of the first parameter and put it to that class as an operation
+                    //      If type couldn't be fixed, then, put it to the classNamedAfterAdaPackage again
                     if(firstParameter instanceof PrimitiveParameter) {
                         var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
                         classNamedAfterAdaPackage.addOperation(theOperation);
@@ -270,7 +271,12 @@ public class Extractor {
                                 }
                             }
                         }
-                        castedParameter.getType().addOperation(theOperation);
+                        if(castedParameter.getType()!=null)
+                            castedParameter.getType().addOperation(theOperation);
+                        else {
+                            var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                            classNamedAfterAdaPackage.addOperation(theOperation);
+                        }
                     }
                 }
 
@@ -349,6 +355,7 @@ public class Extractor {
 
                     // If first parameter is primitive, then it is like no parameter than return.
                     // Else, fix the class of the first parameter and put it to that class as an operation
+                    //      If type couldn't be fixed, then, put it to the classNamedAfterAdaPackage again
                     if(firstParameter instanceof PrimitiveParameter) {
                         var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
                         classNamedAfterAdaPackage.addOperation(theOperation);
@@ -368,7 +375,12 @@ public class Extractor {
                                 }
                             }
                         }
-                        castedParameter.getType().addOperation(theOperation);
+                        if(castedParameter.getType()!=null)
+                            castedParameter.getType().addOperation(theOperation);
+                        else {
+                            var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                            classNamedAfterAdaPackage.addOperation(theOperation);
+                        }
                     }
                 }
 

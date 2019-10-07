@@ -17,7 +17,7 @@ import java.util.jar.JarException;
 
 public class AdaXmlParser {
 
-    public static CompilationUnit parseAndProduceCompilationUnit(String adaXmlString) {
+    public static CompilationUnit parseAndProduceCompilationUnit(String adaXmlString) throws JAXBException {
         CompilationUnit result = null;
 
         JAXBContext jaxbContext = null;
@@ -41,7 +41,7 @@ public class AdaXmlParser {
             });
             result = (CompilationUnit) jaxbUnmarshaller.unmarshal(new StringReader(adaXmlString));
         } catch (JAXBException e) {
-            e.printStackTrace();
+            throw e;
         }
 
         return result;
