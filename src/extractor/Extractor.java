@@ -29,6 +29,8 @@ public class Extractor {
             var thePackage = compilationUnit.getUnitDeclarationQ().getPackageDeclaration();
             var packageName = thePackage.getName();
 
+            // TODO check the excel file by ROY to figure out the naming when underscore is involved!
+
             for (var theType : thePackage.getOrdinaryTypes()) {
 
                 // TODO find a way to collect exceptions for individual types and continue the process for the rest at least.
