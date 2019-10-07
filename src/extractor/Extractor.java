@@ -28,8 +28,13 @@ public class Extractor {
 
             var thePackage = compilationUnit.getUnitDeclarationQ().getPackageDeclaration();
             var packageName = thePackage.getName();
+            var classNameAfterPackageName = packageName;
 
-            // TODO check the excel file by ROY to figure out the naming when underscore is involved!
+            // If this is true, then we will create the package name just before the _ but everything else will remain same.
+            //      check the excel file by ROY to see what happens the naming when underscore is involved for more info.
+            if(packageName.contains("_")) {
+                packageName = packageName.split("_")[0];
+            }
 
             for (var theType : thePackage.getOrdinaryTypes()) {
 
@@ -59,7 +64,7 @@ public class Extractor {
                 if(theClass!=null) {
                     var components = theType.getComponentDeclarations();
 
-                    if(components.isEmpty()) {
+                    if(components.isEmpty() && false) {
                         // TODO this means it is an unhandled type in TypeDeclarationViewQ.
                         //      Class will be in the resulting UML but will probably be empty.
                         //      These are still OrdinaryTypeDeclarations, so to fill the details one might need to go into more details.
@@ -172,12 +177,12 @@ public class Extractor {
 
                     var primitiveProperty = new PrimitiveProperty(variableName,VisibilityEnum.Public,typeEnum,variableDefaultValue);
                     // Put the variable without any type to a class same named with the package
-                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                     classNamedAfterAdaPackage.addProperty(primitiveProperty);
                 } else {
                     var classProperty = new ClassProperty(variableName,VisibilityEnum.Public,variableType);
                     // Put the variable without any type to a class same named with the package
-                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                     classNamedAfterAdaPackage.addProperty(classProperty);
                 }
             }
@@ -250,7 +255,7 @@ public class Extractor {
                 // If there is only 1 parameter, it is just return.
                 // Should be put to the class named after the package
                 if(theOperation.getParameters().size()==1) {
-                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                     classNamedAfterAdaPackage.addOperation(theOperation);
                 }
 
@@ -263,7 +268,7 @@ public class Extractor {
                     // Else, fix the class of the first parameter and put it to that class as an operation
                     //      If type couldn't be fixed, then, put it to the classNamedAfterAdaPackage again
                     if(firstParameter instanceof PrimitiveParameter) {
-                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                         classNamedAfterAdaPackage.addOperation(theOperation);
                     } else {
                         var castedParameter = ((ClassParameter) firstParameter);
@@ -284,7 +289,7 @@ public class Extractor {
                         if(castedParameter.getType()!=null)
                             castedParameter.getType().addOperation(theOperation);
                         else {
-                            var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                            var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                             classNamedAfterAdaPackage.addOperation(theOperation);
                         }
                     }
@@ -354,7 +359,7 @@ public class Extractor {
                 // If there is only 1 parameter, it is just return.
                 // Should be put to the class named after the package
                 if(theOperation.getParameters().size()==1) {
-                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                    var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                     classNamedAfterAdaPackage.addOperation(theOperation);
                 }
 
@@ -367,7 +372,7 @@ public class Extractor {
                     // Else, fix the class of the first parameter and put it to that class as an operation
                     //      If type couldn't be fixed, then, put it to the classNamedAfterAdaPackage again
                     if(firstParameter instanceof PrimitiveParameter) {
-                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                         classNamedAfterAdaPackage.addOperation(theOperation);
                     } else {
                         var castedParameter = ((ClassParameter) firstParameter);
@@ -388,7 +393,7 @@ public class Extractor {
                         if(castedParameter.getType()!=null)
                             castedParameter.getType().addOperation(theOperation);
                         else {
-                            var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(packageName);
+                            var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                             classNamedAfterAdaPackage.addOperation(theOperation);
                         }
                     }

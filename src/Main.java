@@ -46,21 +46,17 @@ public class Main {
 
                 if(resultUml.hasPlaceholders()) {
                     // TODO
-                    System.out.println("CAN'T EXPORT: THIS UML HAS EXTERNAL PLACEHOLDERS THAT NEEDS TO BE RESOLVED!\n");
+                    System.out.println("WARNING: THIS UML HAS EXTERNAL PLACEHOLDERS THAT NEEDS TO BE RESOLVED! They will be resolved when all UML diagrams are combined!\n");
                 } else {
                     System.out.print("Exporting resulting UML to XMI...");
                     var resultingXMI = Processor.processUML(resultUml);
-                    System.out.println(" OK");
+                    System.out.println(" OK\n");
 
-                    System.out.print("Writing to file: " + resultUml.getFileName() + ".xmi");
-                    if(!Files.exists(Paths.get("xmi-files"))) {
-                        System.out.print("\nCreating xmi-files directory for the first time!");
-                        Files.createDirectory(Paths.get("xmi-files"));
-                    }
-                    Files.write(Paths.get("xmi-files\\"+resultUml.getFileName() + ".xmi"), resultingXMI.getBytes());
-                    System.out.println(" OK");
+                    //System.out.print("Writing to file: " + resultUml.getFileName() + ".xmi");
+                    //Files.write(Paths.get("xmi-files\\"+resultUml.getFileName() + ".xmi"), resultingXMI.getBytes());
+                    //System.out.println(" OK");
 
-                    System.out.println("File: " + resultUml.getFileName() + ".xmi is successfully created!\n");
+                    //System.out.println("File: " + resultUml.getFileName() + ".xmi is successfully created!\n");
                 }
             } catch (Exception e) {
                 StringWriter sw = new StringWriter();
@@ -78,6 +74,10 @@ public class Main {
             System.out.println(" OK");
 
             System.out.print("Writing to file: Overall.xmi");
+            if(!Files.exists(Paths.get("xmi-files"))) {
+                System.out.print("\nCreating xmi-files directory!");
+                Files.createDirectory(Paths.get("xmi-files"));
+            }
             Files.write(Paths.get("xmi-files\\Overall.xmi"), resultingXMI.getBytes());
             System.out.println(" OK");
 
