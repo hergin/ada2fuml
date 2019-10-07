@@ -27,6 +27,12 @@ public class UML extends HierarchicalElement {
         this.fileName = fileName;
     }
 
+    public void combine(UML otherUML) {
+        classes.addAll(otherUML.getClasses());
+        packages.addAll(otherUML.getPackages());
+        associations.addAll(otherUML.getAssociations());
+    }
+
     public boolean hasPlaceholders() {
 
         for(var aClass:classes) {
@@ -40,6 +46,36 @@ public class UML extends HierarchicalElement {
         }
 
         return false;
+    }
+
+    public List<Class> collectAllClassesThatHasPlaceholders() {
+        var result = new ArrayList<Class>();
+
+        result.addAll(filterClassesWithoutPlaceholders(this.classes));
+
+        for(var aPackage:packages) {
+            result.addAll(aPackage.getClasses());
+            for(var aSubPackage:aPackage.getSubPackages()) {
+                result.addAll(aSubPackage.getClasses());
+            }
+        }
+
+        return result;
+    }
+
+    private List<Class> filterClassesWithoutPlaceholders(List<Class> classes) {
+        var result = new ArrayList<Class>();
+        for (var aClass : classes) {
+            if(aClass.hasPlaceholders()) {
+                result.add(aClass);
+            }
+            for (var aSubclass : aClass.getNestedClasses()) {
+                if(aSubclass.hasPlaceholders()) {
+                    result.add(aSubclass);
+                }
+            }
+        }
+        return result;
     }
 
     public void replaceLocalPlaceholders() {

@@ -21,6 +21,8 @@ public class Main {
         var files = listAdaSourceFiles(".");
         System.out.println("Found "+files.size()+" ada source files in the current directory!\n");
 
+        var overallUML = new UML("Complete UML");
+
         for (var file : files) {
 
             try {
@@ -38,6 +40,8 @@ public class Main {
                 System.out.print("Extracting UML concepts...");
                 var resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
                 System.out.println(" OK");
+
+                overallUML.combine(resultUml);
 
                 if(resultUml.hasPlaceholders()) {
                     // TODO
@@ -63,8 +67,10 @@ public class Main {
                 e.printStackTrace(pw);
                 System.out.println("\nEXCEPTION THROWN, SKIPPING TO NEXT FILE. Below is the message and the stacktrace:\n"+e.getMessage()+"\n"+sw.toString()+"\n");
             }
-
         }
+
+        overallUML.replaceLocalPlaceholders();
+
     }
 
     public static List<File> listAdaSourceFiles(String path) {
