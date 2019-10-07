@@ -24,6 +24,24 @@ public class Class extends HierarchicalElement {
         nestedClasses = new ArrayList<>();
     }
 
+    public List<HierarchicalElement> findElementsWithPlaceholder() {
+        List<HierarchicalElement> result = new ArrayList<>();
+
+        for (var property:properties) {
+            if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
+                result.add(property);
+        }
+
+        for (var operation:operations) {
+            for (var parameter:operation.getParameters()) {
+                if (parameter instanceof ClassParameter && ((ClassParameter) parameter).getPlaceholder() != null && !((ClassParameter) parameter).getPlaceholder().isEmpty())
+                    result.add(parameter);
+            }
+        }
+
+        return result;
+    }
+
     public boolean hasPlaceholders() {
         for (var property:properties) {
             if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())

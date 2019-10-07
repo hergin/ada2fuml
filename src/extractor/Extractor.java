@@ -9,6 +9,7 @@ import model.Operation;
 import model.Package;
 import model.UML;
 import model.enums.DirectionEnum;
+import model.enums.PlaceholderPreferenceEnum;
 import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
 import model.parameters.ClassParameter;
@@ -392,7 +393,7 @@ public class Extractor {
         }
 
         // Try to fix the local placeholders because if they don't have . in their place holder, probably these classes are in the same UML.
-        resultingUML.replaceLocalPlaceholders();
+        resultingUML.fixPlaceholders(PlaceholderPreferenceEnum.Local);
 
         return resultingUML;
     }

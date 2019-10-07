@@ -1,13 +1,14 @@
+import exceptions.StillHavePlaceHolderException;
+import exceptions.UnknownParameterException;
+import exceptions.UnknownPropertyException;
 import exporter.Processor;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import model.UML;
+import model.enums.PlaceholderPreferenceEnum;
 import xmlparsing.AdaXmlParser;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Main {
                     // TODO
                     System.out.println("CAN'T EXPORT: THIS UML HAS EXTERNAL PLACEHOLDERS THAT NEEDS TO BE RESOLVED!\n");
                 } else {
-                    System.out.print("Exporting overall UML to XMI...");
+                    System.out.print("Exporting resulting UML to XMI...");
                     var resultingXMI = Processor.processUML(resultUml);
                     System.out.println(" OK");
 
@@ -69,8 +70,24 @@ public class Main {
             }
         }
 
-        overallUML.replaceLocalPlaceholders();
+        try{
+            overallUML.fixPlaceholders(PlaceholderPreferenceEnum.Global);
 
+            System.out.print("Exporting overall UML to XMI...");
+            var resultingXMI = Processor.processUML(overallUML);
+            System.out.println(" OK");
+
+            System.out.print("Writing to file: Overall.xmi");
+            Files.write(Paths.get("xmi-files\\Overall.xmi"), resultingXMI.getBytes());
+            System.out.println(" OK");
+
+            System.out.println("File: Overall.xmi is successfully created!\n");
+        } catch (Exception e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            System.out.println("\nEXCEPTION THROWN, SKIPPING TO NEXT FILE. Below is the message and the stacktrace:\n"+e.getMessage()+"\n"+sw.toString()+"\n");
+        }
     }
 
     public static List<File> listAdaSourceFiles(String path) {

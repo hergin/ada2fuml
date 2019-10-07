@@ -1,10 +1,13 @@
 package model;
 
 import exporter.Processor;
+import model.enums.PlaceholderPreferenceEnum;
+import model.parameters.ClassParameter;
 import model.properties.ClassProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UML extends HierarchicalElement {
 
@@ -48,10 +51,59 @@ public class UML extends HierarchicalElement {
         return false;
     }
 
-    public List<Class> collectAllClassesThatHasPlaceholders() {
+    public void fixPlaceholders(PlaceholderPreferenceEnum preference) {
+        var allClasses = collectAllClasses();
+        var classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
+
+        for (var aClass:classesThatHavePlaceholders) {
+            var elementsWithPlaceholder = aClass.findElementsWithPlaceholder();
+
+            for (var anElement:elementsWithPlaceholder) {
+                String placeholder = anElement instanceof ClassProperty? ((ClassProperty) anElement).getPlaceholder(): ((ClassParameter) anElement).getPlaceholder();
+
+                for (var someClass:allClasses) {
+                    if ((preference.equals(PlaceholderPreferenceEnum.Global) && someClass.getSignature().equals(placeholder))
+                        || (preference.equals(PlaceholderPreferenceEnum.Local) && !placeholder.contains(".") && someClass.getName().equals(placeholder))) {
+                        if(anElement instanceof ClassProperty)
+                            ((ClassProperty) anElement).fixType(someClass);
+                        else
+                            ((ClassParameter) anElement).fixType(someClass);
+                    }
+                }
+            }
+        }
+
+        // If it still has placeholders after global fixing, we need to find by brute force.
+        //    This basically might mean maybe because the package name and type name is the same,
+        //       we have created a class in the same name as package.
+        //          Place holder might end with class name but signatures might be different.
+        if(preference.equals(PlaceholderPreferenceEnum.Global) && hasPlaceholders()) {
+            allClasses = collectAllClasses();
+            classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
+
+            for (var aClass:classesThatHavePlaceholders) {
+                var elementsWithPlaceholder = aClass.findElementsWithPlaceholder();
+
+                for (var anElement:elementsWithPlaceholder) {
+                    String placeholder = anElement instanceof ClassProperty? ((ClassProperty) anElement).getPlaceholder(): ((ClassParameter) anElement).getPlaceholder();
+
+                    for (var someClass:allClasses) {
+                        if (placeholder.endsWith(someClass.getName())) {
+                            if(anElement instanceof ClassProperty)
+                                ((ClassProperty) anElement).fixType(someClass);
+                            else
+                                ((ClassParameter) anElement).fixType(someClass);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public List<Class> collectAllClasses() {
         var result = new ArrayList<Class>();
 
-        result.addAll(filterClassesWithoutPlaceholders(this.classes));
+        result.addAll(this.classes);
 
         for(var aPackage:packages) {
             result.addAll(aPackage.getClasses());
@@ -61,56 +113,6 @@ public class UML extends HierarchicalElement {
         }
 
         return result;
-    }
-
-    private List<Class> filterClassesWithoutPlaceholders(List<Class> classes) {
-        var result = new ArrayList<Class>();
-        for (var aClass : classes) {
-            if(aClass.hasPlaceholders()) {
-                result.add(aClass);
-            }
-            for (var aSubclass : aClass.getNestedClasses()) {
-                if(aSubclass.hasPlaceholders()) {
-                    result.add(aSubclass);
-                }
-            }
-        }
-        return result;
-    }
-
-    public void replaceLocalPlaceholders() {
-        traverseClasses(classes);
-        for(var packagee:packages) {
-            traverseClasses(packagee.getClasses());
-        }
-    }
-
-    private void traverseClasses(List<Class> incomingClasses) {
-        for (var theClass:incomingClasses) {
-            for (var theProperty:theClass.getProperties()) {
-                if(theProperty instanceof ClassProperty) {
-                    var castedProperty = ((ClassProperty) theProperty);
-                    if(castedProperty.getPlaceholder() != null
-                            && !castedProperty.getPlaceholder().isEmpty()
-                            && !castedProperty.getPlaceholder().contains(".")) {
-                        for(var expectedClass:classes) {
-                            if(expectedClass.getName().equals(castedProperty.getPlaceholder())) {
-                                castedProperty.fixType(expectedClass);
-                                break;
-                            }
-                        }
-                        for(var packagee:packages) {
-                            for (var expectedClass : packagee.getClasses()) {
-                                if (expectedClass.getName().equals(castedProperty.getPlaceholder())) {
-                                    castedProperty.fixType(expectedClass);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 
     public boolean hasClass(String inputClassName) {

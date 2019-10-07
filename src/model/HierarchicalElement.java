@@ -26,7 +26,7 @@ public class HierarchicalElement {
 
         var current = parent;
 
-        while(current!=null) {
+        while(current!=null && !(current instanceof UML)) {
             sb.insert(0,current.getName()+".");
             current = current.getParent();
         }
