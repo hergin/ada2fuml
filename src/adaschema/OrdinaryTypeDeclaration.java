@@ -112,6 +112,10 @@ public class OrdinaryTypeDeclaration
             if(getTypeDeclarationViewQ().getTaggedRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition().getRecordComponentsQl().getNotAnElementOrComponentDeclarationOrNullComponent().size()>0) {
                 componentList = getTypeDeclarationViewQ().getTaggedRecordTypeDefinition().getRecordDefinitionQ().getRecordDefinition().getRecordComponentsQl().getNotAnElementOrComponentDeclarationOrNullComponent();
             }
+        } else if(getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition()!=null && getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getRecordDefinitionQ().getRecordDefinition()!=null) {
+            if(getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getRecordDefinitionQ().getRecordDefinition().getRecordComponentsQl().getNotAnElementOrComponentDeclarationOrNullComponent().size()>0) {
+                componentList = getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getRecordDefinitionQ().getRecordDefinition().getRecordComponentsQl().getNotAnElementOrComponentDeclarationOrNullComponent();
+            }
         }
 
         for (var component:componentList) {

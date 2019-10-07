@@ -45,6 +45,9 @@ public class Extractor {
                     theClass = packageNamedAfterAdaPackage.createOrGetClassByName(typeName);
                 }
 
+                // TODO package name with . in it means there is a subpackage.
+
+                // TODO ordinaryTypes with an extension, means there is a superclass involved. See @RoyTests.md_example4-nest test
 
                 if(theClass!=null) {
                     var components = theType.getComponentDeclarations();

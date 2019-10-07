@@ -157,6 +157,13 @@ public class PackageDeclaration
             for (var thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
                 if (thing instanceof DefiningIdentifier) {
                     return ((DefiningIdentifier) thing).getDefName();
+                } else if (thing instanceof DefiningExpandedName) {
+                    if(((DefiningExpandedName) thing).getDefiningPrefixQ()!=null) {
+                        return ((DefiningExpandedName) thing).getDefiningPrefixQ().getIdentifier().getRefName() + "."
+                                + ((DefiningExpandedName) thing).getDefiningSelectorQ().getDefiningIdentifier().getDefName();
+                    } else {
+                        return ((DefiningExpandedName) thing).getDefiningSelectorQ().getDefiningIdentifier().getDefName();
+                    }
                 }
             }
         } catch (Exception e) {
