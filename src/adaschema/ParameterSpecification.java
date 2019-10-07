@@ -119,7 +119,7 @@ public class ParameterSpecification
                 return getObjectDeclarationViewQ().getIdentifier().getRefName();
             else {
                 if(getObjectDeclarationViewQ().getSelectedComponent().getPrefixQ()!=null) {
-                    return getObjectDeclarationViewQ().getSelectedComponent().getPrefixQ() + "." + getObjectDeclarationViewQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+                    return getObjectDeclarationViewQ().getSelectedComponent().getPrefixQ().getIdentifier().getRefName() + "." + getObjectDeclarationViewQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
                 } else {
                     return getObjectDeclarationViewQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
                 }
