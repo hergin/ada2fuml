@@ -33,9 +33,20 @@ public class UML extends HierarchicalElement {
     }
 
     public void combine(UML otherUML) {
-        classes.addAll(otherUML.getClasses());
-        packages.addAll(otherUML.getPackages());
-        associations.addAll(otherUML.getAssociations());
+        otherUML.getClasses().forEach(c->addClass(c));
+
+        for(var otherPackage:otherUML.getPackages()) {
+            var sameNamedPackages = packages.stream().filter(p->p.getName().equals(otherPackage.getName()));
+            if(sameNamedPackages.count()>0) {
+                var sameNamedPackage = sameNamedPackages.findFirst().get();
+                otherPackage.getClasses().forEach(c->sameNamedPackage.addClass(c));
+                otherPackage.getSubPackages().forEach(sb->sameNamedPackage.addSubPackage(sb));
+                otherUML.getPackages().removeIf(p -> p.getId().equals(otherPackage.getId()));
+            }
+        }
+
+        otherUML.getPackages().forEach(p->addPackage(p));
+        otherUML.getAssociations().forEach(a->addAssociation(a));
     }
 
     public boolean hasPlaceholders() {
