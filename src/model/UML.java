@@ -36,16 +36,16 @@ public class UML extends HierarchicalElement {
         otherUML.getClasses().forEach(c->addClass(c));
 
         for(var otherPackage:otherUML.getPackages()) {
-            var sameNamedPackages = packages.stream().filter(p->p.getName().equals(otherPackage.getName()));
-            if(sameNamedPackages.count()>0) {
-                var sameNamedPackage = sameNamedPackages.findFirst().get();
+            var sameNamedPackages = packages.stream().filter(p->p.getName().equals(otherPackage.getName())).collect(Collectors.toList());
+            if(sameNamedPackages.size()>0) {
+                var sameNamedPackage = sameNamedPackages.get(0);
                 otherPackage.getClasses().forEach(c->sameNamedPackage.addClass(c));
                 otherPackage.getSubPackages().forEach(sb->sameNamedPackage.addSubPackage(sb));
-                otherUML.getPackages().removeIf(p -> p.getId().equals(otherPackage.getId()));
+            } else {
+                addPackage(otherPackage);
             }
         }
 
-        otherUML.getPackages().forEach(p->addPackage(p));
         otherUML.getAssociations().forEach(a->addAssociation(a));
     }
 
