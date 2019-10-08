@@ -54,11 +54,29 @@ public class Extractor {
                         theClass = resultingUML.createOrGetClassByName(typeName);
                     }
 
-                    // packageX + typeY => packageX + classY
-                    if (!packageName.equals(typeName)) {
-                        Package packageNamedAfterAdaPackage = resultingUML.createOrGetPackageByName(packageName);
+                    // If there is a . in the package name, we will create subpackage.
+                    if(classNameAfterPackageName.contains(".")) {
+                        var higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
+                        packageName = higherLevelPackage;
+                        if(higherLevelPackage.contains("_"))
+                            higherLevelPackage = higherLevelPackage.split("_")[0];
+                        classNameAfterPackageName = classNameAfterPackageName.split("\\.")[1];
 
-                        theClass = packageNamedAfterAdaPackage.createOrGetClassByName(typeName);
+                        Package dottedSuperPackage = resultingUML.createOrGetPackageByName(higherLevelPackage);
+
+                        // packageX + typeY => packageX + classY
+                        if (!packageName.equals(typeName)) {
+                            Package subpackage = dottedSuperPackage.createOrGetSubPackageByName(packageName);
+                            theClass = subpackage.createOrGetClassByName(typeName);
+                        }
+
+                    } else {
+                        // packageX + typeY => packageX + classY
+                        if (!packageName.equals(typeName)) {
+                            Package packageNamedAfterAdaPackage = resultingUML.createOrGetPackageByName(packageName);
+
+                            theClass = packageNamedAfterAdaPackage.createOrGetClassByName(typeName);
+                        }
                     }
 
                     // TODO package name with . in it means there is a subpackage.
@@ -86,7 +104,9 @@ public class Extractor {
                                 if (value != null) {
                                     if (!fieldDef.getName().equals("recordTypeDefinition")
                                             && !fieldDef.getName().equals("taggedRecordTypeDefinition")
-                                            && !fieldDef.getName().equals("derivedRecordExtensionDefinition")) {
+                                            && !fieldDef.getName().equals("derivedRecordExtensionDefinition")
+                                            && !fieldDef.getName().equals("unconstrainedArrayDefinition")
+                                            && !fieldDef.getName().equals("derivedTypeDefinition")) {
                                         throw new UnhandledTypeException("An unhandled type is found in TypeDeclarationViewQ: " + fieldDef.getName());
                                     }
                                 }
@@ -289,18 +309,9 @@ public class Extractor {
                             classNamedAfterAdaPackage.addOperation(theOperation);
                         } else {
                             var castedParameter = ((ClassParameter) firstParameter);
-                            for (var aClass : resultingUML.getClasses()) {
-                                if (aClass.getName().equals(castedParameter.getPlaceholder())) {
+                            for (var aClass : resultingUML.collectAllClasses()) {
+                                if (!castedParameter.getPlaceholder().contains(".") && aClass.getName().equals(castedParameter.getPlaceholder())) {
                                     castedParameter.fixType(aClass);
-                                }
-                            }
-                            if (castedParameter.getType() == null) {
-                                for (var aPackage : resultingUML.getPackages()) {
-                                    for (var theClass : aPackage.getClasses()) {
-                                        if (theClass.getName().equals(castedParameter.getPlaceholder())) {
-                                            castedParameter.fixType(theClass);
-                                        }
-                                    }
                                 }
                             }
                             if (castedParameter.getType() != null)
@@ -398,18 +409,9 @@ public class Extractor {
                             classNamedAfterAdaPackage.addOperation(theOperation);
                         } else {
                             var castedParameter = ((ClassParameter) firstParameter);
-                            for (var aClass : resultingUML.getClasses()) {
-                                if (aClass.getName().equals(castedParameter.getPlaceholder())) {
+                            for (var aClass : resultingUML.collectAllClasses()) {
+                                if (!castedParameter.getPlaceholder().contains(".") && aClass.getName().equals(castedParameter.getPlaceholder())) {
                                     castedParameter.fixType(aClass);
-                                }
-                            }
-                            if (castedParameter.getType() == null) {
-                                for (var aPackage : resultingUML.getPackages()) {
-                                    for (var theClass : aPackage.getClasses()) {
-                                        if (theClass.getName().equals(castedParameter.getPlaceholder())) {
-                                            castedParameter.fixType(theClass);
-                                        }
-                                    }
                                 }
                             }
                             if (castedParameter.getType() != null)

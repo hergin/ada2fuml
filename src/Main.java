@@ -87,7 +87,7 @@ public class Main {
         try{
             overallUML.fixPlaceholders(PlaceholderPreferenceEnum.Global);
 
-            System.out.print("Exporting overall UML to XMI...");
+            System.out.print("ALL UML PACKAGES ARE COMBINED!\nExporting overall UML to XMI...");
             var resultingXMI = Processor.processUML(overallUML);
             System.out.println(" OK: All placeholders are fixed!");
 
@@ -99,12 +99,12 @@ public class Main {
             Files.write(Paths.get("xmi-files\\Overall.xmi"), resultingXMI.getBytes());
             System.out.println(" OK");
 
-            System.out.println("File: Overall.xmi is successfully created!\n");
+            System.out.println("File: xmi-files\\Overall.xmi is successfully created!\n");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
-            System.out.println("\nEXCEPTION THROWN, SKIPPING TO NEXT FILE. Below is the message and the stacktrace:\n"+e.getMessage()+"\n"+sw.toString()+"\n");
+            System.out.println("\nEXCEPTION THROWN WHILE SAVING THE OVERALL UML. Below is the message and the stacktrace:\n"+e.getMessage()+"\n"+sw.toString()+"\n");
         }
     }
 
