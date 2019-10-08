@@ -19,8 +19,7 @@ public class Processor {
     public static String processUML(UML inputUML) throws StillHavePlaceHolderException, UnknownParameterException, UnknownPropertyException {
 
         if(inputUML.hasPlaceholders())
-            throw new StillHavePlaceHolderException(inputUML.getName()+" still has placeholders!");
-            // TODO collect and report the Props and Params that have placeholders for reporting purposes.
+            throw new StillHavePlaceHolderException(inputUML.getName()+" still has placeholders!", inputUML.getItemsWithPlaceholders());
 
         StringBuilder string = new StringBuilder();
         string.append("<?xml version='1.0' encoding='UTF-8'?>");

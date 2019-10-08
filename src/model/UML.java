@@ -32,6 +32,16 @@ public class UML extends HierarchicalElement {
         this.fileName = fileName;
     }
 
+    public List<HierarchicalElement> getItemsWithPlaceholders() {
+        var allClasses = collectAllClasses();
+        var classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
+
+        var result = new ArrayList<HierarchicalElement>();
+        classesThatHavePlaceholders.stream().forEach(c->result.addAll(c.findElementsWithPlaceholder()));
+
+        return result;
+    }
+
     public void combine(UML otherUML) {
         otherUML.getClasses().forEach(c->addClass(c));
 

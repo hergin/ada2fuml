@@ -7,6 +7,8 @@ import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import model.UML;
 import model.enums.PlaceholderPreferenceEnum;
+import model.parameters.ClassParameter;
+import model.properties.ClassProperty;
 import xmlparsing.AdaXmlParser;
 
 import java.io.*;
@@ -58,20 +60,22 @@ public class Main {
 
                 overallUML.combine(resultUml);
 
-                if(resultUml.hasPlaceholders()) {
-                    // TODO
-                    System.out.println("WARNING: THIS UML HAS EXTERNAL PLACEHOLDERS THAT NEEDS TO BE RESOLVED! They will be resolved when all UML diagrams are combined!\n");
-                } else {
-                    System.out.print("Exporting resulting UML to XMI...");
-                    var resultingXMI = Processor.processUML(resultUml);
-                    System.out.println(" OK\n");
+                System.out.print("Exporting resulting UML to XMI...");
+                var resultingXMI = Processor.processUML(resultUml);
+                System.out.println(" OK\n");
 
-                    //System.out.print("Writing to file: " + resultUml.getFileName() + ".xmi");
-                    //Files.write(Paths.get("xmi-files\\"+resultUml.getFileName() + ".xmi"), resultingXMI.getBytes());
-                    //System.out.println(" OK");
+                //System.out.print("Writing to file: " + resultUml.getFileName() + ".xmi");
+                //Files.write(Paths.get("xmi-files\\"+resultUml.getFileName() + ".xmi"), resultingXMI.getBytes());
+                //System.out.println(" OK");
 
-                    //System.out.println("File: " + resultUml.getFileName() + ".xmi is successfully created!\n");
+                //System.out.println("File: " + resultUml.getFileName() + ".xmi is successfully created!\n");
+
+            } catch (StillHavePlaceHolderException shphe) {
+                System.out.println("\nWARNING: "+shphe.getMessage()+" But the tool will try to resolve them when combined! Below are the items with placeholders:");
+                for(var item:shphe.getItems()) {
+                    System.out.println("NAME: "+item.getName()+" PLACEHOLDER: "+(item instanceof ClassProperty? ((ClassProperty) item).getPlaceholder(): ((ClassParameter) item).getPlaceholder()));
                 }
+                System.out.println();
             } catch (Exception e) {
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
@@ -85,7 +89,7 @@ public class Main {
 
             System.out.print("Exporting overall UML to XMI...");
             var resultingXMI = Processor.processUML(overallUML);
-            System.out.println(" OK");
+            System.out.println(" OK: All placeholders are fixed!");
 
             System.out.print("Writing to file: Overall.xmi");
             if(!Files.exists(Paths.get("xmi-files"))) {
