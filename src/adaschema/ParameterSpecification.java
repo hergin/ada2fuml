@@ -102,7 +102,7 @@ public class ParameterSpecification
      */
     public String getName() throws NamingException {
         try {
-            for (var thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+            for (JaxBSuperclass thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
                 if (thing instanceof DefiningIdentifier) {
                     return ((DefiningIdentifier) thing).getDefName();
                 }

@@ -4,12 +4,12 @@ This project reads Ada specification files (*.ads) in a folder and produces fUML
 
 ## Prerequisites
 
-- Java 12 (or above)
+- Java 1.8 (or above)
 - **gnat2xml.exe** in the **PATH** variable.
 
 ## Usage
 
-Just download the latest jar file from [here](https://github.com/hergin/ada2fuml/releases) and put it in the same folder where you *.ads files stay. Run it like below by command line (assuming java is the executable java of version 12 or above)
+Just download the latest jar file from [here](https://github.com/hergin/ada2fuml/releases) and put it in the same folder where you *.ads files stay. Run it like below by command line (assuming java is the executable java of version 1.8 or above)
 
 > java -jar ada2fuml.jar
 

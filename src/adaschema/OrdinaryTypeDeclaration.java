@@ -84,7 +84,7 @@ public class OrdinaryTypeDeclaration
      */
     public String getName() throws NamingException {
         try {
-            for (var thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+            for (JaxBSuperclass thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
                 if (thing instanceof DefiningIdentifier) {
                     return ((DefiningIdentifier) thing).getDefName();
                 }
@@ -118,7 +118,7 @@ public class OrdinaryTypeDeclaration
             }
         }
 
-        for (var component:componentList) {
+        for (JaxBSuperclass component:componentList) {
             if(component instanceof ComponentDeclaration) {
                 result.add((ComponentDeclaration) component);
             }

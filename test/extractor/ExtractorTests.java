@@ -1,5 +1,6 @@
 package extractor;
 
+import adaschema.CompilationUnit;
 import exceptions.NamingException;
 import exceptions.PartialUMLException;
 import exceptions.UnhandledTypeException;
@@ -7,6 +8,7 @@ import exceptions.UnknownTypeException;
 import model.Operation;
 import model.Parameter;
 import model.Property;
+import model.UML;
 import model.enums.TypeEnum;
 import model.parameters.ClassParameter;
 import model.parameters.PrimitiveParameter;
@@ -18,13 +20,18 @@ import xmlparsing.AdaXmlParser;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 class ExtractorTests {
 
     public static String GetAdaXMLFromResource(String name) {
         try {
-            return new String(ExtractorTests.class.getClassLoader().getResource(name).openStream().readAllBytes());
+            return new String(Files.readAllBytes(Paths.get(ExtractorTests.class.getClassLoader().getResource(name).toURI())));
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         return null;
@@ -32,11 +39,11 @@ class ExtractorTests {
 
     @Test
     void packageX_and_typeX_yields_classX() throws UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
-        var adaXML = GetAdaXMLFromResource("SingleClassWithSameName.ads.xml");
+        String adaXML = GetAdaXMLFromResource("SingleClassWithSameName.ads.xml");
 
-        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+        CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
 
-        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+        UML resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertEquals(1,resultingUML.getClasses().size());
         Assertions.assertEquals("SomeClass",resultingUML.getClasses().get(0).getName());
@@ -44,11 +51,11 @@ class ExtractorTests {
 
     @Test
     void packageX_and_typeY_yields_packageX_and_classY() throws UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
-        var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
+        String adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
 
-        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+        CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
 
-        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+        UML resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertEquals(1,resultingUML.getPackages().size());
         Assertions.assertEquals("SomeClass",resultingUML.getPackages().get(0).getName());
@@ -58,11 +65,11 @@ class ExtractorTests {
 
     @Test
     void primitivePropertyTests() throws UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
-        var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
+        String adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
 
-        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+        CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
 
-        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+        UML resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertEquals(1,resultingUML.getPackages().size());
         Assertions.assertEquals("SomeClass",resultingUML.getPackages().get(0).getName());
@@ -82,20 +89,20 @@ class ExtractorTests {
 
     @Test
     void variableAssignmentTests() throws UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
-        var adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
+        String adaXML = GetAdaXMLFromResource("CombinedTypesAndVariables.ads.xml");
 
-        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+        CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
 
-        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+        UML resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertEquals(2,resultingUML.getClassByName("SomeClass").getProperties().size());
     }
 
     @Test
     void differentPropertyTypesDefaultValuesTests() throws UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
-        var adaXML = GetAdaXMLFromResource("PrimitivePropertyTypes.ads.xml");
-        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
-        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+        String adaXML = GetAdaXMLFromResource("PrimitivePropertyTypes.ads.xml");
+        CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+        UML resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertEquals(1,resultingUML.getPackages().size());
         Assertions.assertEquals(1,resultingUML.getPackages().get(0).getClasses().size());
@@ -120,9 +127,9 @@ class ExtractorTests {
 
     @Test
     void differentVariableTypesDefaultValuesTests() throws UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
-        var adaXML = GetAdaXMLFromResource("PrimitiveVariableTypes.ads.xml");
-        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
-        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+        String adaXML = GetAdaXMLFromResource("PrimitiveVariableTypes.ads.xml");
+        CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+        UML resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertEquals(1,resultingUML.getClasses().size());
 
@@ -155,9 +162,9 @@ class ExtractorTests {
 
     @Test
     void parameterDefaultValueTesting() throws UnhandledTypeException, NamingException, UnknownTypeException, JAXBException, PartialUMLException {
-        var adaXML = GetAdaXMLFromResource("ParameterDefaultValue.ads.xml");
-        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
-        var resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
+        String adaXML = GetAdaXMLFromResource("ParameterDefaultValue.ads.xml");
+        CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXML);
+        UML resultingUML = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertEquals(1,resultingUML.getClasses().size());
 

@@ -12,6 +12,7 @@ import model.properties.AssociationProperty;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Processor {
@@ -48,7 +49,7 @@ public class Processor {
         StringBuilder string = new StringBuilder();
 
         string.append("<packagedElement xmi:type='uml:Association' xmi:id='" + a.getId() + "'>");
-        for(var aProperty:a.getProperties()) {
+        for(AssociationProperty aProperty:a.getProperties()) {
             string.append("<memberEnd xmi:idref='" + aProperty.getId() + "'/>");
         }
         string.append("</packagedElement>");
@@ -165,8 +166,8 @@ public class Processor {
             string.append("</ownedAttribute>");
         } else if (p instanceof AssociationProperty) {
             AssociationProperty ap = (AssociationProperty) p;
-            var selfId = ((Class) ap.getParent()).getId();
-            var typeIds = ap.getAssociation().getProperties().stream().map(prop-> ((Class) prop.getParent()).getId()).filter(prop->!prop.equals(selfId)).collect(Collectors.toList());
+            String selfId = ((Class) ap.getParent()).getId();
+            List<String> typeIds = ap.getAssociation().getProperties().stream().map(prop-> ((Class) prop.getParent()).getId()).filter(prop->!prop.equals(selfId)).collect(Collectors.toList());
             string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + typeIds.get(0) + "' association='" + ap.getAssociation().getId() + "'/>");
         } else if (p instanceof ClassProperty) {
             ClassProperty cp = (ClassProperty) p;

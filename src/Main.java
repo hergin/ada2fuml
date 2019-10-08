@@ -1,3 +1,4 @@
+import adaschema.CompilationUnit;
 import exceptions.PartialUMLException;
 import exceptions.StillHavePlaceHolderException;
 import exceptions.UnknownParameterException;
@@ -5,6 +6,7 @@ import exceptions.UnknownPropertyException;
 import exporter.Processor;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
+import model.HierarchicalElement;
 import model.UML;
 import model.enums.PlaceholderPreferenceEnum;
 import model.parameters.ClassParameter;
@@ -22,23 +24,23 @@ public class Main {
 
     public static void main(String[] args) {
 
-        var files = listAdaSourceFiles(".");
+        List<File> files = listAdaSourceFiles(".");
         System.out.println("Found "+files.size()+" ada source files in the current directory!\n");
 
-        var overallUML = new UML("Complete UML");
+        UML overallUML = new UML("Complete UML");
 
-        for (var file : files) {
+        for (File file : files) {
 
             try {
                 System.out.println("Started processing: " + file.getName() + " file");
-                var adaFile = file;
+                File adaFile = file;
 
                 System.out.print("Converting to XML...");
-                var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
+                String adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
                 System.out.println(" OK");
 
                 System.out.print("Parsing compilation unit from XML...");
-                var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
+                CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
                 System.out.println(" OK");
 
                 System.out.print("Extracting UML concepts...");
@@ -48,7 +50,7 @@ public class Main {
                 } catch (PartialUMLException pue) {
                     resultUml = pue.getPartialUML();
                     System.out.println("WARNING: SOME EXCEPTIONS ARE THROWN WHILE PRODUCING THIS UML! Below are the exceptions and the messages:\n");
-                    for(var exception:pue.getCauses()) {
+                    for(Exception exception:pue.getCauses()) {
                         System.out.println(exception.getMessage());
                         StringWriter sw = new StringWriter();
                         PrintWriter pw = new PrintWriter(sw);
@@ -61,7 +63,7 @@ public class Main {
                 overallUML.combine(resultUml);
 
                 System.out.print("Exporting resulting UML to XMI...");
-                var resultingXMI = Processor.processUML(resultUml);
+                String resultingXMI = Processor.processUML(resultUml);
                 System.out.println(" OK\n");
 
                 //System.out.print("Writing to file: " + resultUml.getFileName() + ".xmi");
@@ -72,7 +74,7 @@ public class Main {
 
             } catch (StillHavePlaceHolderException shphe) {
                 System.out.println("\nWARNING: "+shphe.getMessage()+" But the tool will try to resolve them when combined! Below are the items with placeholders:");
-                for(var item:shphe.getItems()) {
+                for(HierarchicalElement item:shphe.getItems()) {
                     System.out.println("NAME: "+item.getName()+" PLACEHOLDER: "+(item instanceof ClassProperty? ((ClassProperty) item).getPlaceholder(): ((ClassParameter) item).getPlaceholder()));
                 }
                 System.out.println();
@@ -88,7 +90,7 @@ public class Main {
             overallUML.fixPlaceholders(PlaceholderPreferenceEnum.Global);
 
             System.out.print("ALL UML PACKAGES ARE COMBINED!\nExporting overall UML to XMI...");
-            var resultingXMI = Processor.processUML(overallUML);
+            String resultingXMI = Processor.processUML(overallUML);
             System.out.println(" OK: All placeholders are fixed!");
 
             System.out.print("Writing to file: Overall.xmi");

@@ -19,12 +19,12 @@ public class Package extends HierarchicalElement {
     }
 
     public boolean hasPlaceholders() {
-        for(var classs:classes) {
+        for(Class classs:classes) {
             if(classs.hasPlaceholders())
                 return true;
         }
 
-        for(var packagee:subPackages) {
+        for(Package packagee:subPackages) {
             if(packagee.hasPlaceholders())
                 return true;
         }
