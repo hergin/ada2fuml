@@ -24,7 +24,7 @@ public class HierarchicalElement {
     public String getSignature() {
         StringBuilder sb = new StringBuilder(name);
 
-        var current = parent;
+        HierarchicalElement current = parent;
 
         while(current!=null && !(current instanceof UML)) {
             sb.insert(0,current.getName()+".");

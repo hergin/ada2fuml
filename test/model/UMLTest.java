@@ -1,6 +1,7 @@
 package model;
 
 import Integration.RoyTests;
+import adaschema.CompilationUnit;
 import exceptions.*;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import xmlparsing.AdaXmlParser;
 
 import javax.xml.bind.JAXBException;
+import java.io.File;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
@@ -17,21 +19,21 @@ public class UMLTest {
 
     @Test
     void test_fixGlobalPlaceholders() throws Gnat2XmlException, JAXBException, UnknownTypeException, NamingException, UnhandledTypeException, URISyntaxException, PartialUMLException {
-        var adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("SimpleInterFileAssociation/Class1.ads").toURI()).toFile();
-        var adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
-        var compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
-        var class1uml = Extractor.extractHighLevelConcepts(compilationUnit);
+        File adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("SimpleInterFileAssociation/Class1.ads").toURI()).toFile();
+        String adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
+        CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
+        UML class1uml = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertFalse(class1uml.hasPlaceholders());
 
         adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("SimpleInterFileAssociation/Class2.ads").toURI()).toFile();
         adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
         compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
-        var class2uml = Extractor.extractHighLevelConcepts(compilationUnit);
+        UML class2uml = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertTrue(class2uml.hasPlaceholders());
 
-        var combinedUML = new UML("combined");
+        UML combinedUML = new UML("combined");
         combinedUML.combine(class1uml);
         combinedUML.combine(class2uml);
 

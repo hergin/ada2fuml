@@ -27,13 +27,13 @@ public class Class extends HierarchicalElement {
     public List<HierarchicalElement> findElementsWithPlaceholder() {
         List<HierarchicalElement> result = new ArrayList<>();
 
-        for (var property:properties) {
+        for (Property property:properties) {
             if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
                 result.add(property);
         }
 
-        for (var operation:operations) {
-            for (var parameter:operation.getParameters()) {
+        for (Operation operation:operations) {
+            for (Parameter parameter:operation.getParameters()) {
                 if (parameter instanceof ClassParameter && ((ClassParameter) parameter).getPlaceholder() != null && !((ClassParameter) parameter).getPlaceholder().isEmpty())
                     result.add(parameter);
             }
@@ -43,19 +43,19 @@ public class Class extends HierarchicalElement {
     }
 
     public boolean hasPlaceholders() {
-        for (var property:properties) {
+        for (Property property:properties) {
             if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
                 return true;
         }
 
-        for (var operation:operations) {
-            for (var parameter:operation.getParameters()) {
+        for (Operation operation:operations) {
+            for (Parameter parameter:operation.getParameters()) {
                 if (parameter instanceof ClassParameter && ((ClassParameter) parameter).getPlaceholder() != null && !((ClassParameter) parameter).getPlaceholder().isEmpty())
                     return true;
             }
         }
 
-        for(var classs:nestedClasses) {
+        for(Class classs:nestedClasses) {
             if(classs.hasPlaceholders())
                 return true;
         }

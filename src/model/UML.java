@@ -33,10 +33,10 @@ public class UML extends HierarchicalElement {
     }
 
     public List<HierarchicalElement> getItemsWithPlaceholders() {
-        var allClasses = collectAllClasses();
-        var classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
+        List<Class> allClasses = collectAllClasses();
+        List<Class> classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
 
-        var result = new ArrayList<HierarchicalElement>();
+        List<HierarchicalElement> result = new ArrayList<HierarchicalElement>();
         classesThatHavePlaceholders.stream().forEach(c->result.addAll(c.findElementsWithPlaceholder()));
 
         return result;
@@ -45,10 +45,10 @@ public class UML extends HierarchicalElement {
     public void combine(UML otherUML) {
         otherUML.getClasses().forEach(c->addClass(c));
 
-        for(var otherPackage:otherUML.getPackages()) {
-            var sameNamedPackages = packages.stream().filter(p->p.getName().equals(otherPackage.getName())).collect(Collectors.toList());
+        for(Package otherPackage:otherUML.getPackages()) {
+            List<Package> sameNamedPackages = packages.stream().filter(p->p.getName().equals(otherPackage.getName())).collect(Collectors.toList());
             if(sameNamedPackages.size()>0) {
-                var sameNamedPackage = sameNamedPackages.get(0);
+                Package sameNamedPackage = sameNamedPackages.get(0);
                 otherPackage.getClasses().forEach(c->sameNamedPackage.addClass(c));
                 otherPackage.getSubPackages().forEach(sb->sameNamedPackage.addSubPackage(sb));
             } else {
@@ -61,12 +61,12 @@ public class UML extends HierarchicalElement {
 
     public boolean hasPlaceholders() {
 
-        for(var aClass:classes) {
+        for(Class aClass:classes) {
             if(aClass.hasPlaceholders())
                 return true;
         }
 
-        for(var aPackage:packages) {
+        for(Package aPackage:packages) {
             if(aPackage.hasPlaceholders())
                 return true;
         }
@@ -75,20 +75,20 @@ public class UML extends HierarchicalElement {
     }
 
     public void fixPlaceholders(PlaceholderPreferenceEnum preference) {
-        var allClasses = collectAllClasses();
-        var classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
+        List<Class> allClasses = collectAllClasses();
+        List<Class> classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
 
-        for (var aClass:classesThatHavePlaceholders) {
-            var elementsWithPlaceholder = aClass.findElementsWithPlaceholder();
+        for (Class aClass:classesThatHavePlaceholders) {
+            List<HierarchicalElement> elementsWithPlaceholder = aClass.findElementsWithPlaceholder();
 
-            for (var anElement:elementsWithPlaceholder) {
+            for (HierarchicalElement anElement:elementsWithPlaceholder) {
                 String placeholder = anElement instanceof ClassProperty? ((ClassProperty) anElement).getPlaceholder(): ((ClassParameter) anElement).getPlaceholder();
 
-                for (var someClass:allClasses) {
+                for (Class someClass:allClasses) {
                     if ((preference.equals(PlaceholderPreferenceEnum.Global) && someClass.getSignature().equals(placeholder))
                         || (preference.equals(PlaceholderPreferenceEnum.Local) && !placeholder.contains(".") && someClass.getName().equals(placeholder))) {
                         if(anElement instanceof ClassProperty) {
-                            var castedProperty = ((ClassProperty) anElement);
+                            ClassProperty castedProperty = ((ClassProperty) anElement);
                             castedProperty.fixType(someClass);
 
                             if(preference.equals(PlaceholderPreferenceEnum.Global)) {
@@ -104,7 +104,7 @@ public class UML extends HierarchicalElement {
                                 association.addProperty(associationPropertyInTarget);
                             }
                         } else {
-                            var castedParameter = ((ClassParameter)anElement);
+                            ClassParameter castedParameter = ((ClassParameter)anElement);
                             castedParameter.fixType(someClass);
                         }
                     }
@@ -120,16 +120,16 @@ public class UML extends HierarchicalElement {
             allClasses = collectAllClasses();
             classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
 
-            for (var aClass:classesThatHavePlaceholders) {
-                var elementsWithPlaceholder = aClass.findElementsWithPlaceholder();
+            for (Class aClass:classesThatHavePlaceholders) {
+                List<HierarchicalElement> elementsWithPlaceholder = aClass.findElementsWithPlaceholder();
 
-                for (var anElement:elementsWithPlaceholder) {
+                for (HierarchicalElement anElement:elementsWithPlaceholder) {
                     String placeholder = anElement instanceof ClassProperty? ((ClassProperty) anElement).getPlaceholder(): ((ClassParameter) anElement).getPlaceholder();
 
-                    for (var someClass:allClasses) {
+                    for (Class someClass:allClasses) {
                         if (placeholder.endsWith(someClass.getName())) {
                             if(anElement instanceof ClassProperty) {
-                                var castedProperty = ((ClassProperty) anElement);
+                                ClassProperty castedProperty = ((ClassProperty) anElement);
                                 castedProperty.fixType(someClass);
                                 Association association = new Association("associationOf"+castedProperty.getName(), ((Class) castedProperty.getParent()),someClass);
                                 addAssociation(association);
@@ -142,7 +142,7 @@ public class UML extends HierarchicalElement {
                                 someClass.addProperty(associationPropertyInTarget);
                                 association.addProperty(associationPropertyInTarget);
                             } else {
-                                var castedParameter = ((ClassParameter)anElement);
+                                ClassParameter castedParameter = ((ClassParameter)anElement);
                                 castedParameter.fixType(someClass);
                             }
                         }
@@ -153,13 +153,13 @@ public class UML extends HierarchicalElement {
     }
 
     public List<Class> collectAllClasses() {
-        var result = new ArrayList<Class>();
+        List<Class> result = new ArrayList<Class>();
 
         result.addAll(this.classes);
 
-        for(var aPackage:packages) {
+        for(Package aPackage:packages) {
             result.addAll(aPackage.getClasses());
-            for(var aSubPackage:aPackage.getSubPackages()) {
+            for(Package aSubPackage:aPackage.getSubPackages()) {
                 result.addAll(aSubPackage.getClasses());
             }
         }
@@ -168,7 +168,7 @@ public class UML extends HierarchicalElement {
     }
 
     public boolean hasClass(String inputClassName) {
-        for (var theClass:classes) {
+        for (Class theClass:classes) {
             if(theClass.getName().equals(inputClassName)) {
                 return true;
             }
@@ -177,7 +177,7 @@ public class UML extends HierarchicalElement {
     }
 
     public Class getClassByName(String className) {
-        for (var theClass:classes) {
+        for (Class theClass:classes) {
             if(theClass.getName().equals(className)) {
                 return theClass;
             }
@@ -207,7 +207,7 @@ public class UML extends HierarchicalElement {
     }
 
     public boolean hasPackage(String inputPackageName) {
-        for (var thePackage:packages) {
+        for (Package thePackage:packages) {
             if(thePackage.getName().equals(inputPackageName)) {
                 return true;
             }
@@ -227,7 +227,7 @@ public class UML extends HierarchicalElement {
     }
 
     public Package getPackageByName(String packageName) {
-        for (var thePackage:packages) {
+        for (Package thePackage:packages) {
             if(thePackage.getName().equals(packageName)) {
                 return thePackage;
             }

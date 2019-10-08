@@ -1,14 +1,13 @@
 package extractor;
 
-import adaschema.CompilationUnit;
+import adaschema.*;
 import exceptions.NamingException;
 import exceptions.PartialUMLException;
 import exceptions.UnhandledTypeException;
 import exceptions.UnknownTypeException;
+import model.*;
 import model.Class;
-import model.Operation;
 import model.Package;
-import model.UML;
 import model.enums.DirectionEnum;
 import model.enums.PlaceholderPreferenceEnum;
 import model.enums.TypeEnum;
@@ -18,6 +17,7 @@ import model.parameters.PrimitiveParameter;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,9 +31,9 @@ public class Extractor {
 
         if (compilationUnit.getUnitDeclarationQ().getPackageDeclaration()!=null) {
 
-            var thePackage = compilationUnit.getUnitDeclarationQ().getPackageDeclaration();
-            var packageName = thePackage.getName();
-            var classNameAfterPackageName = packageName;
+            PackageDeclaration thePackage = compilationUnit.getUnitDeclarationQ().getPackageDeclaration();
+            String packageName = thePackage.getName();
+            String classNameAfterPackageName = packageName;
 
             // If this is true, then we will create the package name just before the _ but everything else will remain same.
             //      check the excel file by ROY to see what happens the naming when underscore is involved for more info.
@@ -41,11 +41,11 @@ public class Extractor {
                 packageName = packageName.split("_")[0];
             }
 
-            for (var theType : thePackage.getOrdinaryTypes()) {
+            for (OrdinaryTypeDeclaration theType : thePackage.getOrdinaryTypes()) {
 
                 try {
 
-                    var typeName = theType.getName();
+                    String typeName = theType.getName();
 
                     Class theClass = null;
 
@@ -56,7 +56,7 @@ public class Extractor {
 
                     // If there is a . in the package name, we will create subpackage.
                     if(classNameAfterPackageName.contains(".")) {
-                        var higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
+                        String higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
                         packageName = higherLevelPackage;
                         if(higherLevelPackage.contains("_"))
                             higherLevelPackage = higherLevelPackage.split("_")[0];
@@ -84,16 +84,16 @@ public class Extractor {
                     // TODO ordinaryTypes with an extension, means there is a superclass involved. See @RoyTests.md_example4-nest test
 
                     if (theClass != null) {
-                        var components = theType.getComponentDeclarations();
+                        List<ComponentDeclaration> components = theType.getComponentDeclarations();
 
                         if (components.isEmpty()) {
                             // TODO this means it is an unhandled type in TypeDeclarationViewQ.
                             //      Class will be in the resulting UML but will probably be empty.
                             //      These are still OrdinaryTypeDeclarations, so to fill the details one might need to go into more details.
-                            var classDef = theType.getTypeDeclarationViewQ().getClass();
-                            var fieldDefs = classDef.getDeclaredFields();
+                            java.lang.Class classDef = theType.getTypeDeclarationViewQ().getClass();
+                            Field[] fieldDefs = classDef.getDeclaredFields();
 
-                            for (var fieldDef : fieldDefs) {
+                            for (Field fieldDef : fieldDefs) {
                                 Object value = null;
                                 fieldDef.setAccessible(true);
                                 try {
@@ -114,14 +114,14 @@ public class Extractor {
 
                         }
 
-                        for (var component : components) {
-                            var name = component.getName();
-                            var type = component.getType();
+                        for (ComponentDeclaration component : components) {
+                            String name = component.getName();
+                            String type = component.getType();
 
                             //var visibility = null; // TODO FIND IT
 
                             if (isPrimitive(type)) {
-                                var typeEnum = convertToTypeEnum(type);
+                                TypeEnum typeEnum = convertToTypeEnum(type);
 
                                 Object defaultValue = null;
 
@@ -152,10 +152,10 @@ public class Extractor {
                                     }
                                 }
 
-                                var primitiveProperty = new PrimitiveProperty(name, VisibilityEnum.Public, typeEnum, defaultValue);
+                                PrimitiveProperty primitiveProperty = new PrimitiveProperty(name, VisibilityEnum.Public, typeEnum, defaultValue);
                                 theClass.addProperty(primitiveProperty);
                             } else {
-                                var classProperty = new ClassProperty(name, VisibilityEnum.Public, type);
+                                ClassProperty classProperty = new ClassProperty(name, VisibilityEnum.Public, type);
                                 theClass.addProperty(classProperty);
                             }
                         }
@@ -165,17 +165,17 @@ public class Extractor {
                 }
             }
 
-            for (var theVariable : thePackage.getVariableDeclarations()) {
+            for (VariableDeclaration theVariable : thePackage.getVariableDeclarations()) {
 
                 try {
 
-                    var variableName = theVariable.getName();
-                    var variableType = theVariable.getType();
+                    String variableName = theVariable.getName();
+                    String variableType = theVariable.getType();
 
                     //var variableVisibility = null; // TODO FIND IT
 
                     if (isPrimitive(variableType)) {
-                        var typeEnum = convertToTypeEnum(variableType);
+                        TypeEnum typeEnum = convertToTypeEnum(variableType);
 
                         Object variableDefaultValue = null;
 
@@ -206,14 +206,14 @@ public class Extractor {
                             }
                         }
 
-                        var primitiveProperty = new PrimitiveProperty(variableName, VisibilityEnum.Public, typeEnum, variableDefaultValue);
+                        PrimitiveProperty primitiveProperty = new PrimitiveProperty(variableName, VisibilityEnum.Public, typeEnum, variableDefaultValue);
                         // Put the variable without any type to a class same named with the package
-                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
+                        Class classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                         classNamedAfterAdaPackage.addProperty(primitiveProperty);
                     } else {
-                        var classProperty = new ClassProperty(variableName, VisibilityEnum.Public, variableType);
+                        ClassProperty classProperty = new ClassProperty(variableName, VisibilityEnum.Public, variableType);
                         // Put the variable without any type to a class same named with the package
-                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
+                        Class classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                         classNamedAfterAdaPackage.addProperty(classProperty);
                     }
                 } catch (Exception e) {
@@ -221,34 +221,34 @@ public class Extractor {
                 }
             }
 
-            for (var theFunction : thePackage.getFunctionDeclarations()) {
+            for (FunctionDeclaration theFunction : thePackage.getFunctionDeclarations()) {
 
                 try {
 
-                    var functionName = theFunction.getName();
-                    var returnType = theFunction.getReturnType();
+                    String functionName = theFunction.getName();
+                    String returnType = theFunction.getReturnType();
 
-                    var theOperation = new Operation(functionName, VisibilityEnum.Public);
+                    Operation theOperation = new Operation(functionName, VisibilityEnum.Public);
 
                     // Identify return type and add it as parameter
                     if (isPrimitive(returnType)) {
-                        var typeEnum = convertToTypeEnum(returnType);
-                        var primitiveParameter = new PrimitiveParameter("return", DirectionEnum.Return, typeEnum);
+                        TypeEnum typeEnum = convertToTypeEnum(returnType);
+                        PrimitiveParameter primitiveParameter = new PrimitiveParameter("return", DirectionEnum.Return, typeEnum);
                         theOperation.addParameter(primitiveParameter);
                     } else {
-                        var classParameter = new ClassParameter(functionName + "_Return", DirectionEnum.Return, returnType);
+                        ClassParameter classParameter = new ClassParameter(functionName + "_Return", DirectionEnum.Return, returnType);
                         theOperation.addParameter(classParameter);
                     }
 
                     // Process regular parameters of the function
-                    for (var theParameter : theFunction.getParameterSpecifications()) {
-                        var parameterName = theParameter.getName();
-                        var parameterMode = theParameter.getMode();
-                        var directionEnum = convertToDirectionEnum(parameterMode);
-                        var parameterType = theParameter.getType();
+                    for (ParameterSpecification theParameter : theFunction.getParameterSpecifications()) {
+                        String parameterName = theParameter.getName();
+                        String parameterMode = theParameter.getMode();
+                        DirectionEnum directionEnum = convertToDirectionEnum(parameterMode);
+                        String parameterType = theParameter.getType();
 
                         if (isPrimitive(parameterType)) {
-                            var typeEnum = convertToTypeEnum(parameterType);
+                            TypeEnum typeEnum = convertToTypeEnum(parameterType);
 
                             Object parameterDefaultValue = null;
 
@@ -279,10 +279,10 @@ public class Extractor {
                                 }
                             }
 
-                            var primitiveParameter = new PrimitiveParameter(parameterName, directionEnum, typeEnum, parameterDefaultValue);
+                            PrimitiveParameter primitiveParameter = new PrimitiveParameter(parameterName, directionEnum, typeEnum, parameterDefaultValue);
                             theOperation.addParameter(primitiveParameter);
                         } else {
-                            var classParameter = new ClassParameter(parameterName, directionEnum, parameterType);
+                            ClassParameter classParameter = new ClassParameter(parameterName, directionEnum, parameterType);
                             theOperation.addParameter(classParameter);
                         }
                     }
@@ -292,24 +292,24 @@ public class Extractor {
                     // If there is only 1 parameter, it is just return.
                     // Should be put to the class named after the package
                     if (theOperation.getParameters().size() == 1) {
-                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
+                        Class classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                         classNamedAfterAdaPackage.addOperation(theOperation);
                     }
 
                     // If there are more than 1 parameter, let's check the type of the first parameter.
                     // first parameter is the one after return parameter, so index is 1
                     if (theOperation.getParameters().size() > 1) {
-                        var firstParameter = theOperation.getParameters().get(1);
+                        Parameter firstParameter = theOperation.getParameters().get(1);
 
                         // If first parameter is primitive, then it is like no parameter than return.
                         // Else, fix the class of the first parameter and put it to that class as an operation
                         //      If type couldn't be fixed, then, put it to the classNamedAfterAdaPackage again
                         if (firstParameter instanceof PrimitiveParameter) {
-                            var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
+                            Class classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                             classNamedAfterAdaPackage.addOperation(theOperation);
                         } else {
-                            var castedParameter = ((ClassParameter) firstParameter);
-                            for (var aClass : resultingUML.collectAllClasses()) {
+                            ClassParameter castedParameter = ((ClassParameter) firstParameter);
+                            for (Class aClass : resultingUML.collectAllClasses()) {
                                 if (!castedParameter.getPlaceholder().contains(".") && aClass.getName().equals(castedParameter.getPlaceholder())) {
                                     castedParameter.fixType(aClass);
                                 }
@@ -317,7 +317,7 @@ public class Extractor {
                             if (castedParameter.getType() != null)
                                 castedParameter.getType().addOperation(theOperation);
                             else {
-                                var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
+                                Class classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                                 classNamedAfterAdaPackage.addOperation(theOperation);
                             }
                         }
@@ -328,27 +328,27 @@ public class Extractor {
             }
 
 
-            for (var theProcedure : thePackage.getProcedureDeclarations()) {
+            for (ProcedureDeclaration theProcedure : thePackage.getProcedureDeclarations()) {
 
                 try {
 
-                    var functionName = theProcedure.getName();
+                    String functionName = theProcedure.getName();
 
-                    var theOperation = new Operation(functionName, VisibilityEnum.Public);
+                    Operation theOperation = new Operation(functionName, VisibilityEnum.Public);
 
                     // void return type
-                    var primitiveParameter = new PrimitiveParameter("return", DirectionEnum.Return, TypeEnum.Void);
+                    PrimitiveParameter primitiveParameter = new PrimitiveParameter("return", DirectionEnum.Return, TypeEnum.Void);
                     theOperation.addParameter(primitiveParameter);
 
                     // Process regular parameters of the function
-                    for (var theParameter : theProcedure.getParameterSpecifications()) {
-                        var parameterName = theParameter.getName();
-                        var parameterMode = theParameter.getMode();
-                        var directionEnum = convertToDirectionEnum(parameterMode);
-                        var parameterType = theParameter.getType();
+                    for (ParameterSpecification theParameter : theProcedure.getParameterSpecifications()) {
+                        String parameterName = theParameter.getName();
+                        String parameterMode = theParameter.getMode();
+                        DirectionEnum directionEnum = convertToDirectionEnum(parameterMode);
+                        String parameterType = theParameter.getType();
 
                         if (isPrimitive(parameterType)) {
-                            var typeEnum = convertToTypeEnum(parameterType);
+                            TypeEnum typeEnum = convertToTypeEnum(parameterType);
 
                             Object parameterDefaultValue = null;
 
@@ -382,7 +382,7 @@ public class Extractor {
                             primitiveParameter = new PrimitiveParameter(parameterName, directionEnum, typeEnum, parameterDefaultValue);
                             theOperation.addParameter(primitiveParameter);
                         } else {
-                            var classParameter = new ClassParameter(parameterName, directionEnum, parameterType);
+                            ClassParameter classParameter = new ClassParameter(parameterName, directionEnum, parameterType);
                             theOperation.addParameter(classParameter);
                         }
                     }
@@ -392,24 +392,24 @@ public class Extractor {
                     // If there is only 1 parameter, it is just return.
                     // Should be put to the class named after the package
                     if (theOperation.getParameters().size() == 1) {
-                        var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
+                        Class classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                         classNamedAfterAdaPackage.addOperation(theOperation);
                     }
 
                     // If there are more than 1 parameter, let's check the type of the first parameter.
                     // first parameter is the one after return parameter, so index is 1
                     if (theOperation.getParameters().size() > 1) {
-                        var firstParameter = theOperation.getParameters().get(1);
+                        Parameter firstParameter = theOperation.getParameters().get(1);
 
                         // If first parameter is primitive, then it is like no parameter than return.
                         // Else, fix the class of the first parameter and put it to that class as an operation
                         //      If type couldn't be fixed, then, put it to the classNamedAfterAdaPackage again
                         if (firstParameter instanceof PrimitiveParameter) {
-                            var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
+                            Class classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                             classNamedAfterAdaPackage.addOperation(theOperation);
                         } else {
-                            var castedParameter = ((ClassParameter) firstParameter);
-                            for (var aClass : resultingUML.collectAllClasses()) {
+                            ClassParameter castedParameter = ((ClassParameter) firstParameter);
+                            for (Class aClass : resultingUML.collectAllClasses()) {
                                 if (!castedParameter.getPlaceholder().contains(".") && aClass.getName().equals(castedParameter.getPlaceholder())) {
                                     castedParameter.fixType(aClass);
                                 }
@@ -417,7 +417,7 @@ public class Extractor {
                             if (castedParameter.getType() != null)
                                 castedParameter.getType().addOperation(theOperation);
                             else {
-                                var classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
+                                Class classNamedAfterAdaPackage = resultingUML.createOrGetClassByName(classNameAfterPackageName);
                                 classNamedAfterAdaPackage.addOperation(theOperation);
                             }
                         }
