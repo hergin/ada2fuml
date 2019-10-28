@@ -7,6 +7,6 @@ class MainTest {
 
     @Test
     void listFiles() {
-        List<File> result = Main.listAdaSourceFiles(".");
+        List<File> result = Main.listAdaSourceFiles(".","ads");
     }
 }

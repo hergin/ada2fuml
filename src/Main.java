@@ -19,13 +19,20 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        List<File> files = listAdaSourceFiles(".");
-        System.out.println("Found "+files.size()+" ada source files in the current directory!\n");
+        String extension = "xml";
+
+        if(args.length>0 && Arrays.asList(args).contains("--ads")) {
+            extension = "ads";
+        }
+
+        List<File> files = listAdaSourceFiles(".", extension);
+        System.out.println("Found "+files.size()+" ada "+extension+" files in the current directory!\n");
 
         UML overallUML = new UML("Complete UML");
 
@@ -35,9 +42,15 @@ public class Main {
                 System.out.println("Started processing: " + file.getName() + " file");
                 File adaFile = file;
 
-                System.out.print("Converting to XML...");
-                String adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
-                System.out.println(" OK");
+                String adaXml = "";
+
+                if(extension.equals("ads")) {
+                    System.out.print("Converting to XML...");
+                    adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
+                    System.out.println(" OK");
+                } else {
+                    adaXml = String.join(" ",Files.readAllLines(file.toPath()));
+                }
 
                 System.out.print("Parsing compilation unit from XML...");
                 CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
@@ -110,13 +123,13 @@ public class Main {
         }
     }
 
-    public static List<File> listAdaSourceFiles(String path) {
+    public static List<File> listAdaSourceFiles(String path, String extension) {
         File currentFolder = new File(path);
         return Arrays.asList(currentFolder.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
                 //if(name.endsWith(".adb") || name.endsWith(".ads"))
-                if(name.endsWith(".ads"))
+                if(name.endsWith("."+extension))
                     return true;
                 return false;
             }
