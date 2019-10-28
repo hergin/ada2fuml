@@ -25,6 +25,10 @@ public class ClassProperty extends Property {
         this.placeholder = "";
     }
 
+    public boolean hasPlaceholder() {
+        return this.placeholder!=null && !this.placeholder.isEmpty();
+    }
+
     public Class getType() {
         return type;
     }

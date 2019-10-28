@@ -25,6 +25,10 @@ public class ClassParameter extends Parameter {
         this.placeholder = "";
     }
 
+    public boolean hasPlaceholder() {
+        return this.placeholder!=null && !this.placeholder.isEmpty();
+    }
+
     public String getPlaceholder() {
         return placeholder;
     }
