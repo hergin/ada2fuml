@@ -5,7 +5,7 @@ This project reads Ada specification files (*.ads) or XML equivalents in a folde
 ## Prerequisites
 
 - Java 1.8 (or above)
-- **gnat2xml.exe** in the **PATH** variable.
+- **gnat2xml.exe** in the **PATH** variable. (Optional if `--ads` flag will be used.)
 
 ## Usage
 
