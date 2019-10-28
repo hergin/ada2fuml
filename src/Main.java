@@ -4,6 +4,7 @@ import exceptions.StillHavePlaceHolderException;
 import exceptions.UnknownParameterException;
 import exceptions.UnknownPropertyException;
 import exporter.Processor;
+import exporter.StillHavePlaceholderExceptionPolicy;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import model.HierarchicalElement;
@@ -76,7 +77,7 @@ public class Main {
                 overallUML.combine(resultUml);
 
                 System.out.print("Exporting resulting UML to XMI...");
-                String resultingXMI = Processor.processUML(resultUml);
+                String resultingXMI = Processor.processUML(resultUml, StillHavePlaceholderExceptionPolicy.Throw);
                 System.out.println(" OK\n");
 
                 //System.out.print("Writing to file: " + resultUml.getFileName() + ".xmi");
@@ -103,8 +104,16 @@ public class Main {
             overallUML.fixPlaceholders(PlaceholderPreferenceEnum.Global);
 
             System.out.print("ALL UML PACKAGES ARE COMBINED!\nExporting overall UML to XMI...");
-            String resultingXMI = Processor.processUML(overallUML);
-            System.out.println(" OK: All placeholders are fixed!");
+            String resultingXMI = Processor.processUML(overallUML, StillHavePlaceholderExceptionPolicy.ByPass);
+
+            if(overallUML.hasPlaceholders()) {
+                System.out.println(" WARNING: The resulting UML still has placeholders but the tool will export anyway! Below are the items with placeholders:");
+                for(HierarchicalElement item:overallUML.getItemsWithPlaceholders()) {
+                    System.out.println("NAME: "+item.getName()+" PLACEHOLDER: "+(item instanceof ClassProperty? ((ClassProperty) item).getPlaceholder(): ((ClassParameter) item).getPlaceholder()));
+                }
+            } else {
+                System.out.println(" OK: All placeholders are fixed!");
+            }
 
             System.out.print("Writing to file: Overall.xmi");
             if(!Files.exists(Paths.get("xmi-files"))) {

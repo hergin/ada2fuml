@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 
 public class Processor {
 
-    public static String processUML(UML inputUML) throws StillHavePlaceHolderException, UnknownParameterException, UnknownPropertyException {
+    public static String processUML(UML inputUML, StillHavePlaceholderExceptionPolicy policy) throws StillHavePlaceHolderException, UnknownParameterException, UnknownPropertyException {
 
-        if(inputUML.hasPlaceholders())
+        if(inputUML.hasPlaceholders() && policy.equals(StillHavePlaceholderExceptionPolicy.Throw))
             throw new StillHavePlaceHolderException(inputUML.getName()+" still has placeholders!", inputUML.getItemsWithPlaceholders());
 
         StringBuilder string = new StringBuilder();
@@ -146,7 +146,11 @@ public class Processor {
             string.append("</ownedParameter>");
         } else if (param instanceof ClassParameter) {
             ClassParameter cParam = (ClassParameter) param;
-            string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + cParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+            if(cParam.hasPlaceholder()) {
+                string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + cParam.getPlaceholder() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+            } else {
+                string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + cParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+            }
         } else {
             throw new UnknownParameterException("An unknown parameter (than Primitive or Class) showed up. Signature: "+param.getSignature());
         }
@@ -171,7 +175,11 @@ public class Processor {
             string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + typeIds.get(0) + "' association='" + ap.getAssociation().getId() + "'/>");
         } else if (p instanceof ClassProperty) {
             ClassProperty cp = (ClassProperty) p;
-            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getType().getId() + "'/>");
+            if(cp.hasPlaceholder()) {
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getPlaceholder() + "'/>");
+            } else {
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getType().getId() + "'/>");
+            }
         } else {
             throw new UnknownPropertyException("An unknown parameter (than Primitive, Class, or Association) showed up. Signature: "+p.getSignature());
         }

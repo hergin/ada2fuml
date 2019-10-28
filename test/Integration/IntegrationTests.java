@@ -3,6 +3,7 @@ package Integration;
 import adaschema.CompilationUnit;
 import exceptions.*;
 import exporter.Processor;
+import exporter.StillHavePlaceholderExceptionPolicy;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import gnat2xml.Gnat2XmlRunnerTests;
@@ -80,7 +81,7 @@ public class IntegrationTests {
 
         Assertions.assertEquals(1,resultUml.getPackages().size());
 
-        String resultingXMI = Processor.processUML(resultUml);
+        String resultingXMI = Processor.processUML(resultUml, StillHavePlaceholderExceptionPolicy.Throw);
 
         Assertions.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"><uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"Class2\"><packagedElement xmi:type=\"uml:Package\" xmi:id=\"ID1\" name=\"Class2\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID2\" name=\"Class1Array\"></packagedElement></packagedElement><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID3\" name=\"Class2\"><ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"ID4\" name=\"Class1List\" visibility=\"public\" type=\"ID2\"/><ownedOperation xmi:type=\"uml:Operation\" xmi:id=\"ID5\" name=\"Initialize\" visibility=\"public\"><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID6\" name=\"Initialize_Return\" visibility=\"public\" type=\"ID3\" direction=\"return\"/><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID7\" name=\"Max\" visibility=\"public\" direction=\"in\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#UnlimitedNatural\"/></ownedParameter></ownedOperation></packagedElement></uml:Model></xmi:XMI>",resultingXMI);
     }
