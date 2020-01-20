@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20131001' 
+   xmlns:StandardProfile='http://www.omg.org/spec/UML/20131001/StandardProfile' 
+   xmlns:xmi='http://www.omg.org/spec/XMI/20131001'>
+   <uml:Model xmi:type='uml:Model' xmi:id='eee_1045467100313_135436_1' name='uml'>
+      <packagedElement xmi:type='uml:Class' xmi:id='_19_0_2_63b0216_1562005025470_56815_4790' name='SomeClass'/>
+   </uml:Model>
+</xmi:XMI>

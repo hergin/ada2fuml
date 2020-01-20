@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:uml="http://www.omg.org/spec/UML/20131001"
+   xmlns:StandardProfile="http://www.omg.org/spec/UML/20131001/StandardProfile"
+   xmlns:xmi="http://www.omg.org/spec/XMI/20131001">
+   <uml:Model xmi:type="uml:Model" xmi:id="ID0" name="uml">
+      <packagedElement xmi:type="uml:Package" xmi:id="ID1" name="package1">
+         <packagedElement xmi:type="uml:Class" xmi:id="ID2" name="Class1">
+            <ownedAttribute xmi:type="uml:Property" xmi:id="ID4" name="someProperty" visibility="private">
+               <type href="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String"/>
+               <defaultValue xmi:type="uml:LiteralString" xmi:id="ID7" value="hellomate"/>
+            </ownedAttribute>
+            <ownedOperation xmi:type="uml:Operation" xmi:id="ID3" name="someOperation" visibility="private">
+               <ownedParameter xmi:type="uml:Parameter" xmi:id="ID5" name="unnamed1" visibility="public" direction="inout">
+                  <type href="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer"/>
+               </ownedParameter>
+               <ownedParameter xmi:type="uml:Parameter" xmi:id="ID6" name="return" visibility="public" direction="return">
+                  <type href="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Boolean"/>
+               </ownedParameter>
+            </ownedOperation>
+         </packagedElement>
+      </packagedElement>
+   </uml:Model>
+</xmi:XMI>

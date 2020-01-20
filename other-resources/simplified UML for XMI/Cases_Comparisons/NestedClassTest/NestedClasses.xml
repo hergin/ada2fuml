@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:uml="http://www.omg.org/spec/UML/20131001"
+         xmlns:StandardProfile="http://www.omg.org/spec/UML/20131001/StandardProfile"
+         xmlns:xmi="http://www.omg.org/spec/XMI/20131001">
+   <xmi:documentation xmi:type="xmi:Documentation">
+      <xmi:exporter>MagicDraw Clean XMI Exporter</xmi:exporter>
+      <xmi:exporterVersion>19.0 v9</xmi:exporterVersion>
+   </xmi:documentation>
+   <uml:Model xmi:type="uml:Model" xmi:id="eee_1045467100313_135436_1" name="Model">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_18_1beta_8c90288_1415101994820_370998_4336"
+                    body="Author:hergin.&#xA;Created:6/27/2019 2:52 PM.&#xA;Title:.&#xA;Comment:.&#xA;">
+         <annotatedElement xmi:idref="eee_1045467100313_135436_1"/>
+      </ownedComment>
+      <packagedElement xmi:type="uml:Class" xmi:id="_19_0_2_8ac027e_1561661551436_226730_4790"
+                       name="OuterClass">
+         <ownedAttribute xmi:type="uml:Property" xmi:id="_19_0_2_8ac027e_1561661569589_385970_4792"
+                         name="OuterProperty"
+                         visibility="private">
+            <type href="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer"/>
+            <defaultValue xmi:type="uml:LiteralInteger"
+                          xmi:id="_19_0_2_8ac027e_1561661601940_487859_4794"
+                          value="4"/>
+         </ownedAttribute>
+         <nestedClassifier xmi:type="uml:Class" xmi:id="_19_0_2_8ac027e_1561661562405_976399_4791"
+                           name="InnerClass">
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_19_0_2_8ac027e_1561661580836_992006_4793"
+                            name="InnerProperty"
+                            visibility="private">
+               <type href="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Boolean"/>
+               <defaultValue xmi:type="uml:LiteralBoolean"
+                             xmi:id="_19_0_2_8ac027e_1561661630514_111372_4795"/>
+            </ownedAttribute>
+         </nestedClassifier>
+      </packagedElement>
+   </uml:Model>
+</xmi:XMI>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:uml="http://www.omg.org/spec/model.UML/20131001" 
+   xmlns:StandardProfile="http://www.omg.org/spec/model.UML/20131001/StandardProfile" 
+   xmlns:xmi="http://www.omg.org/spec/XMI/20131001">
+   <uml:Model xmi:type="uml:Model" xmi:id="ID0" name="uml1">
+      <packagedElement xmi:type="uml:Package" xmi:id="ID1" name="package1">
+         <packagedElement xmi:type="uml:Package" xmi:id="ID3" name="subPackage"></packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="ID2" name="package2"></packagedElement>
+   </uml:Model>
+</xmi:XMI>

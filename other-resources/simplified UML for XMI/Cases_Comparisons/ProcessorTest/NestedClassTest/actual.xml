@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:uml="http://www.omg.org/spec/model.UML/20131001"
+   xmlns:StandardProfile="http://www.omg.org/spec/model.UML/20131001/StandardProfile"
+   xmlns:xmi="http://www.omg.org/spec/XMI/20131001">
+   <uml:Model xmi:type="uml:Model" xmi:id="ID0" name="uml">
+      <packagedElement xmi:type="uml:Class" xmi:id="ID1" name="Class1">
+         <nestedClassifier xmi:type="uml:Class" xmi:id="ID3" name="NestedClass"></nestedClassifier>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="ID2" name="Class2"></packagedElement>
+   </uml:Model>
+</xmi:XMI>

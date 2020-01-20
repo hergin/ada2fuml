@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20131001' 
+   xmlns:StandardProfile='http://www.omg.org/spec/UML/20131001/StandardProfile' 
+   xmlns:xmi='http://www.omg.org/spec/XMI/20131001'>
+   <uml:Model xmi:type='uml:Model' xmi:id='eee_1045467100313_135436_1' name='uml'>
+      <packagedElement xmi:type='uml:Class' xmi:id='_19_0_2_59b01f6_1561662966618_200952_4790' name='Class1'>
+         <ownedOperation xmi:type='uml:Operation' xmi:id='_19_0_2_59b01f6_1561662982769_418544_4791' name='SomeMethod' visibility='public'>
+            <ownedParameter xmi:type='uml:Parameter' xmi:id='_19_0_2_59b01f6_1561662994531_236616_4793' name='classParameter' visibility='public' type='_19_0_2_59b01f6_1561662966618_200952_4790'/>
+            <ownedParameter xmi:type='uml:Parameter' xmi:id='_19_0_2_59b01f6_1561663032283_172921_4794' name='PrimParameter' visibility='public'>
+               <type href='http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Boolean'/>
+            </ownedParameter>
+            <ownedParameter xmi:type='uml:Parameter' xmi:id='_19_0_2_59b01f6_1561663305817_923040_4795' name='PrimParamWithValue' visibility='public'>
+               <type href='http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer'/>
+               <defaultValue xmi:type='uml:LiteralInteger' xmi:id='_19_0_2_59b01f6_1561663321873_661637_4796' value='99'/>
+            </ownedParameter>
+         </ownedOperation>
+      </packagedElement>
+   </uml:Model>
+</xmi:XMI>

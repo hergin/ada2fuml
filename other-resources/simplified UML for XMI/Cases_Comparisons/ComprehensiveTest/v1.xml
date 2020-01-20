@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:uml="http://www.omg.org/spec/UML/20131001" 
+   xmlns:StandardProfile="http://www.omg.org/spec/UML/20131001/StandardProfile" 
+   xmlns:xmi="http://www.omg.org/spec/XMI/20131001">
+   <uml:Model xmi:type="uml:Model" xmi:id="eee_1045467100313_135436_1" name="uml">
+      <packagedElement xmi:type="uml:Package" xmi:id="_19_0_2_59b01f6_1561679417721_475772_4790" name="package1">
+         <packagedElement xmi:type="uml:Class" xmi:id="_19_0_2_59b01f6_1561679425664_374885_4791" name="Class1">
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_19_0_2_59b01f6_1561679501124_491408_4797" name="someProperty" visibility="private">
+               <type href="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String"/>
+               <defaultValue xmi:type="uml:LiteralString" xmi:id="_19_0_2_59b01f6_1561679516569_753176_4798" value="hellomate"/>
+            </ownedAttribute>
+            <ownedOperation xmi:type="uml:Operation" xmi:id="_19_0_2_59b01f6_1561679440292_120617_4793" name="someOperation" visibility="private">
+               <ownedParameter xmi:type="uml:Parameter" xmi:id="_19_0_2_59b01f6_1561679459338_283335_4795" visibility="public" direction="return">
+                  <type href="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Boolean"/>
+               </ownedParameter>
+               <ownedParameter xmi:type="uml:Parameter" xmi:id="_19_0_2_59b01f6_1561679465265_380723_4796" name="unnamed1" visibility="public" direction="inout">
+                  <type href="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer"/>
+               </ownedParameter>
+            </ownedOperation>
+         </packagedElement>
+      </packagedElement>
+   </uml:Model>
+</xmi:XMI>

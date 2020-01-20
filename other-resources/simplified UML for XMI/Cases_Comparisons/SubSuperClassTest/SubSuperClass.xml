@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20131001' 
+   xmlns:StandardProfile='http://www.omg.org/spec/UML/20131001/StandardProfile' 
+   xmlns:xmi='http://www.omg.org/spec/XMI/20131001'>
+   <uml:Model xmi:type='uml:Model' xmi:id='eee_1045467100313_135436_1' name='Model'>
+      <packagedElement xmi:type='uml:Class' xmi:id='_19_0_2_8ac027e_1561661790883_194011_4790' name='Animal'>
+         <ownedAttribute xmi:type='uml:Property' xmi:id='_19_0_2_8ac027e_1561661876976_4496_4793' name='name' visibility='private'>
+            <type href='http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String'/>
+         </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type='uml:Class' xmi:id='_19_0_2_8ac027e_1561661800274_487678_4791' name='Cat'>
+         <generalization xmi:type='uml:Generalization' xmi:id='_19_0_2_8ac027e_1561661867820_412790_4792' general='_19_0_2_8ac027e_1561661790883_194011_4790'/>
+         <ownedAttribute xmi:type='uml:Property' xmi:id='_19_0_2_8ac027e_1561661906690_758189_4794' name='sound' visibility='private'>
+            <type href='http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String'/>
+            <defaultValue xmi:type='uml:LiteralString' xmi:id='_19_0_2_8ac027e_1561661926555_988542_4795' value='miaovv'/>
+         </ownedAttribute>
+      </packagedElement>
+   </uml:Model>
+</xmi:XMI>

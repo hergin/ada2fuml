@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20131001' 
+   xmlns:StandardProfile='http://www.omg.org/spec/UML/20131001/StandardProfile' 
+   xmlns:xmi='http://www.omg.org/spec/XMI/20131001'>
+   <xmi:documentation xmi:type='xmi:Documentation'>
+      <xmi:exporter>MagicDraw Clean XMI Exporter</xmi:exporter>
+      <xmi:exporterVersion>19.0 v9</xmi:exporterVersion>
+   </xmi:documentation>
+   <uml:Model xmi:type='uml:Model' xmi:id='eee_1045467100313_135436_1' name='Model'>
+      <ownedComment xmi:type='uml:Comment' xmi:id='_18_1beta_8c90288_1415101994820_370998_4336' body='Author:hergin.&#xA;Created:6/26/2019 12:17 PM.&#xA;Title:.&#xA;Comment:.&#xA;'>
+         <annotatedElement xmi:idref='eee_1045467100313_135436_1'/>
+      </ownedComment>
+      <packagedElement xmi:type='uml:Class' xmi:id='_19_0_2_8ac027e_1561565840974_771081_4790' name='C1'>
+         <ownedAttribute xmi:type='uml:Property' xmi:id='_19_0_2_8ac027e_1561565875989_876044_4826' name='someC2' visibility='private' type='_19_0_2_8ac027e_1561565855470_826607_4824' association='_19_0_2_8ac027e_1561565875988_858371_4825'/>
+         <ownedAttribute xmi:type='uml:Property' xmi:id='_19_0_2_8ac027e_1561565896061_108188_4828' name='someInteger' visibility='private'>
+            <type href='http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer'/>
+            <defaultValue xmi:type='uml:LiteralInteger' xmi:id='_19_0_2_8ac027e_1561571738401_252499_4922' value='5'/>
+         </ownedAttribute>
+         <ownedAttribute xmi:type='uml:Property' xmi:id='_19_0_2_8ac027e_1561565954276_47618_4829' name='someC2asProp' visibility='private' type='_19_0_2_8ac027e_1561565855470_826607_4824'/>
+      </packagedElement>
+      <packagedElement xmi:type='uml:Class' xmi:id='_19_0_2_8ac027e_1561565855470_826607_4824' name='C2'>
+         <ownedAttribute xmi:type='uml:Property' xmi:id='_19_0_2_8ac027e_1561565875989_411953_4827' visibility='private' type='_19_0_2_8ac027e_1561565840974_771081_4790' association='_19_0_2_8ac027e_1561565875988_858371_4825'/>
+      </packagedElement>
+      <packagedElement xmi:type='uml:Association' xmi:id='_19_0_2_8ac027e_1561565875988_858371_4825'>
+         <memberEnd xmi:idref='_19_0_2_8ac027e_1561565875989_876044_4826'/>
+         <memberEnd xmi:idref='_19_0_2_8ac027e_1561565875989_411953_4827'/>
+      </packagedElement>
+   </uml:Model>
+</xmi:XMI>
