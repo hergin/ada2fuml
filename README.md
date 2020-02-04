@@ -25,6 +25,10 @@ The output is printed to the console. You can save it to a file using the comman
 
 > java -jar ada2fuml.jar > logs.txt
 
+## Limitations
+
+The tool currently is not processing all elements in Ada source code. It is customized to the project sponsor's needs. If you want to handle more structures in Ada, you should modify Extractor to handle them.
+
 ## Thanks
 
 This project is implemented with the support provided by Raytheon Company.
