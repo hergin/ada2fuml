@@ -13,8 +13,8 @@ public class StringUtils {
                 .replace("\n", "")
                 .replace("\r", "")
                 .replace("\t", "")
-                .replace("xmi:version=\"2.1\"", "")
-                .replace("20110701", "20131001")
+                .replace("xmi:version=\"2.1\"", "") // this line is not to change every test after roy's additions, remove later
+                .replace("20110701", "20131001") // this line is not to change every test after roy's additions, remove later
                 .replaceAll(" +", " ");
     }
 
