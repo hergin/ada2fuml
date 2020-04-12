@@ -13,6 +13,8 @@ import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.xmlunit.assertj.XmlAssert;
+import utils.StringUtils;
 import xmlparsing.AdaXmlParser;
 
 import javax.xml.bind.JAXBException;
@@ -29,13 +31,13 @@ public class IntegrationTests {
         CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
         UML resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
 
-        Assertions.assertEquals(1,resultUml.getPackages().size());
-        Assertions.assertEquals("SomeClass",resultUml.getPackages().get(0).getName());
+        Assertions.assertEquals(1, resultUml.getPackages().size());
+        Assertions.assertEquals("SomeClass", resultUml.getPackages().get(0).getName());
 
-        Assertions.assertEquals(2,resultUml.getPackages().get(0).getClasses().size());
+        Assertions.assertEquals(2, resultUml.getPackages().get(0).getClasses().size());
 
-        Assertions.assertEquals(1,resultUml.getClasses().size());
-        Assertions.assertEquals("SomeClass",resultUml.getClasses().get(0).getName());
+        Assertions.assertEquals(1, resultUml.getClasses().size());
+        Assertions.assertEquals("SomeClass", resultUml.getClasses().get(0).getName());
     }
 
     @Test
@@ -45,21 +47,21 @@ public class IntegrationTests {
         CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
         UML resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
 
-        Assertions.assertEquals(1,resultUml.getPackages().size());
-        Assertions.assertEquals("SomeClass",resultUml.getPackages().get(0).getName());
+        Assertions.assertEquals(1, resultUml.getPackages().size());
+        Assertions.assertEquals("SomeClass", resultUml.getPackages().get(0).getName());
 
-        Assertions.assertEquals(2,resultUml.getPackages().get(0).getClasses().size());
+        Assertions.assertEquals(2, resultUml.getPackages().get(0).getClasses().size());
 
-        Assertions.assertEquals("SomeClass1",resultUml.getPackages().get(0).getClasses().get(0).getName());
-        Assertions.assertEquals(1,resultUml.getPackages().get(0).getClasses().get(0).getProperties().size());
-        Assertions.assertEquals("someAttribute",resultUml.getPackages().get(0).getClasses().get(0).getProperties().get(0).getName());
+        Assertions.assertEquals("SomeClass1", resultUml.getPackages().get(0).getClasses().get(0).getName());
+        Assertions.assertEquals(1, resultUml.getPackages().get(0).getClasses().get(0).getProperties().size());
+        Assertions.assertEquals("someAttribute", resultUml.getPackages().get(0).getClasses().get(0).getProperties().get(0).getName());
         Assertions.assertEquals(TypeEnum.Integer, ((PrimitiveProperty) resultUml.getPackages().get(0).getClasses().get(0).getProperties().get(0)).getType());
         //Assertions.assertEquals(1, ((PrimitiveProperty) resultUml.getPackages().get(0).getClasses().get(0).getProperties().get(0)).getDefaultValue());
 
 
-        Assertions.assertEquals("SomeClass2",resultUml.getPackages().get(0).getClasses().get(1).getName());
-        Assertions.assertEquals(1,resultUml.getPackages().get(0).getClasses().get(1).getProperties().size());
-        Assertions.assertEquals("someAttribute2",resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(0).getName());
+        Assertions.assertEquals("SomeClass2", resultUml.getPackages().get(0).getClasses().get(1).getName());
+        Assertions.assertEquals(1, resultUml.getPackages().get(0).getClasses().get(1).getProperties().size());
+        Assertions.assertEquals("someAttribute2", resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(0).getName());
         Assertions.assertEquals("SomeClass1", ((ClassProperty) resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(0)).getType().getName());
 
     }
@@ -79,11 +81,16 @@ public class IntegrationTests {
             resultUml = pmu.getPartialUML();
         }
 
-        Assertions.assertEquals(1,resultUml.getPackages().size());
+        Assertions.assertEquals(1, resultUml.getPackages().size());
 
-        String resultingXMI = Processor.processUML(resultUml, StillHavePlaceholderExceptionPolicy.Throw);
+        String resultingXMI = StringUtils.sanitize(Processor.processUML(resultUml, StillHavePlaceholderExceptionPolicy.Throw));
 
-        Assertions.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"><uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"Class2\"><packagedElement xmi:type=\"uml:Package\" xmi:id=\"ID1\" name=\"Class2\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID2\" name=\"Class1Array\"></packagedElement></packagedElement><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID3\" name=\"Class2\"><ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"ID4\" name=\"Class1List\" visibility=\"public\" type=\"ID2\"/><ownedOperation xmi:type=\"uml:Operation\" xmi:id=\"ID5\" name=\"Initialize\" visibility=\"public\"><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID6\" name=\"Initialize_Return\" visibility=\"public\" type=\"ID3\" direction=\"return\"/><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID7\" name=\"Max\" visibility=\"public\" direction=\"in\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#UnlimitedNatural\"/></ownedParameter></ownedOperation></packagedElement></uml:Model></xmi:XMI>",resultingXMI);
+        XmlAssert.assertThat("<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"><uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"Class2\"><packagedElement xmi:type=\"uml:Package\" xmi:id=\"ID1\" name=\"Class2\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID2\" name=\"Class1Array\"></packagedElement></packagedElement><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID3\" name=\"Class2\"><ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"ID4\" name=\"Class1List\" visibility=\"public\" type=\"ID2\"/><ownedOperation xmi:type=\"uml:Operation\" xmi:id=\"ID5\" name=\"Initialize\" visibility=\"public\"><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID6\" name=\"Initialize_Return\" visibility=\"public\" type=\"ID3\" direction=\"return\"/><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID7\" name=\"Max\" visibility=\"public\" direction=\"in\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#UnlimitedNatural\"/></ownedParameter></ownedOperation></packagedElement></uml:Model></xmi:XMI>")
+                .and(resultingXMI)
+                .ignoreWhitespace()
+                .areIdentical();
+
+        //Assertions.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"><uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"Class2\"><packagedElement xmi:type=\"uml:Package\" xmi:id=\"ID1\" name=\"Class2\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID2\" name=\"Class1Array\"></packagedElement></packagedElement><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID3\" name=\"Class2\"><ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"ID4\" name=\"Class1List\" visibility=\"public\" type=\"ID2\"/><ownedOperation xmi:type=\"uml:Operation\" xmi:id=\"ID5\" name=\"Initialize\" visibility=\"public\"><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID6\" name=\"Initialize_Return\" visibility=\"public\" type=\"ID3\" direction=\"return\"/><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID7\" name=\"Max\" visibility=\"public\" direction=\"in\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#UnlimitedNatural\"/></ownedParameter></ownedOperation></packagedElement></uml:Model></xmi:XMI>", resultingXMI);
     }
 
 }
