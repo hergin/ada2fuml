@@ -7,7 +7,12 @@ import java.util.List;
 
 public class Package extends HierarchicalElement {
 
+    private List<Property> properties;
     private List<Class> classes;
+    private List<Struct> structs;
+    private List<Except> exceptions;
+    private List<Enumeration> enumerations;
+    private List<Interface> interfaces;
     private List<Package> subPackages;
     private String id;
 
@@ -15,7 +20,12 @@ public class Package extends HierarchicalElement {
         super(name);
         id = Processor.uuidGenerator();
         classes = new ArrayList<>();
+        structs = new ArrayList<>();
+        enumerations = new ArrayList<>();
+        exceptions = new ArrayList<>();
+        interfaces = new ArrayList<>();
         subPackages = new ArrayList<>();
+        properties = new ArrayList<>();
     }
 
     public boolean hasPlaceholders() {
@@ -36,6 +46,14 @@ public class Package extends HierarchicalElement {
         return classes.stream().filter(c->c.getName().equals(inputClassName)).count()!=0;
     }
 
+    public boolean hasStruct(String inputStructName) {
+        return structs.stream().filter(c->c.getName().equals(inputStructName)).count()!=0;
+    }
+
+    public boolean hasInterface(String inputInterfacesName) {
+        return interfaces.stream().filter(c->c.getName().equals(inputInterfacesName)).count()!=0;
+    }
+
     public Class createOrGetClassByName(String className) {
         Class resultingClass = null;
         if(this.hasClass(className)) {
@@ -47,13 +65,76 @@ public class Package extends HierarchicalElement {
         return resultingClass;
     }
 
+    public Struct createOrGetStructByName(String structName) {
+        Struct resultingStruct = null;
+        if(this.hasStruct(structName)) {
+            resultingStruct = this.getStructByName(structName);
+        } else {
+            resultingStruct = new Struct(structName);
+            this.addStruct(resultingStruct);
+        }
+        return resultingStruct;
+    }
+
+    public Interface createOrGetInterfaceByName(String interfaceName) {
+        Interface resultingInterface = null;
+        if(this.hasInterface(interfaceName)) {
+        	resultingInterface = this.getInterfaceByName(interfaceName);
+        } else {
+        	resultingInterface = new Interface(interfaceName);
+            this.addInterface(resultingInterface);
+        }
+        return resultingInterface;
+    }
+
     public Class getClassByName(String className) {
         return classes.stream().filter(c->c.getName().equals(className)).findFirst().get();
+    }
+
+    public Except getExceptByName(String exceptName) {
+        return exceptions.stream().filter(c->c.getName().equals(exceptName)).findFirst().get();
+    }
+
+    public Struct getStructByName(String structName) {
+        return structs.stream().filter(c->c.getName().equals(structName)).findFirst().get();
+    }
+
+    public Enumeration getEnumByName(String enumName) {
+        return enumerations.stream().filter(c->c.getName().equals(enumName)).findFirst().get();
+    }
+
+    public Interface getInterfaceByName(String interfaceName) {
+        return interfaces.stream().filter(c->c.getName().equals(interfaceName)).findFirst().get();
+    }
+
+    public void addProperty(Property someProperty) {
+        someProperty.setParent(this);
+        properties.add(someProperty);
     }
 
     public void addClass(Class inputClass) {
         inputClass.setParent(this);
         classes.add(inputClass);
+    }
+
+    public void addStruct(Struct inputStruct) {
+        inputStruct.setParent(this);
+        structs.add(inputStruct);
+    }
+
+    public void addExcept(Except inputExcept) {
+        inputExcept.setParent(this);
+        exceptions.add(inputExcept);
+    }
+
+    public void addEnumeration(Enumeration inputEnumeration) {
+    	inputEnumeration.setParent(this);
+        enumerations.add(inputEnumeration);
+    }
+
+    public void addInterface(Interface inputInterface) {
+    	inputInterface.setParent(this);
+        interfaces.add(inputInterface);
     }
 
     public boolean hasSubPackage(String inputPackageName) {
@@ -80,8 +161,32 @@ public class Package extends HierarchicalElement {
         subPackages.add(inputPackage);
     }
 
+    public boolean hasProperties() {
+        return (properties != null) && (! properties.isEmpty());
+    }
+
+    public List<Property> getProperties() {
+        return properties;
+    }
+
     public List<Class> getClasses() {
         return classes;
+    }
+
+    public List<Struct> getStructs() {
+        return structs;
+    }
+
+    public List<Except> getExceptions() {
+        return exceptions;
+    }
+
+    public List<Enumeration> getEnumerations() {
+        return enumerations;
+    }
+
+    public List<Interface> getInterfaces() {
+        return interfaces;
     }
 
     public List<Package> getSubPackages() {

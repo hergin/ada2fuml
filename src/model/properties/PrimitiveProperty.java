@@ -19,6 +19,10 @@ public class PrimitiveProperty extends Property {
         return type;
     }
 
+    public boolean hasDefault() {
+    	return defaultValue != null;
+    }
+
     public Object getDefaultValue() {
         return defaultValue;
     }

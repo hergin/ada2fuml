@@ -7,15 +7,25 @@ import model.*;
 import model.Class;
 import model.Package;
 import model.parameters.ClassParameter;
+import model.parameters.EnumParameter;
+import model.parameters.StructParameter;
 import model.parameters.PrimitiveParameter;
 import model.properties.AssociationProperty;
+import model.properties.EnumerationProperty;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
+import model.properties.Variable;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Processor {
+
+	// private List<String> structIds;
+
+    private static final String specDate = "20110701";      // Rhapsody version 8.4
+    // private static final String specDate = "20090901";   // MagicDraw version 17.05
+    // private static final String specDate = "20131001";
 
     public static String processUML(UML inputUML, StillHavePlaceholderExceptionPolicy policy) throws StillHavePlaceHolderException, UnknownParameterException, UnknownPropertyException {
 
@@ -23,11 +33,12 @@ public class Processor {
             throw new StillHavePlaceHolderException(inputUML.getName()+" still has placeholders!", inputUML.getItemsWithPlaceholders());
 
         StringBuilder string = new StringBuilder();
-        string.append("<?xml version='1.0' encoding='UTF-8'?>");
-        string.append("<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20131001'");
-        string.append(" xmlns:StandardProfile='http://www.omg.org/spec/UML/20131001/StandardProfile'");
-        string.append(" xmlns:xmi='http://www.omg.org/spec/XMI/20131001'>");
-        string.append("<uml:Model xmi:type='uml:Model' xmi:id='" + inputUML.getId() + "' name='" + inputUML.getName() + "'>");
+        string.append("<?xml version='1.0' encoding='UTF-8'?>" + System.lineSeparator());
+        string.append("<xmi:XMI xmi:version='2.1'" + System.lineSeparator());
+        string.append("         xmlns:uml='http://www.omg.org/spec/UML/" + specDate + "'" + System.lineSeparator());
+        string.append("         xmlns:StandardProfile='http://www.omg.org/spec/UML/" + specDate + "/StandardProfile'" + System.lineSeparator());
+        string.append("         xmlns:xmi='http://www.omg.org/spec/XMI/" + specDate + "'>" + System.lineSeparator());
+        string.append("   <uml:Model xmi:type='uml:Model' xmi:id='" + inputUML.getId() + "' name='" + inputUML.getName() + "'>" + System.lineSeparator());
 
         for (Package p : inputUML.getPackages()) {
             string.append(processPackage(p));
@@ -35,11 +46,17 @@ public class Processor {
         for (Class c : inputUML.getClasses()) {
             string.append(processClass(c));
         }
+        for (Interface i : inputUML.getInterfaces()) {
+            string.append(processInterface(i));
+        }
         for (Association a : inputUML.getAssociations()) {
             string.append(processAssociation(a));
         }
+        for (Enumeration e : inputUML.getEnumerations()) {
+            string.append(processEnumeration(e));
+        }
 
-        string.append("</uml:Model>");
+        string.append(System.lineSeparator() + "   </uml:Model>" + System.lineSeparator());
         string.append("</xmi:XMI>");
 
         return string.toString().replace("'", "\"");
@@ -57,6 +74,32 @@ public class Processor {
         return string.toString();
     }
 
+    private static String processException(Except e) throws UnknownPropertyException{
+        StringBuilder string = new StringBuilder();
+
+        string.append("<packagedElement xmi:type='uml:Class' xmi:id='" + e.getId() + "' name='" + e.getName() + "'>");
+
+        processExceptContents(e, string);
+
+        string.append("</packagedElement>");
+
+        return string.toString();
+    }
+
+    private static String processEnumeration(Enumeration e) {
+        StringBuilder string = new StringBuilder();
+
+        string.append("<packagedElement xmi:type='uml:Enumeration' xmi:id='" + e.getId()
+                      + "' name='" + e.getName() + "' visibility='" + e.getVisibility().toString().toLowerCase() + "'>");
+        for(EnumerationProperty eProperty:e.getProperties()) {
+            string.append("<ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:id='"
+                          + eProperty.getId() + "' name='" + eProperty.getName() + "'/>");
+        }
+        string.append("</packagedElement>");
+
+        return string.toString();
+    }
+
     private static String processPackage(Package p) throws UnknownParameterException, UnknownPropertyException {
         StringBuilder string = new StringBuilder();
 
@@ -65,8 +108,23 @@ public class Processor {
         for (Class c : p.getClasses()) {
             string.append(processClass(c));
         }
+        for (Struct s : p.getStructs()) {
+            string.append(processStruct(s));
+        }
+        for (Interface i : p.getInterfaces()) {
+            string.append(processInterface(i));
+        }
         for (Package sub : p.getSubPackages()) {
             string.append(processPackage(sub));
+        }
+        for (Enumeration e : p.getEnumerations()) {
+            string.append(processEnumeration(e));
+        }
+        for (Except e : p.getExceptions()) {
+            string.append(processException(e));
+        }
+        if (p.hasProperties()) {
+        	string.append(processProperties(p.getProperties()));
         }
         string.append("</packagedElement>");
         return string.toString();
@@ -88,10 +146,73 @@ public class Processor {
         return string.toString();
     }
 
+    private static String processStruct(Struct s) throws UnknownParameterException, UnknownPropertyException {
+
+        StringBuilder string = new StringBuilder();
+
+        string.append("<packagedElement xmi:type='uml:DataType' xmi:id='" + s.getId() + "' name='" + s.getName() + "'>");
+
+        processStructContents(s, string);
+
+        string.append("</packagedElement>");
+
+        return string.toString();
+    }
+
+    private static String processInterface(Interface i) throws UnknownParameterException, UnknownPropertyException {
+
+        StringBuilder string = new StringBuilder();
+
+        string.append("<packagedElement xmi:type='uml:Interface' xmi:id='" + i.getId() + "' name='" + i.getName() + "'>");
+
+        for (Interface superInterface : i.getSuperInterfaces()) {
+            string.append(processesSuperInterface(superInterface));
+        }
+
+        processInterfaceContents(i, string);
+
+        string.append("</packagedElement>");
+
+        return string.toString();
+    }
+
+    private static String processProperties(List<Property> properties) throws UnknownPropertyException {
+
+        StringBuilder string = new StringBuilder();
+
+    	string.append("<packagedElement xmi:type='uml:DataType' xmi:id='" + Processor.uuidGenerator() + "' name='Constants'>");
+
+        for (Property p : properties) {
+        	Variable v = (Variable) p;
+        	String isReadOnly = (v.isConstant()) ? " isReadOnly='true'" : "";
+
+            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName()
+                    + "' visibility='" + p.getVisibility().toString().toLowerCase() + "'" + isReadOnly + ">");
+            string.append("<type href='http://www.omg.org/spec/UML/" + specDate
+            		+ "/PrimitiveTypes.xmi#" + v.getType().toString() + "'/>");
+            if (v.hasDefault()) {
+                string.append("<defaultValue xmi:type='uml:Literal" + v.getType().toString()
+                		+ "' xmi:id='" + Processor.uuidGenerator()
+                		+ "' value='" + v.getDefaultValue().toString() + "'/>");
+            }
+            string.append("</ownedAttribute>");
+        }
+
+        string.append("</packagedElement>");
+
+        return string.toString();
+    }
+
 
     private static String processesSuperClass(Class superClass) {
         StringBuilder string = new StringBuilder();
         string.append("<generalization xmi:type='uml:Generalization' xmi:id='" + Processor.uuidGenerator() + "' general='" + superClass.getId() + "'/>");
+        return string.toString();
+    }
+
+    private static String processesSuperInterface(Interface superInterface) {
+        StringBuilder string = new StringBuilder();
+        string.append("<generalization xmi:type='uml:Generalization' xmi:id='" + Processor.uuidGenerator() + "' general='" + superInterface.getId() + "'/>");
         return string.toString();
     }
 
@@ -119,11 +240,49 @@ public class Processor {
         }
     }
 
-    private static String processOperation(Operation o) throws UnknownParameterException {
+    private static void processExceptContents(Except e, StringBuilder string) throws UnknownPropertyException {
+        for (Property p : e.getProperties()) {
+            string.append(processProperty(p));
+        }
+    }
+
+    private static void processStructContents(Struct s, StringBuilder string) throws UnknownPropertyException {
+        for (Property p : s.getProperties()) {
+            string.append(processProperty(p));
+        }
+    }
+
+
+    private static void processInterfaceContents(Interface i, StringBuilder string)
+    		throws UnknownPropertyException, UnknownParameterException {
+        for (Property p : i.getProperties()) {
+            string.append(processProperty(p));
+        }
+        for (Operation o : i.getOperations()) {
+            string.append(processOperation(o));
+        }
+        for (Enumeration e : i.getEnumerations()) {
+            string.append(processEnumeration(e));
+        }
+        for (Struct s : i.getStructs()) {
+            string.append(processStruct(s));
+        }
+        for (Except e : i.getExceptions()) {
+            string.append(processExcept(e));
+        }
+    }
+
+
+
+    private static String processOperation(Operation o) throws UnknownPropertyException, UnknownParameterException {
         StringBuilder string = new StringBuilder();
 
-        string.append("<ownedOperation xmi:type='uml:Operation' xmi:id='" + o.getId() + "' name='" + o.getName() + "' visibility='" + o.getVisibility().toString().toLowerCase() + "'>");
+        string.append("<ownedOperation xmi:type='uml:Operation' xmi:id='" + o.getId()
+                     + "' name='" + o.getName() + "' visibility='" + o.getVisibility().toString().toLowerCase() + "'>");
 
+        for (Except e : o.getExceptions()) {
+            string.append(processExcept(e));
+        }
         for (Parameter p : o.getParameters()) {
             string.append(processParameter(p));
         }
@@ -133,13 +292,21 @@ public class Processor {
         return string.toString();
     }
 
+
+
+    private static String processExcept(Except e) {
+        String result = "<raisedException xmi:idref='" + e.getId() + "'/>";
+    	return result;
+    }
+
+
     private static String processParameter(Parameter param) throws UnknownParameterException {
         StringBuilder string = new StringBuilder();
 
         if (param instanceof PrimitiveParameter) {
             PrimitiveParameter pParam = (PrimitiveParameter) param;
             string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' direction='" + param.getDirection().toString().toLowerCase() + "'>"); // Todo Check if visibility matters here
-            string.append("<type href='http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#" + pParam.getType().toString() + "'/>");
+            string.append("<type href='http://www.omg.org/spec/UML/" + specDate + "/PrimitiveTypes.xmi#" + pParam.getType().toString() + "'/>");
             if (pParam.getDefaultValue() != null) {
                 string.append("<defaultValue xmi:type='uml:Literal" + pParam.getType().toString() + "' xmi:id='" + Processor.uuidGenerator() + "' value='" + pParam.getDefaultValue().toString() + "'/>");
             }
@@ -151,20 +318,50 @@ public class Processor {
             } else {
                 string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + cParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
             }
+        } else if (param instanceof EnumParameter) {
+        	EnumParameter eParam = (EnumParameter) param;
+            // string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + eParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+        	
+            string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"
+                         + eParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+        	
+        } else if (param instanceof StructParameter) {
+        	StructParameter sParam = (StructParameter) param;
+            // string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + sParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+            string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"
+                         + sParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+
         } else {
             throw new UnknownParameterException("An unknown parameter (than Primitive or Class) showed up. Signature: "+param.getSignature());
         }
         return string.toString();
     }
 
+
+
     private static String processProperty(Property p) throws UnknownPropertyException {
         StringBuilder string = new StringBuilder();
 
-        if (p instanceof PrimitiveProperty) {
+        if (p instanceof Variable) {
+        	Variable v = (Variable) p;
+        	String isReadOnly = (v.isConstant()) ? " isReadOnly='true'" : "";
+
+            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName()
+                    + "' visibility='" + p.getVisibility().toString().toLowerCase() + "'" + isReadOnly + ">");
+            string.append("<type href='http://www.omg.org/spec/UML/" + specDate
+            		+ "/PrimitiveTypes.xmi#" + v.getType().toString() + "'/>");
+            if (v.hasDefault()) {
+                string.append("<defaultValue xmi:type='uml:Literal" + v.getType().toString()
+                		+ "' xmi:id='" + Processor.uuidGenerator()
+                		+ "' value='" + v.getDefaultValue().toString() + "'/>");
+            }
+            string.append("</ownedAttribute>");
+        } else if (p instanceof PrimitiveProperty) {
             PrimitiveProperty pp = (PrimitiveProperty) p;
-            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "'>");
-            string.append("<type href='http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#" + pp.getType().toString() + "'/>");
-            if (pp.getDefaultValue() != null) {
+            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName()
+                          + "' visibility='" + p.getVisibility().toString().toLowerCase() + "'>" );
+            string.append("<type href='http://www.omg.org/spec/UML/" + specDate + "/PrimitiveTypes.xmi#" + pp.getType().toString() + "'/>");
+            if (pp.hasDefault()) {
                 string.append("<defaultValue xmi:type='uml:Literal" + pp.getType().toString() + "' xmi:id='" + Processor.uuidGenerator() + "' value='" + pp.getDefaultValue().toString() + "'/>");
             }
             string.append("</ownedAttribute>");

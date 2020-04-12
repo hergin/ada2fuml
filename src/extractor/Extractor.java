@@ -4,7 +4,7 @@ import adaschema.*;
 import exceptions.NamingException;
 import exceptions.PartialUMLException;
 import exceptions.UnhandledTypeException;
-import exceptions.UnknownTypeException;
+//import exceptions.UnknownTypeException;
 import model.*;
 import model.Class;
 import model.Package;
@@ -19,7 +19,7 @@ import model.properties.PrimitiveProperty;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
+//import java.util.Arrays;
 import java.util.List;
 
 public class Extractor {

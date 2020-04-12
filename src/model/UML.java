@@ -17,6 +17,8 @@ public class UML extends HierarchicalElement {
     private String fileName;
     private List<Class> classes;
     private List<Package> packages;
+    private List<Interface> interfaces;
+    private List<Enumeration> enumerations;
     private List<Association> associations;
 
     public UML(String name) {
@@ -24,6 +26,8 @@ public class UML extends HierarchicalElement {
         id = Processor.uuidGenerator();
         classes = new ArrayList<>();
         packages = new ArrayList<>();
+        interfaces = new ArrayList<>();
+        enumerations = new ArrayList<>();
         associations = new ArrayList<>();
     }
 
@@ -252,11 +256,19 @@ public class UML extends HierarchicalElement {
         return classes;
     }
 
+    public List<Interface> getInterfaces() {
+        return interfaces;
+    }
+
     public List<Package> getPackages() {
         return packages;
     }
 
     public List<Association> getAssociations() {
         return associations;
+    }
+
+    public List<Enumeration> getEnumerations() {
+        return enumerations;
     }
 }
