@@ -37,6 +37,8 @@ This project is implemented with the support provided by Raytheon Company.
 
 - Main design & code: [Huseyin Ergin](http://www.cs.bsu.edu/~hergin)
 - Summer helper: [Keith DeSimini](https://www.linkedin.com/in/kdesimini/)
+- Sponsor/XMI output: [Roy Bell](www.linkedin.com/pub/roy-bell/1/32b/19a)
+
 
 ## License
 
