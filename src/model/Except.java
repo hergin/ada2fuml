@@ -1,6 +1,6 @@
 package model;
 
-import exporter.Processor;
+import model.auxiliary.HierarchicalElement;
 import model.enums.VisibilityEnum;
 
 import java.util.ArrayList;

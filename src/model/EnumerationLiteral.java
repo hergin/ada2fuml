@@ -1,6 +1,6 @@
 package model;
 
-import exporter.Processor;
+import model.auxiliary.HierarchicalElement;
 
 public class EnumerationLiteral extends HierarchicalElement {
 

@@ -1,6 +1,6 @@
 package model;
 
-import exporter.Processor;
+import model.auxiliary.HierarchicalElement;
 import model.parameters.ClassParameter;
 import model.properties.ClassProperty;
 

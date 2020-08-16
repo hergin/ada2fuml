@@ -1,6 +1,6 @@
 package model;
 
-import exporter.Processor;
+import model.auxiliary.HierarchicalElement;
 import model.enums.PlaceholderPreferenceEnum;
 import model.enums.VisibilityEnum;
 import model.parameters.ClassParameter;

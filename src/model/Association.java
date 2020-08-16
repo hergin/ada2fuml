@@ -1,6 +1,6 @@
 package model;
 
-import exporter.Processor;
+import model.auxiliary.HierarchicalElement;
 import model.properties.AssociationProperty;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package exceptions;
 
-import model.HierarchicalElement;
+import model.auxiliary.HierarchicalElement;
 
 import java.util.ArrayList;
 import java.util.List;

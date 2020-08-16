@@ -1,6 +1,7 @@
-package model;
+package model.auxiliary;
 
 import exporter.Processor;
+import model.UML;
 
 public class HierarchicalElement {
 

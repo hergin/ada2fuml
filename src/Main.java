@@ -1,13 +1,11 @@
 import adaschema.CompilationUnit;
 import exceptions.PartialUMLException;
 import exceptions.StillHavePlaceHolderException;
-import exceptions.UnknownParameterException;
-import exceptions.UnknownPropertyException;
 import exporter.Processor;
 import exporter.StillHavePlaceholderExceptionPolicy;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
-import model.HierarchicalElement;
+import model.auxiliary.HierarchicalElement;
 import model.UML;
 import model.enums.PlaceholderPreferenceEnum;
 import model.parameters.ClassParameter;
@@ -17,10 +15,8 @@ import xmlparsing.AdaXmlParser;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main {
 
