@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Association extends HierarchicalElement {
 
-    private String id;
     private Class source;
     private Class target;
 
@@ -16,7 +15,6 @@ public class Association extends HierarchicalElement {
 
     public Association(String name, Class source, Class target) {
         super(name);
-        id = Processor.uuidGenerator();
         this.source = source;
         this.target = target;
         properties = new ArrayList<>();
@@ -36,9 +34,5 @@ public class Association extends HierarchicalElement {
 
     public Class getTarget() {
         return target;
-    }
-
-    public String getId() {
-        return id;
     }
 }

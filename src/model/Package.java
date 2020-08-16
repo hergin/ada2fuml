@@ -14,11 +14,9 @@ public class Package extends HierarchicalElement {
     private List<Enumeration> enumerations;
     private List<Interface> interfaces;
     private List<Package> subPackages;
-    private String id;
 
     public Package(String name) {
         super(name);
-        id = Processor.uuidGenerator();
         classes = new ArrayList<>();
         structs = new ArrayList<>();
         enumerations = new ArrayList<>();
@@ -193,7 +191,4 @@ public class Package extends HierarchicalElement {
         return subPackages;
     }
 
-    public String getId() {
-        return id;
-    }
 }

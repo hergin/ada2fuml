@@ -6,11 +6,9 @@ import model.enums.VisibilityEnum;
 public abstract class Property extends HierarchicalElement {
 
     private VisibilityEnum visibility;
-    private String id;
 
     public Property(String name, VisibilityEnum visibility) {
         super(name);
-        id = Processor.uuidGenerator();
         this.visibility = visibility;
     }
 
@@ -18,7 +16,4 @@ public abstract class Property extends HierarchicalElement {
         return visibility;
     }
 
-    public String getId() {
-        return id;
-    }
 }

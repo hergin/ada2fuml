@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 public class UML extends HierarchicalElement {
 
-    private String id;
     private String fileName;
     private List<Class> classes;
     private List<Package> packages;
@@ -23,7 +22,6 @@ public class UML extends HierarchicalElement {
 
     public UML(String name) {
         super(name);
-        id = Processor.uuidGenerator();
         classes = new ArrayList<>();
         packages = new ArrayList<>();
         interfaces = new ArrayList<>();
@@ -246,10 +244,6 @@ public class UML extends HierarchicalElement {
 
     public String getFileName() {
         return fileName;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public List<Class> getClasses() {

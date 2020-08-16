@@ -10,13 +10,11 @@ public class Struct extends HierarchicalElement {
 
     private List<Property> properties;
     private VisibilityEnum visibility;
-    private String id;
 
     public Struct (String name) {
         super(name);
         properties = new ArrayList<>();
         this.visibility = VisibilityEnum.Public;
-        id = Processor.uuidGenerator();
     }
 
     public void addProperty(Property someProperty) {
@@ -32,7 +30,4 @@ public class Struct extends HierarchicalElement {
         return visibility;
     }
 
-    public String getId() {
-        return id;
-    }
 }

@@ -13,11 +13,9 @@ public class Class extends HierarchicalElement {
     private List<Operation> operations;
     private List<Class> superClasses;
     private List<Class> nestedClasses;
-    private String id;
 
     public Class(String name) {
         super(name);
-        id = Processor.uuidGenerator();
         properties = new ArrayList<>();
         operations = new ArrayList<>();
         superClasses = new ArrayList<>();
@@ -92,10 +90,6 @@ public class Class extends HierarchicalElement {
 
     public List<Class> getSuperClasses() {
         return superClasses;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public List<Class> getNestedClasses() {

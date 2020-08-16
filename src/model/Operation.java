@@ -11,14 +11,12 @@ public class Operation extends HierarchicalElement {
     private List<Parameter> parameters;
     private List<Except> exceptions;
     private VisibilityEnum visibility;
-    private String id;
 
     public Operation(String name, VisibilityEnum visibility) {
         super(name);
         parameters = new ArrayList<>();
         exceptions = new ArrayList<>();
         this.visibility = visibility;
-        id = Processor.uuidGenerator();
     }
 
     public Operation addParameter(Parameter parameter) {
@@ -45,7 +43,4 @@ public class Operation extends HierarchicalElement {
         return visibility;
     }
 
-    public String getId() {
-        return id;
-    }
 }

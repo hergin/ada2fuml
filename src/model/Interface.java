@@ -15,11 +15,9 @@ public class Interface extends HierarchicalElement {
     private List<Struct> structs;
     private List<Interface> superInterfaces;
     private List<Enumeration> enumerations;
-    private String id;
 
     public Interface(String name) {
         super(name);
-        id = Processor.uuidGenerator();
         properties = new ArrayList<>();
         operations = new ArrayList<>();
         structs = new ArrayList<>();
@@ -123,7 +121,4 @@ public class Interface extends HierarchicalElement {
         return enumerations.stream().filter(c->c.getName().equals(enumName)).findFirst().get();
     }
 
-    public String getId() {
-        return id;
-    }
 }
