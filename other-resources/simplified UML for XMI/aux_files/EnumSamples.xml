@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:uml="http://www.omg.org/spec/UML/20131001" xmlns:StandardProfile="http://www.omg.org/spec/UML/20131001/StandardProfile" xmlns:xmi="http://www.omg.org/spec/XMI/20131001">
+   <xmi:documentation xmi:type="xmi:Documentation">
+      <xmi:exporter>MagicDraw Clean XMI Exporter</xmi:exporter>
+      <xmi:exporterVersion>19.0 v9</xmi:exporterVersion>
+   </xmi:documentation>
+   <uml:Model xmi:type="uml:Model" xmi:id="eee_1045467100313_135436_1" name="Model">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_18_1beta_8c90288_1415101994820_370998_4336" body="Author:hergin.&#xA;Created:8/16/2020 11:39 AM.&#xA;Title:.&#xA;Comment:.&#xA;">
+         <annotatedElement xmi:idref="eee_1045467100313_135436_1" />
+      </ownedComment>
+      <packagedElement xmi:type="uml:Class" xmi:id="_19_0_2_8ac027e_1597592385295_555510_4790" name="SampleClass">
+         <ownedAttribute xmi:type="uml:Property" xmi:id="_19_0_2_8ac027e_1597592494110_78623_4795" name="EnumProperty1" visibility="private" type="_19_0_2_8ac027e_1597592394672_670811_4791">
+            <defaultValue xmi:type="uml:InstanceValue" xmi:id="_19_0_2_8ac027e_1597592517685_916597_4796" instance="_19_0_2_8ac027e_1597592403183_364436_4792" />
+         </ownedAttribute>
+         <ownedOperation xmi:type="uml:Operation" xmi:id="_19_0_2_8ac027e_1597592554685_215551_4797" name="Operation1" visibility="public">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_19_0_2_8ac027e_1597592566244_110744_4798" name="PrimitiveParameter1" visibility="public">
+               <type href="UML_Standard_Profile.mdzip#eee_1045467100323_377050_61" />
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_19_0_2_8ac027e_1597592654095_541527_4799" name="EnumParameter1" visibility="public" type="_19_0_2_8ac027e_1597592394672_670811_4791" />
+         </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_19_0_2_8ac027e_1597592394672_670811_4791" name="MyEnum">
+         <ownedAttribute xmi:type="uml:Property" xmi:id="_19_0_2_8ac027e_1597592420239_664907_4793" name="PrimitiveProperty1" visibility="private" isReadOnly="true">
+            <type href="UML_Standard_Profile.mdzip#eee_1045467100323_848034_66" />
+         </ownedAttribute>
+         <ownedAttribute xmi:type="uml:Property" xmi:id="_19_0_2_8ac027e_1597592473061_276047_4794" name="ClassProperty1" visibility="private" isReadOnly="true" type="_19_0_2_8ac027e_1597592385295_555510_4790" />
+         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_19_0_2_8ac027e_1597592403183_364436_4792" name="Literal1" />
+         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_19_0_2_8ac027e_1597593211887_893182_4800" name="Literal2" />
+      </packagedElement>
+   </uml:Model>
+</xmi:XMI>

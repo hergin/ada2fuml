@@ -7,11 +7,10 @@ import model.*;
 import model.Class;
 import model.Package;
 import model.parameters.ClassParameter;
-import model.parameters.EnumParameter;
+import model.parameters.EnumerationParameter;
 import model.parameters.StructParameter;
 import model.parameters.PrimitiveParameter;
 import model.properties.AssociationProperty;
-import model.properties.EnumerationProperty;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 import model.properties.Variable;
@@ -86,16 +85,27 @@ public class Processor {
         return string.toString();
     }
 
-    private static String processEnumeration(Enumeration e) {
+    private static String processEnumeration(Enumeration e) throws UnknownPropertyException {
         StringBuilder string = new StringBuilder();
 
         string.append("<packagedElement xmi:type='uml:Enumeration' xmi:id='" + e.getId()
                       + "' name='" + e.getName() + "' visibility='" + e.getVisibility().toString().toLowerCase() + "'>");
-        for(EnumerationProperty eProperty:e.getProperties()) {
-            string.append("<ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:id='"
-                          + eProperty.getId() + "' name='" + eProperty.getName() + "'/>");
+        for(Property aProperty:e.getProperties()) {
+            string.append(processProperty(aProperty));
+        }
+        for (EnumerationLiteral aLiteral : e.getLiterals()) {
+            string.append(processEnumerationLiteral(aLiteral));
         }
         string.append("</packagedElement>");
+
+        return string.toString();
+    }
+
+    private static String processEnumerationLiteral(EnumerationLiteral aLiteral) {
+        StringBuilder string = new StringBuilder();
+
+        string.append("<ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:id='"
+                + aLiteral.getId() + "' name='" + aLiteral.getName() + "'/>");
 
         return string.toString();
     }
@@ -318,8 +328,8 @@ public class Processor {
             } else {
                 string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + cParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
             }
-        } else if (param instanceof EnumParameter) {
-        	EnumParameter eParam = (EnumParameter) param;
+        } else if (param instanceof EnumerationParameter) {
+        	EnumerationParameter eParam = (EnumerationParameter) param;
             // string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + eParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
         	
             string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"

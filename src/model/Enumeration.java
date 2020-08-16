@@ -10,50 +10,42 @@ import java.util.List;
 
 public class Enumeration extends HierarchicalElement {
 
-    private List<EnumerationProperty> properties;
+    private List<Property> properties;
+    private List<EnumerationLiteral> literals;
     private static final VisibilityEnum visibility = VisibilityEnum.Public;
-    private String id;
+    protected String id;
 
     public Enumeration (String name) {
         super(name);
-        properties = new ArrayList<>();
         id = Processor.uuidGenerator();
+        properties = new ArrayList<>();
+        literals = new ArrayList<>();
     }
 
-//    public List<HierarchicalElement> findElementsWithPlaceholder() {
-//        List<HierarchicalElement> result = new ArrayList<>();
-//
-//        for (Property property:properties) {
-//            if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
-//                result.add(property);
-//        }
-//
-//        return result;
-//    }
-//
-//    public boolean hasPlaceholders() {
-//        for (Property property:properties) {
-//            if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
-//                return true;
-//        }
-//
-//        return false;
-//    }
-
-    public void addProperty(EnumerationProperty someProperty) {
-        someProperty.setParent(this);
-        properties.add(someProperty);
+    public void addProperty(Property aProperty) {
+        aProperty.setParent(this);
+        properties.add(aProperty);
     }
 
-    public List<EnumerationProperty> getProperties() {
+    public void addLiteral(EnumerationLiteral aLiteral) {
+        aLiteral.setParent(this);
+        literals.add(aLiteral);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<Property> getProperties() {
         return properties;
+    }
+
+    public List<EnumerationLiteral> getLiterals() {
+        return literals;
     }
 
     public VisibilityEnum getVisibility() {
         return visibility;
     }
 
-    public String getId() {
-        return id;
-    }
 }

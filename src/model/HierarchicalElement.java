@@ -1,5 +1,7 @@
 package model;
 
+import exporter.Processor;
+
 public class HierarchicalElement {
 
     private String name;
