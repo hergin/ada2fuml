@@ -1,13 +1,13 @@
 package model.parameters;
 
 import model.Parameter;
+import model.auxiliary.IPlaceholderedElement;
 import model.enums.DirectionEnum;
 import model.Class;
 
-public class ClassParameter extends Parameter {
+public class ClassParameter extends Parameter implements IPlaceholderedElement {
 
     private Class type;
-
     private String placeholder;
 
     public ClassParameter (String name, DirectionEnum direction, String placeholder) {
@@ -23,10 +23,6 @@ public class ClassParameter extends Parameter {
     public void fixType(Class type) {
         this.type = type;
         this.placeholder = "";
-    }
-
-    public boolean hasPlaceholder() {
-        return this.placeholder!=null && !this.placeholder.isEmpty();
     }
 
     public String getPlaceholder() {

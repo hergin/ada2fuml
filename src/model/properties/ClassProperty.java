@@ -2,9 +2,10 @@ package model.properties;
 
 import model.Class;
 import model.Property;
+import model.auxiliary.IPlaceholderedElement;
 import model.enums.VisibilityEnum;
 
-public class ClassProperty extends Property {
+public class ClassProperty extends Property implements IPlaceholderedElement {
 
     private Class type;
 
@@ -23,10 +24,6 @@ public class ClassProperty extends Property {
     public void fixType(Class type) {
         this.type = type;
         this.placeholder = "";
-    }
-
-    public boolean hasPlaceholder() {
-        return this.placeholder!=null && !this.placeholder.isEmpty();
     }
 
     public Class getType() {

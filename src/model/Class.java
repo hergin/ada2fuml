@@ -1,6 +1,7 @@
 package model;
 
 import model.auxiliary.HierarchicalElement;
+import model.auxiliary.IPlaceholderedElement;
 import model.parameters.ClassParameter;
 import model.properties.ClassProperty;
 
@@ -42,13 +43,13 @@ public class Class extends HierarchicalElement {
 
     public boolean hasPlaceholders() {
         for (Property property:properties) {
-            if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
+            if(property instanceof IPlaceholderedElement && ((IPlaceholderedElement) property).hasPlaceholder())
                 return true;
         }
 
         for (Operation operation:operations) {
             for (Parameter parameter:operation.getParameters()) {
-                if (parameter instanceof ClassParameter && ((ClassParameter) parameter).getPlaceholder() != null && !((ClassParameter) parameter).getPlaceholder().isEmpty())
+                if (parameter instanceof IPlaceholderedElement && ((IPlaceholderedElement) parameter).hasPlaceholder())
                     return true;
             }
         }
