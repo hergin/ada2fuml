@@ -43,7 +43,34 @@ public class SubTypeFromRoyTests {
     }
 
     @Test
-    void test_gm_unit_rank_types_1() {
+    void test_gm_unit_rank_types_1() throws Gnat2XmlException, JAXBException, URISyntaxException, PartialUMLException, NamingException {
+        File adaFile = Paths.get(RoyTests.class.getClassLoader().getResource("ExamplesFromRoy/gm_unit_rank_types.1.ads").toURI()).toFile();
+        String adaXml = Gnat2XmlRunner.ConvertAdaCodeToXml(adaFile);
+        CompilationUnit compilationUnit = AdaXmlParser.parseAndProduceCompilationUnit(adaXml);
 
+        try {
+            UML resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
+        } catch (PartialUMLException pmu) {
+            UML partialUml = pmu.getPartialUML();
+
+            Assertions.assertEquals(1, partialUml.getPackages().size());
+            Assertions.assertEquals(6, partialUml.getPackages().get(0).getClasses().size());
+
+            Assertions.assertEquals("Extended_Numeric_Rank_Type", partialUml.getPackages().get(0).getClasses().get(0).getName());
+            Assertions.assertEquals(1, partialUml.getPackages().get(0).getClasses().get(0).getSuperClasses().size());
+            Assertions.assertEquals("Integer", partialUml.getPackages().get(0).getClasses().get(0).getSuperClasses().get(0).getName());
+
+            Assertions.assertEquals("Integer", partialUml.getPackages().get(0).getClasses().get(1).getName());
+
+            Assertions.assertEquals("Numeric_Rank_Type", partialUml.getPackages().get(0).getClasses().get(2).getName());
+            Assertions.assertEquals(1, partialUml.getPackages().get(0).getClasses().get(2).getSuperClasses().size());
+            Assertions.assertEquals("Extended_Numeric_Rank_Type", partialUml.getPackages().get(0).getClasses().get(2).getSuperClasses().get(0).getName());
+
+            Assertions.assertEquals("Rank_Type", partialUml.getPackages().get(0).getClasses().get(3).getName());
+
+            Assertions.assertEquals("Unit_Numeric_Rank_Type", partialUml.getPackages().get(0).getClasses().get(4).getName());
+
+            Assertions.assertEquals("Unit_Rank_Type", partialUml.getPackages().get(0).getClasses().get(5).getName());
+        }
     }
 }
