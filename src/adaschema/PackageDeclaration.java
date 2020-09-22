@@ -72,6 +72,26 @@ public class PackageDeclaration
      * HELPER_METHOD
      * @return
      */
+    public List<SubtypeDeclaration> getSubtypes() {
+        List<SubtypeDeclaration> ordinaryTypes = new ArrayList<>();
+
+        for (Object o: visiblePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof SubtypeDeclaration)
+                ordinaryTypes.add((SubtypeDeclaration) o);
+        }
+
+        for (Object o: privatePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof SubtypeDeclaration)
+                ordinaryTypes.add((SubtypeDeclaration) o);
+        }
+
+        return ordinaryTypes;
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
     public List<OrdinaryTypeDeclaration> getOrdinaryTypes() {
         List<OrdinaryTypeDeclaration> ordinaryTypes = new ArrayList<>();
 

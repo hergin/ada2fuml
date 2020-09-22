@@ -8,6 +8,8 @@
 
 package adaschema;
 
+import exceptions.NamingException;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -59,6 +61,35 @@ public class SubtypeDeclaration
     protected ElementList aspectSpecificationsQl;
     @XmlAttribute(name = "checks")
     protected String checks;
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public String getSuperClassName() throws NamingException {
+        try {
+            return getTypeDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+        } catch (Exception e) {
+            throw new NamingException("Subtype's superclass has some different naming structure than expected!", e);
+        }
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public String getName() throws NamingException {
+        try {
+            for (JaxBSuperclass thing : getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral()) {
+                if (thing instanceof DefiningIdentifier) {
+                    return ((DefiningIdentifier) thing).getDefName();
+                }
+            }
+        } catch(Exception e) {
+            throw new NamingException("Subtype has some different naming structure than expected!", e);
+        }
+        throw new NamingException("Subtype has some different naming structure than expected!");
+    }
 
     /**
      * Gets the value of the sloc property.

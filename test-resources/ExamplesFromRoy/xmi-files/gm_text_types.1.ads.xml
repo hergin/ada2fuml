@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<compilation_unit unit_kind="A_Package" unit_class="A_Public_Declaration" unit_origin="An_Application_Unit" unit_full_name="Gm_Text_Types" def_name="Gm_Text_Types" source_file="gm_text_types.1.ads">
+   <sloc line="2" col="1" endline="12" endcol="18"/>
+   <context_clause_elements_ql>
+   </context_clause_elements_ql>
+   <unit_declaration_q>
+      <package_declaration>
+         <sloc line="2" col="1" endline="12" endcol="18"/>
+         <names_ql>
+            <defining_identifier def_name="Gm_Text_Types" def="ada://package/Gm_Text_Types-2:9" type="null">
+               <sloc line="2" col="9" endline="2" endcol="21"/>
+            </defining_identifier>
+         </names_ql>
+         <aspect_specifications_ql>
+         </aspect_specifications_ql>
+         <visible_part_declarative_items_ql>
+            <subtype_declaration>
+               <sloc line="5" col="3" endline="5" endcol="53"/>
+               <names_ql>
+                  <defining_identifier def_name="Name_Length_Type" def="ada://subtype/Gm_Text_Types-2:9/Name_Length_Type-5:11" type="null">
+                     <sloc line="5" col="11" endline="5" endcol="26"/>
+                  </defining_identifier>
+               </names_ql>
+               <type_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="5" col="31" endline="5" endcol="52"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Positive" ref="ada://subtype/Standard-1:1/Positive-1:1" type="null">
+                           <sloc line="5" col="31" endline="5" endcol="38"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <simple_expression_range>
+                           <sloc line="5" col="46" endline="5" endcol="52"/>
+                           <lower_bound_q>
+                              <integer_literal type="universal integer" lit_val="1">
+                                 <sloc line="5" col="46" endline="5" endcol="46"/>
+                              </integer_literal>
+                           </lower_bound_q>
+                           <upper_bound_q>
+                              <integer_literal type="universal integer" lit_val="25">
+                                 <sloc line="5" col="51" endline="5" endcol="52"/>
+                              </integer_literal>
+                           </upper_bound_q>
+                        </simple_expression_range>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </type_declaration_view_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </subtype_declaration>
+            <subtype_declaration>
+               <sloc line="8" col="3" endline="8" endcol="49"/>
+               <names_ql>
+                  <defining_identifier def_name="Name_Type" def="ada://subtype/Gm_Text_Types-2:9/Name_Type-8:11" type="null">
+                     <sloc line="8" col="11" endline="8" endcol="19"/>
+                  </defining_identifier>
+               </names_ql>
+               <type_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="8" col="24" endline="8" endcol="48"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="String" ref="ada://ordinary_type/Standard-1:1/String-1:1" type="null">
+                           <sloc line="8" col="24" endline="8" endcol="29"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <index_constraint>
+                           <sloc line="8" col="31" endline="8" endcol="48"/>
+                           <discrete_ranges_ql>
+                              <discrete_subtype_indication>
+                                 <sloc line="8" col="32" endline="8" endcol="47"/>
+                                 <subtype_mark_q>
+                                    <identifier ref_name="Name_Length_Type" ref="ada://subtype/Gm_Text_Types-2:9/Name_Length_Type-5:11" type="null">
+                                       <sloc line="8" col="32" endline="8" endcol="47"/>
+                                    </identifier>
+                                 </subtype_mark_q>
+                                 <subtype_constraint_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </subtype_constraint_q>
+                              </discrete_subtype_indication>
+                           </discrete_ranges_ql>
+                        </index_constraint>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </type_declaration_view_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </subtype_declaration>
+            <constant_declaration>
+               <sloc line="10" col="3" endline="10" endcol="65"/>
+               <names_ql>
+                  <defining_identifier def_name="Default_Name" def="ada://constant/Gm_Text_Types-2:9/Default_Name-10:3" type="ada://subtype/Gm_Text_Types-2:9/Name_Type-8:11">
+                     <sloc line="10" col="3" endline="10" endcol="14"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="10" col="27" endline="10" endcol="35"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Name_Type" ref="ada://subtype/Gm_Text_Types-2:9/Name_Type-8:11" type="null">
+                           <sloc line="10" col="27" endline="10" endcol="35"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <qualified_expression type="ada://subtype/Gm_Text_Types-2:9/Name_Type-8:11">
+                     <sloc line="10" col="40" endline="10" endcol="64"/>
+                     <converted_or_qualified_subtype_mark_q>
+                        <identifier ref_name="Name_Type" ref="ada://subtype/Gm_Text_Types-2:9/Name_Type-8:11" type="null">
+                           <sloc line="10" col="40" endline="10" endcol="48"/>
+                        </identifier>
+                     </converted_or_qualified_subtype_mark_q>
+                     <converted_or_qualified_expression_q>
+                        <named_array_aggregate type="ada://subtype/Gm_Text_Types-2:9/Name_Type-8:11">
+                           <sloc line="10" col="50" endline="10" endcol="64"/>
+                           <array_component_associations_ql>
+                              <array_component_association>
+                                 <sloc line="10" col="51" endline="10" endcol="63"/>
+                                 <array_component_choices_ql>
+                                    <others_choice>
+                                       <sloc line="10" col="51" endline="10" endcol="56"/>
+                                    </others_choice>
+                                 </array_component_choices_ql>
+                                 <component_expression_q>
+                                    <character_literal ref_name="&apos;a&apos;" ref="ada://enumeration_literal/Standard-1:1/Character-1:1/&apos;a&apos;-1:1" type="ada://ordinary_type/Standard-1:1/Character-1:1">
+                                       <sloc line="10" col="61" endline="10" endcol="63"/>
+                                    </character_literal>
+                                 </component_expression_q>
+                              </array_component_association>
+                           </array_component_associations_ql>
+                        </named_array_aggregate>
+                     </converted_or_qualified_expression_q>
+                  </qualified_expression>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </constant_declaration>
+         </visible_part_declarative_items_ql>
+         <private_part_declarative_items_ql>
+         </private_part_declarative_items_ql>
+      </package_declaration>
+   </unit_declaration_q>
+   <pragmas_after_ql>
+   </pragmas_after_ql>
+</compilation_unit>

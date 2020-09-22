@@ -41,6 +41,47 @@ public class Extractor {
                 packageName = packageName.split("_")[0];
             }
 
+            for(SubtypeDeclaration theSubtype : thePackage.getSubtypes()) {
+                String subtypeName = theSubtype.getName();
+
+                Class theClass = null;
+                Package thePackageInWhichTheSubTypeClass = null;
+
+                // packageX + typeX => classX
+                if (packageName.equals(subtypeName)) {
+                    theClass = resultingUML.createOrGetClassByName(subtypeName);
+                }
+
+                // If there is a . in the package name, we will create subpackage.
+                if(classNameAfterPackageName.contains(".")) {
+                    String higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
+                    packageName = higherLevelPackage;
+                    if(higherLevelPackage.contains("_"))
+                        higherLevelPackage = higherLevelPackage.split("_")[0];
+                    classNameAfterPackageName = classNameAfterPackageName.split("\\.")[1];
+
+                    Package dottedSuperPackage = resultingUML.createOrGetPackageByName(higherLevelPackage);
+
+                    // packageX + typeY => packageX + classY
+                    if (!packageName.equals(subtypeName)) {
+                        Package subpackage = dottedSuperPackage.createOrGetSubPackageByName(packageName);
+                        thePackageInWhichTheSubTypeClass = subpackage;
+                        theClass = subpackage.createOrGetClassByName(subtypeName);
+                    }
+
+                } else {
+                    // packageX + typeY => packageX + classY
+                    if (!packageName.equals(subtypeName)) {
+                        Package packageNamedAfterAdaPackage = resultingUML.createOrGetPackageByName(packageName);
+                        thePackageInWhichTheSubTypeClass = packageNamedAfterAdaPackage;
+                        theClass = packageNamedAfterAdaPackage.createOrGetClassByName(subtypeName);
+                    }
+                }
+
+                Class superClass = thePackageInWhichTheSubTypeClass.createOrGetClassByName(theSubtype.getSuperClassName());
+                theClass.addSuperClass(superClass);
+            }
+
             for (OrdinaryTypeDeclaration theType : thePackage.getOrdinaryTypes()) {
 
                 try {
@@ -78,8 +119,6 @@ public class Extractor {
                             theClass = packageNamedAfterAdaPackage.createOrGetClassByName(typeName);
                         }
                     }
-
-                    // TODO package name with . in it means there is a subpackage.
 
                     // TODO ordinaryTypes with an extension, means there is a superclass involved. See @RoyTests.md_example4-nest test
 

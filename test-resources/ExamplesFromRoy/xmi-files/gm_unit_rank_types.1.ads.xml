@@ -1,0 +1,1565 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<compilation_unit unit_kind="A_Package" unit_class="A_Public_Declaration" unit_origin="An_Application_Unit" unit_full_name="Gm_Unit_Rank_Types" def_name="Gm_Unit_Rank_Types" source_file="gm_unit_rank_types.1.ads">
+   <sloc line="2" col="1" endline="78" endcol="23"/>
+   <context_clause_elements_ql>
+   </context_clause_elements_ql>
+   <unit_declaration_q>
+      <package_declaration>
+         <sloc line="2" col="1" endline="78" endcol="23"/>
+         <names_ql>
+            <defining_identifier def_name="Gm_Unit_Rank_Types" def="ada://package/Gm_Unit_Rank_Types-2:9" type="null">
+               <sloc line="2" col="9" endline="2" endcol="26"/>
+            </defining_identifier>
+         </names_ql>
+         <aspect_specifications_ql>
+         </aspect_specifications_ql>
+         <visible_part_declarative_items_ql>
+            <subtype_declaration>
+               <sloc line="8" col="3" endline="8" endcol="62"/>
+               <names_ql>
+                  <defining_identifier def_name="Extended_Numeric_Rank_Type" def="ada://subtype/Gm_Unit_Rank_Types-2:9/Extended_Numeric_Rank_Type-8:11" type="null">
+                     <sloc line="8" col="11" endline="8" endcol="36"/>
+                  </defining_identifier>
+               </names_ql>
+               <type_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="8" col="41" endline="8" endcol="61"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Integer" ref="ada://ordinary_type/Standard-1:1/Integer-1:1" type="null">
+                           <sloc line="8" col="41" endline="8" endcol="47"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <simple_expression_range>
+                           <sloc line="8" col="55" endline="8" endcol="61"/>
+                           <lower_bound_q>
+                              <integer_literal type="universal integer" lit_val="0">
+                                 <sloc line="8" col="55" endline="8" endcol="55"/>
+                              </integer_literal>
+                           </lower_bound_q>
+                           <upper_bound_q>
+                              <integer_literal type="universal integer" lit_val="99">
+                                 <sloc line="8" col="60" endline="8" endcol="61"/>
+                              </integer_literal>
+                           </upper_bound_q>
+                        </simple_expression_range>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </type_declaration_view_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </subtype_declaration>
+            <constant_declaration>
+               <sloc line="14" col="3" endline="14" endcol="61"/>
+               <names_ql>
+                  <defining_identifier def_name="No_Numeric_Rank" def="ada://constant/Gm_Unit_Rank_Types-2:9/No_Numeric_Rank-14:3" type="ada://subtype/Gm_Unit_Rank_Types-2:9/Extended_Numeric_Rank_Type-8:11">
+                     <sloc line="14" col="3" endline="14" endcol="17"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="14" col="30" endline="14" endcol="55"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Extended_Numeric_Rank_Type" ref="ada://subtype/Gm_Unit_Rank_Types-2:9/Extended_Numeric_Rank_Type-8:11" type="null">
+                           <sloc line="14" col="30" endline="14" endcol="55"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <integer_literal type="universal integer" lit_val="0">
+                     <sloc line="14" col="60" endline="14" endcol="60"/>
+                  </integer_literal>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </constant_declaration>
+            <subtype_declaration>
+               <sloc line="20" col="3" endline="20" endcol="72"/>
+               <names_ql>
+                  <defining_identifier def_name="Numeric_Rank_Type" def="ada://subtype/Gm_Unit_Rank_Types-2:9/Numeric_Rank_Type-20:11" type="null">
+                     <sloc line="20" col="11" endline="20" endcol="27"/>
+                  </defining_identifier>
+               </names_ql>
+               <type_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="20" col="32" endline="20" endcol="71"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Extended_Numeric_Rank_Type" ref="ada://subtype/Gm_Unit_Rank_Types-2:9/Extended_Numeric_Rank_Type-8:11" type="null">
+                           <sloc line="20" col="32" endline="20" endcol="57"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <simple_expression_range>
+                           <sloc line="20" col="65" endline="20" endcol="71"/>
+                           <lower_bound_q>
+                              <integer_literal type="universal integer" lit_val="1">
+                                 <sloc line="20" col="65" endline="20" endcol="65"/>
+                              </integer_literal>
+                           </lower_bound_q>
+                           <upper_bound_q>
+                              <integer_literal type="universal integer" lit_val="99">
+                                 <sloc line="20" col="70" endline="20" endcol="71"/>
+                              </integer_literal>
+                           </upper_bound_q>
+                        </simple_expression_range>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </type_declaration_view_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </subtype_declaration>
+            <constant_declaration>
+               <sloc line="22" col="3" endline="22" endcol="57"/>
+               <names_ql>
+                  <defining_identifier def_name="Default_Numeric_Rank" def="ada://constant/Gm_Unit_Rank_Types-2:9/Default_Numeric_Rank-22:3" type="ada://subtype/Gm_Unit_Rank_Types-2:9/Numeric_Rank_Type-20:11">
+                     <sloc line="22" col="3" endline="22" endcol="22"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="22" col="35" endline="22" endcol="51"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Numeric_Rank_Type" ref="ada://subtype/Gm_Unit_Rank_Types-2:9/Numeric_Rank_Type-20:11" type="null">
+                           <sloc line="22" col="35" endline="22" endcol="51"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <integer_literal type="universal integer" lit_val="1">
+                     <sloc line="22" col="56" endline="22" endcol="56"/>
+                  </integer_literal>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </constant_declaration>
+            <ordinary_type_declaration>
+               <sloc line="29" col="3" endline="49" endcol="74"/>
+               <names_ql>
+                  <defining_identifier def_name="Rank_Type" def="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8" type="null">
+                     <sloc line="29" col="8" endline="29" endcol="16"/>
+                  </defining_identifier>
+               </names_ql>
+               <discriminant_part_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </discriminant_part_q>
+               <type_declaration_view_q>
+                  <enumeration_type_definition>
+                     <sloc line="29" col="21" endline="49" endcol="73"/>
+                     <enumeration_literal_declarations_ql>
+                        <enumeration_literal_specification>
+                           <sloc line="29" col="22" endline="29" endcol="28"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Unknown" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Unknown-29:22" type="null">
+                                 <sloc line="29" col="22" endline="29" endcol="28"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="29" col="31" endline="29" endcol="40"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Restricted" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Restricted-29:31" type="null">
+                                 <sloc line="29" col="31" endline="29" endcol="40"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="29" col="43" endline="29" endcol="56"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Not_Applicable" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Not_Applicable-29:43" type="null">
+                                 <sloc line="29" col="43" endline="29" endcol="56"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="29" col="59" endline="29" endcol="62"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Zero" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Zero-29:59" type="null">
+                                 <sloc line="29" col="59" endline="29" endcol="62"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="29" col="65" endline="29" endcol="67"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="One" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/One-29:65" type="null">
+                                 <sloc line="29" col="65" endline="29" endcol="67"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="29" col="70" endline="29" endcol="72"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Two" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Two-29:70" type="null">
+                                 <sloc line="29" col="70" endline="29" endcol="72"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="29" col="75" endline="29" endcol="79"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Three" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Three-29:75" type="null">
+                                 <sloc line="29" col="75" endline="29" endcol="79"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="30" col="22" endline="30" endcol="25"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Four" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Four-30:22" type="null">
+                                 <sloc line="30" col="22" endline="30" endcol="25"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="30" col="28" endline="30" endcol="31"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Five" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Five-30:28" type="null">
+                                 <sloc line="30" col="28" endline="30" endcol="31"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="30" col="34" endline="30" endcol="36"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Six" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Six-30:34" type="null">
+                                 <sloc line="30" col="34" endline="30" endcol="36"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="30" col="39" endline="30" endcol="43"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seven-30:39" type="null">
+                                 <sloc line="30" col="39" endline="30" endcol="43"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="30" col="46" endline="30" endcol="50"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eight" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eight-30:46" type="null">
+                                 <sloc line="30" col="46" endline="30" endcol="50"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="30" col="53" endline="30" endcol="56"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Nine" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Nine-30:53" type="null">
+                                 <sloc line="30" col="53" endline="30" endcol="56"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="30" col="59" endline="30" endcol="61"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ten" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ten-30:59" type="null">
+                                 <sloc line="30" col="59" endline="30" endcol="61"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="30" col="64" endline="30" endcol="69"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eleven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eleven-30:64" type="null">
+                                 <sloc line="30" col="64" endline="30" endcol="69"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="30" col="72" endline="30" endcol="77"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twelve" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twelve-30:72" type="null">
+                                 <sloc line="30" col="72" endline="30" endcol="77"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="31" col="22" endline="31" endcol="29"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirteen" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirteen-31:22" type="null">
+                                 <sloc line="31" col="22" endline="31" endcol="29"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="31" col="32" endline="31" endcol="39"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fourteen" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fourteen-31:32" type="null">
+                                 <sloc line="31" col="32" endline="31" endcol="39"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="31" col="42" endline="31" endcol="48"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifteen" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifteen-31:42" type="null">
+                                 <sloc line="31" col="42" endline="31" endcol="48"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="31" col="51" endline="31" endcol="57"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixteen" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixteen-31:51" type="null">
+                                 <sloc line="31" col="51" endline="31" endcol="57"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="31" col="60" endline="31" endcol="68"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventeen" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventeen-31:60" type="null">
+                                 <sloc line="31" col="60" endline="31" endcol="68"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="31" col="71" endline="31" endcol="78"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighteen" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighteen-31:71" type="null">
+                                 <sloc line="31" col="71" endline="31" endcol="78"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="32" col="22" endline="32" endcol="29"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Nineteen" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Nineteen-32:22" type="null">
+                                 <sloc line="32" col="22" endline="32" endcol="29"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="32" col="32" endline="32" endcol="37"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty-32:32" type="null">
+                                 <sloc line="32" col="32" endline="32" endcol="37"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="32" col="40" endline="32" endcol="49"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty_One" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty_One-32:40" type="null">
+                                 <sloc line="32" col="40" endline="32" endcol="49"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="32" col="52" endline="32" endcol="61"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty_Two" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty_Two-32:52" type="null">
+                                 <sloc line="32" col="52" endline="32" endcol="61"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="32" col="64" endline="32" endcol="75"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty_Three" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty_Three-32:64" type="null">
+                                 <sloc line="32" col="64" endline="32" endcol="75"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="33" col="22" endline="33" endcol="32"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty_Four" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty_Four-33:22" type="null">
+                                 <sloc line="33" col="22" endline="33" endcol="32"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="33" col="35" endline="33" endcol="45"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty_Five" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty_Five-33:35" type="null">
+                                 <sloc line="33" col="35" endline="33" endcol="45"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="33" col="48" endline="33" endcol="57"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty_Six" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty_Six-33:48" type="null">
+                                 <sloc line="33" col="48" endline="33" endcol="57"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="33" col="60" endline="33" endcol="71"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty_Seven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty_Seven-33:60" type="null">
+                                 <sloc line="33" col="60" endline="33" endcol="71"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="34" col="22" endline="34" endcol="33"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty_Eight" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty_Eight-34:22" type="null">
+                                 <sloc line="34" col="22" endline="34" endcol="33"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="34" col="36" endline="34" endcol="46"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Twenty_Nine" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Twenty_Nine-34:36" type="null">
+                                 <sloc line="34" col="36" endline="34" endcol="46"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="34" col="49" endline="34" endcol="54"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty-34:49" type="null">
+                                 <sloc line="34" col="49" endline="34" endcol="54"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="34" col="57" endline="34" endcol="66"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty_One" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty_One-34:57" type="null">
+                                 <sloc line="34" col="57" endline="34" endcol="66"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="34" col="69" endline="34" endcol="78"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty_Two" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty_Two-34:69" type="null">
+                                 <sloc line="34" col="69" endline="34" endcol="78"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="35" col="22" endline="35" endcol="33"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty_Three" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty_Three-35:22" type="null">
+                                 <sloc line="35" col="22" endline="35" endcol="33"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="35" col="36" endline="35" endcol="46"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty_Four" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty_Four-35:36" type="null">
+                                 <sloc line="35" col="36" endline="35" endcol="46"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="35" col="49" endline="35" endcol="59"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty_Five" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty_Five-35:49" type="null">
+                                 <sloc line="35" col="49" endline="35" endcol="59"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="35" col="62" endline="35" endcol="71"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty_Six" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty_Six-35:62" type="null">
+                                 <sloc line="35" col="62" endline="35" endcol="71"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="36" col="22" endline="36" endcol="33"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty_Seven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty_Seven-36:22" type="null">
+                                 <sloc line="36" col="22" endline="36" endcol="33"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="36" col="36" endline="36" endcol="47"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty_Eight" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty_Eight-36:36" type="null">
+                                 <sloc line="36" col="36" endline="36" endcol="47"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="36" col="50" endline="36" endcol="60"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Thirty_Nine" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Thirty_Nine-36:50" type="null">
+                                 <sloc line="36" col="50" endline="36" endcol="60"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="36" col="63" endline="36" endcol="67"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty-36:63" type="null">
+                                 <sloc line="36" col="63" endline="36" endcol="67"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="36" col="70" endline="36" endcol="78"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty_One" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty_One-36:70" type="null">
+                                 <sloc line="36" col="70" endline="36" endcol="78"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="37" col="22" endline="37" endcol="30"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty_Two" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty_Two-37:22" type="null">
+                                 <sloc line="37" col="22" endline="37" endcol="30"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="37" col="33" endline="37" endcol="43"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty_Three" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty_Three-37:33" type="null">
+                                 <sloc line="37" col="33" endline="37" endcol="43"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="37" col="46" endline="37" endcol="55"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty_Four" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty_Four-37:46" type="null">
+                                 <sloc line="37" col="46" endline="37" endcol="55"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="37" col="58" endline="37" endcol="67"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty_Five" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty_Five-37:58" type="null">
+                                 <sloc line="37" col="58" endline="37" endcol="67"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="37" col="70" endline="37" endcol="78"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty_Six" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty_Six-37:70" type="null">
+                                 <sloc line="37" col="70" endline="37" endcol="78"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="38" col="22" endline="38" endcol="32"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty_Seven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty_Seven-38:22" type="null">
+                                 <sloc line="38" col="22" endline="38" endcol="32"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="38" col="35" endline="38" endcol="45"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty_Eight" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty_Eight-38:35" type="null">
+                                 <sloc line="38" col="35" endline="38" endcol="45"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="38" col="48" endline="38" endcol="57"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Forty_Nine" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Forty_Nine-38:48" type="null">
+                                 <sloc line="38" col="48" endline="38" endcol="57"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="38" col="60" endline="38" endcol="64"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty-38:60" type="null">
+                                 <sloc line="38" col="60" endline="38" endcol="64"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="38" col="67" endline="38" endcol="75"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty_One" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty_One-38:67" type="null">
+                                 <sloc line="38" col="67" endline="38" endcol="75"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="39" col="22" endline="39" endcol="30"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty_Two" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty_Two-39:22" type="null">
+                                 <sloc line="39" col="22" endline="39" endcol="30"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="39" col="33" endline="39" endcol="43"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty_Three" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty_Three-39:33" type="null">
+                                 <sloc line="39" col="33" endline="39" endcol="43"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="39" col="46" endline="39" endcol="55"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty_Four" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty_Four-39:46" type="null">
+                                 <sloc line="39" col="46" endline="39" endcol="55"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="39" col="58" endline="39" endcol="67"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty_Five" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty_Five-39:58" type="null">
+                                 <sloc line="39" col="58" endline="39" endcol="67"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="39" col="70" endline="39" endcol="78"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty_Six" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty_Six-39:70" type="null">
+                                 <sloc line="39" col="70" endline="39" endcol="78"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="40" col="22" endline="40" endcol="32"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty_Seven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty_Seven-40:22" type="null">
+                                 <sloc line="40" col="22" endline="40" endcol="32"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="40" col="35" endline="40" endcol="45"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty_Eight" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty_Eight-40:35" type="null">
+                                 <sloc line="40" col="35" endline="40" endcol="45"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="40" col="48" endline="40" endcol="57"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Fifty_Nine" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Fifty_Nine-40:48" type="null">
+                                 <sloc line="40" col="48" endline="40" endcol="57"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="40" col="60" endline="40" endcol="64"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty-40:60" type="null">
+                                 <sloc line="40" col="60" endline="40" endcol="64"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="40" col="67" endline="40" endcol="75"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty_One" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty_One-40:67" type="null">
+                                 <sloc line="40" col="67" endline="40" endcol="75"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="41" col="22" endline="41" endcol="30"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty_Two" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty_Two-41:22" type="null">
+                                 <sloc line="41" col="22" endline="41" endcol="30"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="41" col="33" endline="41" endcol="43"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty_Three" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty_Three-41:33" type="null">
+                                 <sloc line="41" col="33" endline="41" endcol="43"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="41" col="46" endline="41" endcol="55"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty_Four" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty_Four-41:46" type="null">
+                                 <sloc line="41" col="46" endline="41" endcol="55"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="41" col="58" endline="41" endcol="67"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty_Five" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty_Five-41:58" type="null">
+                                 <sloc line="41" col="58" endline="41" endcol="67"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="42" col="22" endline="42" endcol="30"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty_Six" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty_Six-42:22" type="null">
+                                 <sloc line="42" col="22" endline="42" endcol="30"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="42" col="33" endline="42" endcol="43"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty_Seven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty_Seven-42:33" type="null">
+                                 <sloc line="42" col="33" endline="42" endcol="43"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="42" col="46" endline="42" endcol="56"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty_Eight" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty_Eight-42:46" type="null">
+                                 <sloc line="42" col="46" endline="42" endcol="56"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="42" col="59" endline="42" endcol="68"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Sixty_Nine" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Sixty_Nine-42:59" type="null">
+                                 <sloc line="42" col="59" endline="42" endcol="68"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="42" col="71" endline="42" endcol="77"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy-42:71" type="null">
+                                 <sloc line="42" col="71" endline="42" endcol="77"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="43" col="22" endline="43" endcol="32"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy_One" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy_One-43:22" type="null">
+                                 <sloc line="43" col="22" endline="43" endcol="32"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="43" col="35" endline="43" endcol="45"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy_Two" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy_Two-43:35" type="null">
+                                 <sloc line="43" col="35" endline="43" endcol="45"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="43" col="48" endline="43" endcol="60"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy_Three" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy_Three-43:48" type="null">
+                                 <sloc line="43" col="48" endline="43" endcol="60"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="43" col="63" endline="43" endcol="74"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy_Four" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy_Four-43:63" type="null">
+                                 <sloc line="43" col="63" endline="43" endcol="74"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="44" col="22" endline="44" endcol="33"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy_Five" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy_Five-44:22" type="null">
+                                 <sloc line="44" col="22" endline="44" endcol="33"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="44" col="36" endline="44" endcol="46"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy_Six" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy_Six-44:36" type="null">
+                                 <sloc line="44" col="36" endline="44" endcol="46"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="44" col="49" endline="44" endcol="61"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy_Seven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy_Seven-44:49" type="null">
+                                 <sloc line="44" col="49" endline="44" endcol="61"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="44" col="64" endline="44" endcol="76"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy_Eight" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy_Eight-44:64" type="null">
+                                 <sloc line="44" col="64" endline="44" endcol="76"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="45" col="22" endline="45" endcol="33"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Seventy_Nine" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Seventy_Nine-45:22" type="null">
+                                 <sloc line="45" col="22" endline="45" endcol="33"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="45" col="36" endline="45" endcol="41"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty-45:36" type="null">
+                                 <sloc line="45" col="36" endline="45" endcol="41"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="45" col="44" endline="45" endcol="53"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty_One" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty_One-45:44" type="null">
+                                 <sloc line="45" col="44" endline="45" endcol="53"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="45" col="56" endline="45" endcol="65"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty_Two" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty_Two-45:56" type="null">
+                                 <sloc line="45" col="56" endline="45" endcol="65"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="45" col="68" endline="45" endcol="79"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty_Three" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty_Three-45:68" type="null">
+                                 <sloc line="45" col="68" endline="45" endcol="79"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="46" col="22" endline="46" endcol="32"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty_Four" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty_Four-46:22" type="null">
+                                 <sloc line="46" col="22" endline="46" endcol="32"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="46" col="35" endline="46" endcol="45"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty_Five" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty_Five-46:35" type="null">
+                                 <sloc line="46" col="35" endline="46" endcol="45"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="46" col="48" endline="46" endcol="57"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty_Six" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty_Six-46:48" type="null">
+                                 <sloc line="46" col="48" endline="46" endcol="57"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="46" col="60" endline="46" endcol="71"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty_Seven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty_Seven-46:60" type="null">
+                                 <sloc line="46" col="60" endline="46" endcol="71"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="47" col="22" endline="47" endcol="33"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty_Eight" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty_Eight-47:22" type="null">
+                                 <sloc line="47" col="22" endline="47" endcol="33"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="47" col="36" endline="47" endcol="46"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Eighty_Nine" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Eighty_Nine-47:36" type="null">
+                                 <sloc line="47" col="36" endline="47" endcol="46"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="47" col="49" endline="47" endcol="54"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety-47:49" type="null">
+                                 <sloc line="47" col="49" endline="47" endcol="54"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="47" col="57" endline="47" endcol="66"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety_One" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety_One-47:57" type="null">
+                                 <sloc line="47" col="57" endline="47" endcol="66"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="48" col="22" endline="48" endcol="31"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety_Two" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety_Two-48:22" type="null">
+                                 <sloc line="48" col="22" endline="48" endcol="31"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="48" col="34" endline="48" endcol="45"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety_Three" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety_Three-48:34" type="null">
+                                 <sloc line="48" col="34" endline="48" endcol="45"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="48" col="48" endline="48" endcol="58"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety_Four" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety_Four-48:48" type="null">
+                                 <sloc line="48" col="48" endline="48" endcol="58"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="48" col="61" endline="48" endcol="71"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety_Five" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety_Five-48:61" type="null">
+                                 <sloc line="48" col="61" endline="48" endcol="71"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="49" col="22" endline="49" endcol="31"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety_Six" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety_Six-49:22" type="null">
+                                 <sloc line="49" col="22" endline="49" endcol="31"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="49" col="34" endline="49" endcol="45"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety_Seven" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety_Seven-49:34" type="null">
+                                 <sloc line="49" col="34" endline="49" endcol="45"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="49" col="48" endline="49" endcol="59"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety_Eight" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety_Eight-49:48" type="null">
+                                 <sloc line="49" col="48" endline="49" endcol="59"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                        <enumeration_literal_specification>
+                           <sloc line="49" col="62" endline="49" endcol="72"/>
+                           <names_ql>
+                              <defining_enumeration_literal def_name="Ninety_Nine" def="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Ninety_Nine-49:62" type="null">
+                                 <sloc line="49" col="62" endline="49" endcol="72"/>
+                              </defining_enumeration_literal>
+                           </names_ql>
+                        </enumeration_literal_specification>
+                     </enumeration_literal_declarations_ql>
+                  </enumeration_type_definition>
+               </type_declaration_view_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </ordinary_type_declaration>
+            <constant_declaration>
+               <sloc line="51" col="3" endline="51" endcol="47"/>
+               <names_ql>
+                  <defining_identifier def_name="Default_Rank" def="ada://constant/Gm_Unit_Rank_Types-2:9/Default_Rank-51:3" type="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8">
+                     <sloc line="51" col="3" endline="51" endcol="14"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="51" col="27" endline="51" endcol="35"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Rank_Type" ref="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8" type="null">
+                           <sloc line="51" col="27" endline="51" endcol="35"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <enumeration_literal ref_name="Unknown" ref="ada://enumeration_literal/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8/Unknown-29:22" type="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8">
+                     <sloc line="51" col="40" endline="51" endcol="46"/>
+                  </enumeration_literal>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </constant_declaration>
+            <ordinary_type_declaration>
+               <sloc line="56" col="3" endline="60" endcol="15"/>
+               <names_ql>
+                  <defining_identifier def_name="Unit_Numeric_Rank_Type" def="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8" type="null">
+                     <sloc line="56" col="8" endline="56" endcol="29"/>
+                  </defining_identifier>
+               </names_ql>
+               <discriminant_part_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </discriminant_part_q>
+               <type_declaration_view_q>
+                  <record_type_definition>
+                     <sloc line="57" col="5" endline="60" endcol="14"/>
+                     <has_abstract_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_abstract_q>
+                     <has_limited_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_limited_q>
+                     <record_definition_q>
+                        <record_definition>
+                           <sloc line="57" col="5" endline="60" endcol="14"/>
+                           <has_limited_q>
+                              <not_an_element>
+                                 <sloc line="1" col="1" endline="0" endcol="0"/>
+                              </not_an_element>
+                           </has_limited_q>
+                           <record_components_ql>
+                              <component_declaration>
+                                 <sloc line="58" col="7" endline="58" endcol="21"/>
+                                 <names_ql>
+                                    <defining_identifier def_name="Unit" def="ada://component/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8/Unit-58:7" type="null">
+                                       <sloc line="58" col="7" endline="58" endcol="10"/>
+                                    </defining_identifier>
+                                 </names_ql>
+                                 <has_aliased_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </has_aliased_q>
+                                 <object_declaration_view_q>
+                                    <component_definition>
+                                       <sloc line="58" col="14" endline="58" endcol="20"/>
+                                       <has_aliased_q>
+                                          <not_an_element>
+                                             <sloc line="1" col="1" endline="0" endcol="0"/>
+                                          </not_an_element>
+                                       </has_aliased_q>
+                                       <component_definition_view_q>
+                                          <subtype_indication>
+                                             <sloc line="58" col="14" endline="58" endcol="20"/>
+                                             <has_aliased_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_aliased_q>
+                                             <has_null_exclusion_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_null_exclusion_q>
+                                             <subtype_mark_q>
+                                                <identifier ref_name="Integer" ref="ada://ordinary_type/Standard-1:1/Integer-1:1" type="null">
+                                                   <sloc line="58" col="14" endline="58" endcol="20"/>
+                                                </identifier>
+                                             </subtype_mark_q>
+                                             <subtype_constraint_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </subtype_constraint_q>
+                                          </subtype_indication>
+                                       </component_definition_view_q>
+                                    </component_definition>
+                                 </object_declaration_view_q>
+                                 <initialization_expression_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </initialization_expression_q>
+                                 <aspect_specifications_ql>
+                                 </aspect_specifications_ql>
+                              </component_declaration>
+                              <component_declaration>
+                                 <sloc line="59" col="7" endline="59" endcol="31"/>
+                                 <names_ql>
+                                    <defining_identifier def_name="Rank" def="ada://component/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8/Rank-59:7" type="null">
+                                       <sloc line="59" col="7" endline="59" endcol="10"/>
+                                    </defining_identifier>
+                                 </names_ql>
+                                 <has_aliased_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </has_aliased_q>
+                                 <object_declaration_view_q>
+                                    <component_definition>
+                                       <sloc line="59" col="14" endline="59" endcol="30"/>
+                                       <has_aliased_q>
+                                          <not_an_element>
+                                             <sloc line="1" col="1" endline="0" endcol="0"/>
+                                          </not_an_element>
+                                       </has_aliased_q>
+                                       <component_definition_view_q>
+                                          <subtype_indication>
+                                             <sloc line="59" col="14" endline="59" endcol="30"/>
+                                             <has_aliased_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_aliased_q>
+                                             <has_null_exclusion_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_null_exclusion_q>
+                                             <subtype_mark_q>
+                                                <identifier ref_name="Numeric_Rank_Type" ref="ada://subtype/Gm_Unit_Rank_Types-2:9/Numeric_Rank_Type-20:11" type="null">
+                                                   <sloc line="59" col="14" endline="59" endcol="30"/>
+                                                </identifier>
+                                             </subtype_mark_q>
+                                             <subtype_constraint_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </subtype_constraint_q>
+                                          </subtype_indication>
+                                       </component_definition_view_q>
+                                    </component_definition>
+                                 </object_declaration_view_q>
+                                 <initialization_expression_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </initialization_expression_q>
+                                 <aspect_specifications_ql>
+                                 </aspect_specifications_ql>
+                              </component_declaration>
+                           </record_components_ql>
+                        </record_definition>
+                     </record_definition_q>
+                  </record_type_definition>
+               </type_declaration_view_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </ordinary_type_declaration>
+            <constant_declaration>
+               <sloc line="62" col="3" endline="64" endcol="60"/>
+               <names_ql>
+                  <defining_identifier def_name="Default_Unit_Numeric_Rank" def="ada://constant/Gm_Unit_Rank_Types-2:9/Default_Unit_Numeric_Rank-62:3" type="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8">
+                     <sloc line="62" col="3" endline="62" endcol="27"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="62" col="40" endline="62" endcol="61"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Unit_Numeric_Rank_Type" ref="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8" type="null">
+                           <sloc line="62" col="40" endline="62" endcol="61"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <qualified_expression type="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8">
+                     <sloc line="63" col="7" endline="64" endcol="59"/>
+                     <converted_or_qualified_subtype_mark_q>
+                        <identifier ref_name="Unit_Numeric_Rank_Type" ref="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8" type="null">
+                           <sloc line="63" col="7" endline="63" endcol="28"/>
+                        </identifier>
+                     </converted_or_qualified_subtype_mark_q>
+                     <converted_or_qualified_expression_q>
+                        <record_aggregate type="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8">
+                           <sloc line="63" col="30" endline="64" endcol="59"/>
+                           <record_component_associations_ql>
+                              <record_component_association>
+                                 <sloc line="63" col="31" endline="63" endcol="39"/>
+                                 <record_component_choices_ql>
+                                    <identifier ref_name="Unit" ref="ada://component/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8/Unit-58:7" type="null">
+                                       <sloc line="63" col="31" endline="63" endcol="34"/>
+                                    </identifier>
+                                 </record_component_choices_ql>
+                                 <component_expression_q>
+                                    <integer_literal type="universal integer" lit_val="0">
+                                       <sloc line="63" col="39" endline="63" endcol="39"/>
+                                    </integer_literal>
+                                 </component_expression_q>
+                              </record_component_association>
+                              <record_component_association>
+                                 <sloc line="64" col="31" endline="64" endcol="58"/>
+                                 <record_component_choices_ql>
+                                    <identifier ref_name="Rank" ref="ada://component/Gm_Unit_Rank_Types-2:9/Unit_Numeric_Rank_Type-56:8/Rank-59:7" type="null">
+                                       <sloc line="64" col="31" endline="64" endcol="34"/>
+                                    </identifier>
+                                 </record_component_choices_ql>
+                                 <component_expression_q>
+                                    <identifier ref_name="Default_Numeric_Rank" ref="ada://constant/Gm_Unit_Rank_Types-2:9/Default_Numeric_Rank-22:3" type="ada://subtype/Gm_Unit_Rank_Types-2:9/Numeric_Rank_Type-20:11">
+                                       <sloc line="64" col="39" endline="64" endcol="58"/>
+                                    </identifier>
+                                 </component_expression_q>
+                              </record_component_association>
+                           </record_component_associations_ql>
+                        </record_aggregate>
+                     </converted_or_qualified_expression_q>
+                  </qualified_expression>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </constant_declaration>
+            <ordinary_type_declaration>
+               <sloc line="68" col="3" endline="72" endcol="15"/>
+               <names_ql>
+                  <defining_identifier def_name="Unit_Rank_Type" def="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8" type="null">
+                     <sloc line="68" col="8" endline="68" endcol="21"/>
+                  </defining_identifier>
+               </names_ql>
+               <discriminant_part_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </discriminant_part_q>
+               <type_declaration_view_q>
+                  <record_type_definition>
+                     <sloc line="69" col="5" endline="72" endcol="14"/>
+                     <has_abstract_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_abstract_q>
+                     <has_limited_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_limited_q>
+                     <record_definition_q>
+                        <record_definition>
+                           <sloc line="69" col="5" endline="72" endcol="14"/>
+                           <has_limited_q>
+                              <not_an_element>
+                                 <sloc line="1" col="1" endline="0" endcol="0"/>
+                              </not_an_element>
+                           </has_limited_q>
+                           <record_components_ql>
+                              <component_declaration>
+                                 <sloc line="70" col="7" endline="70" endcol="21"/>
+                                 <names_ql>
+                                    <defining_identifier def_name="Unit" def="ada://component/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8/Unit-70:7" type="null">
+                                       <sloc line="70" col="7" endline="70" endcol="10"/>
+                                    </defining_identifier>
+                                 </names_ql>
+                                 <has_aliased_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </has_aliased_q>
+                                 <object_declaration_view_q>
+                                    <component_definition>
+                                       <sloc line="70" col="14" endline="70" endcol="20"/>
+                                       <has_aliased_q>
+                                          <not_an_element>
+                                             <sloc line="1" col="1" endline="0" endcol="0"/>
+                                          </not_an_element>
+                                       </has_aliased_q>
+                                       <component_definition_view_q>
+                                          <subtype_indication>
+                                             <sloc line="70" col="14" endline="70" endcol="20"/>
+                                             <has_aliased_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_aliased_q>
+                                             <has_null_exclusion_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_null_exclusion_q>
+                                             <subtype_mark_q>
+                                                <identifier ref_name="Integer" ref="ada://ordinary_type/Standard-1:1/Integer-1:1" type="null">
+                                                   <sloc line="70" col="14" endline="70" endcol="20"/>
+                                                </identifier>
+                                             </subtype_mark_q>
+                                             <subtype_constraint_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </subtype_constraint_q>
+                                          </subtype_indication>
+                                       </component_definition_view_q>
+                                    </component_definition>
+                                 </object_declaration_view_q>
+                                 <initialization_expression_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </initialization_expression_q>
+                                 <aspect_specifications_ql>
+                                 </aspect_specifications_ql>
+                              </component_declaration>
+                              <component_declaration>
+                                 <sloc line="71" col="7" endline="71" endcol="23"/>
+                                 <names_ql>
+                                    <defining_identifier def_name="Rank" def="ada://component/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8/Rank-71:7" type="null">
+                                       <sloc line="71" col="7" endline="71" endcol="10"/>
+                                    </defining_identifier>
+                                 </names_ql>
+                                 <has_aliased_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </has_aliased_q>
+                                 <object_declaration_view_q>
+                                    <component_definition>
+                                       <sloc line="71" col="14" endline="71" endcol="22"/>
+                                       <has_aliased_q>
+                                          <not_an_element>
+                                             <sloc line="1" col="1" endline="0" endcol="0"/>
+                                          </not_an_element>
+                                       </has_aliased_q>
+                                       <component_definition_view_q>
+                                          <subtype_indication>
+                                             <sloc line="71" col="14" endline="71" endcol="22"/>
+                                             <has_aliased_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_aliased_q>
+                                             <has_null_exclusion_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </has_null_exclusion_q>
+                                             <subtype_mark_q>
+                                                <identifier ref_name="Rank_Type" ref="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8" type="null">
+                                                   <sloc line="71" col="14" endline="71" endcol="22"/>
+                                                </identifier>
+                                             </subtype_mark_q>
+                                             <subtype_constraint_q>
+                                                <not_an_element>
+                                                   <sloc line="1" col="1" endline="0" endcol="0"/>
+                                                </not_an_element>
+                                             </subtype_constraint_q>
+                                          </subtype_indication>
+                                       </component_definition_view_q>
+                                    </component_definition>
+                                 </object_declaration_view_q>
+                                 <initialization_expression_q>
+                                    <not_an_element>
+                                       <sloc line="1" col="1" endline="0" endcol="0"/>
+                                    </not_an_element>
+                                 </initialization_expression_q>
+                                 <aspect_specifications_ql>
+                                 </aspect_specifications_ql>
+                              </component_declaration>
+                           </record_components_ql>
+                        </record_definition>
+                     </record_definition_q>
+                  </record_type_definition>
+               </type_declaration_view_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </ordinary_type_declaration>
+            <constant_declaration>
+               <sloc line="74" col="3" endline="76" endcol="44"/>
+               <names_ql>
+                  <defining_identifier def_name="Default_Unit_Rank" def="ada://constant/Gm_Unit_Rank_Types-2:9/Default_Unit_Rank-74:3" type="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8">
+                     <sloc line="74" col="3" endline="74" endcol="19"/>
+                  </defining_identifier>
+               </names_ql>
+               <has_aliased_q>
+                  <not_an_element>
+                     <sloc line="1" col="1" endline="0" endcol="0"/>
+                  </not_an_element>
+               </has_aliased_q>
+               <object_declaration_view_q>
+                  <subtype_indication>
+                     <sloc line="74" col="32" endline="74" endcol="45"/>
+                     <has_aliased_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_aliased_q>
+                     <has_null_exclusion_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </has_null_exclusion_q>
+                     <subtype_mark_q>
+                        <identifier ref_name="Unit_Rank_Type" ref="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8" type="null">
+                           <sloc line="74" col="32" endline="74" endcol="45"/>
+                        </identifier>
+                     </subtype_mark_q>
+                     <subtype_constraint_q>
+                        <not_an_element>
+                           <sloc line="1" col="1" endline="0" endcol="0"/>
+                        </not_an_element>
+                     </subtype_constraint_q>
+                  </subtype_indication>
+               </object_declaration_view_q>
+               <initialization_expression_q>
+                  <qualified_expression type="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8">
+                     <sloc line="75" col="7" endline="76" endcol="43"/>
+                     <converted_or_qualified_subtype_mark_q>
+                        <identifier ref_name="Unit_Rank_Type" ref="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8" type="null">
+                           <sloc line="75" col="7" endline="75" endcol="20"/>
+                        </identifier>
+                     </converted_or_qualified_subtype_mark_q>
+                     <converted_or_qualified_expression_q>
+                        <record_aggregate type="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8">
+                           <sloc line="75" col="22" endline="76" endcol="43"/>
+                           <record_component_associations_ql>
+                              <record_component_association>
+                                 <sloc line="75" col="23" endline="75" endcol="31"/>
+                                 <record_component_choices_ql>
+                                    <identifier ref_name="Unit" ref="ada://component/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8/Unit-70:7" type="null">
+                                       <sloc line="75" col="23" endline="75" endcol="26"/>
+                                    </identifier>
+                                 </record_component_choices_ql>
+                                 <component_expression_q>
+                                    <integer_literal type="universal integer" lit_val="0">
+                                       <sloc line="75" col="31" endline="75" endcol="31"/>
+                                    </integer_literal>
+                                 </component_expression_q>
+                              </record_component_association>
+                              <record_component_association>
+                                 <sloc line="76" col="23" endline="76" endcol="42"/>
+                                 <record_component_choices_ql>
+                                    <identifier ref_name="Rank" ref="ada://component/Gm_Unit_Rank_Types-2:9/Unit_Rank_Type-68:8/Rank-71:7" type="null">
+                                       <sloc line="76" col="23" endline="76" endcol="26"/>
+                                    </identifier>
+                                 </record_component_choices_ql>
+                                 <component_expression_q>
+                                    <identifier ref_name="Default_Rank" ref="ada://constant/Gm_Unit_Rank_Types-2:9/Default_Rank-51:3" type="ada://ordinary_type/Gm_Unit_Rank_Types-2:9/Rank_Type-29:8">
+                                       <sloc line="76" col="31" endline="76" endcol="42"/>
+                                    </identifier>
+                                 </component_expression_q>
+                              </record_component_association>
+                           </record_component_associations_ql>
+                        </record_aggregate>
+                     </converted_or_qualified_expression_q>
+                  </qualified_expression>
+               </initialization_expression_q>
+               <aspect_specifications_ql>
+               </aspect_specifications_ql>
+            </constant_declaration>
+         </visible_part_declarative_items_ql>
+         <private_part_declarative_items_ql>
+         </private_part_declarative_items_ql>
+      </package_declaration>
+   </unit_declaration_q>
+   <pragmas_after_ql>
+   </pragmas_after_ql>
+</compilation_unit>
