@@ -15,6 +15,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class UMLTest {
 
     @Test
@@ -44,4 +46,8 @@ public class UMLTest {
         Assertions.assertFalse(combinedUML.hasPlaceholders());
     }
 
+    @Test
+    void combine() {
+        fail("write a test for this one!");
+    }
 }

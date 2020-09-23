@@ -72,6 +72,26 @@ public class OrdinaryTypeDeclaration
      * HELPER_METHOD
      * @return
      */
+    public List<String> getEnumLiterals() {
+        List<String> resultingEnumLiterals = new ArrayList<>();
+
+        if(getTypeDeclarationViewQ()!=null
+                && getTypeDeclarationViewQ().getEnumerationTypeDefinition()!=null
+                && getTypeDeclarationViewQ().getEnumerationTypeDefinition().getEnumerationLiteralDeclarationsQl()!=null) {
+            for (JaxBSuperclass thing : getTypeDeclarationViewQ().getEnumerationTypeDefinition().getEnumerationLiteralDeclarationsQl().getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+                if(thing instanceof EnumerationLiteralSpecification) {
+                    resultingEnumLiterals.add(((DefiningEnumerationLiteral) ((EnumerationLiteralSpecification) thing).getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral().get(0)).getDefName());
+                }
+            }
+        }
+
+        return resultingEnumLiterals;
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
     public PackageDeclaration getParentPackage() {
         if(getParent()==null || getParent().getParent()==null || !(getParent().getParent() instanceof PackageDeclaration))
             return null;

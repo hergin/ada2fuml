@@ -46,12 +46,14 @@ public class UML extends HierarchicalElement {
 
     public void combine(UML otherUML) {
         otherUML.getClasses().forEach(c->addClass(c));
+        otherUML.getEnumerations().forEach(e->addEnumeration(e));
 
         for(Package otherPackage:otherUML.getPackages()) {
             List<Package> sameNamedPackages = packages.stream().filter(p->p.getName().equals(otherPackage.getName())).collect(Collectors.toList());
             if(sameNamedPackages.size()>0) {
                 Package sameNamedPackage = sameNamedPackages.get(0);
                 otherPackage.getClasses().forEach(c->sameNamedPackage.addClass(c));
+                otherPackage.getEnumerations().forEach(e->sameNamedPackage.addEnumeration(e));
                 otherPackage.getSubPackages().forEach(sb->sameNamedPackage.addSubPackage(sb));
             } else {
                 addPackage(otherPackage);
@@ -169,6 +171,35 @@ public class UML extends HierarchicalElement {
         return result;
     }
 
+    public boolean hasEnumeration(String inputEnumerationName) {
+        for (Enumeration theEnum:enumerations) {
+            if(theEnum.getName().equals(inputEnumerationName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Enumeration getEnumByName(String enumName) {
+        for (Enumeration theEnum:enumerations) {
+            if(theEnum.getName().equals(enumName)) {
+                return theEnum;
+            }
+        }
+        return null;
+    }
+
+    public Enumeration createOrGetEnumByName(String enumName) {
+        Enumeration resultingEnum = null;
+        if(this.hasClass(enumName)) {
+            resultingEnum = this.getEnumByName(enumName);
+        } else {
+            resultingEnum = new Enumeration(enumName);
+            this.addEnumeration(resultingEnum);
+        }
+        return resultingEnum;
+    }
+
     public boolean hasClass(String inputClassName) {
         for (Class theClass:classes) {
             if(theClass.getName().equals(inputClassName)) {
@@ -196,6 +227,11 @@ public class UML extends HierarchicalElement {
             this.addClass(resultingClass);
         }
         return resultingClass;
+    }
+
+    public void addEnumeration(Enumeration inputEnumeration) {
+        inputEnumeration.setParent(this);
+        enumerations.add(inputEnumeration);
     }
 
     public void addClass(Class inputClass) {

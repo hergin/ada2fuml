@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import javax.xml.bind.JAXBException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class AdaXmlParserTest {
 
     @Test
@@ -157,7 +155,7 @@ class AdaXmlParserTest {
         // Name of the parent package of the class
         Assertions.assertEquals("SomeClass",((DefiningIdentifier)theClass.getParentPackage().getNamesQl().getNotAnElementOrDefiningIdentifierOrDefiningCharacterLiteral().get(0)).getDefName());
 
-        List<OrdinaryTypeDeclaration> ordinaryTypeDeclarations = thePackage.getOrdinaryTypes();
+        List<OrdinaryTypeDeclaration> ordinaryTypeDeclarations = thePackage.getOrdinaryTypesOtherThanEnumeration();
 
         Assertions.assertEquals(1,ordinaryTypeDeclarations.size());
     }

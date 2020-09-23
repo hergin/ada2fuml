@@ -92,16 +92,36 @@ public class PackageDeclaration
      * HELPER_METHOD
      * @return
      */
-    public List<OrdinaryTypeDeclaration> getOrdinaryTypes() {
+    public List<OrdinaryTypeDeclaration> getEnumerationOrdinaryTypes() {
+        List<OrdinaryTypeDeclaration> enumerationTypes = new ArrayList<>();
+
+        for (Object o: visiblePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof OrdinaryTypeDeclaration && ((OrdinaryTypeDeclaration) o).getTypeDeclarationViewQ().getEnumerationTypeDefinition()!=null)
+                enumerationTypes.add((OrdinaryTypeDeclaration) o);
+        }
+
+        for (Object o: privatePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
+            if(o instanceof OrdinaryTypeDeclaration && ((OrdinaryTypeDeclaration) o).getTypeDeclarationViewQ().getEnumerationTypeDefinition()!=null)
+                enumerationTypes.add((OrdinaryTypeDeclaration) o);
+        }
+
+        return enumerationTypes;
+    }
+
+    /**
+     * HELPER_METHOD
+     * @return
+     */
+    public List<OrdinaryTypeDeclaration> getOrdinaryTypesOtherThanEnumeration() {
         List<OrdinaryTypeDeclaration> ordinaryTypes = new ArrayList<>();
 
         for (Object o: visiblePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
-            if(o instanceof OrdinaryTypeDeclaration)
+            if(o instanceof OrdinaryTypeDeclaration && ((OrdinaryTypeDeclaration) o).getTypeDeclarationViewQ().getEnumerationTypeDefinition()==null)
                 ordinaryTypes.add((OrdinaryTypeDeclaration) o);
         }
 
         for (Object o: privatePartDeclarativeItemsQl.getNotAnElementOrOrdinaryTypeDeclarationOrTaskTypeDeclaration()) {
-            if(o instanceof OrdinaryTypeDeclaration)
+            if(o instanceof OrdinaryTypeDeclaration && ((OrdinaryTypeDeclaration) o).getTypeDeclarationViewQ().getEnumerationTypeDefinition()==null)
                 ordinaryTypes.add((OrdinaryTypeDeclaration) o);
         }
 

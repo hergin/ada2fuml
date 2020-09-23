@@ -52,6 +52,17 @@ public class Package extends HierarchicalElement {
         return interfaces.stream().filter(c->c.getName().equals(inputInterfacesName)).count()!=0;
     }
 
+    public Enumeration createOrGetEnumByName(String enumName) {
+        Enumeration resultingEnum = null;
+        if(this.hasClass(enumName)) {
+            resultingEnum = this.getEnumByName(enumName);
+        } else {
+            resultingEnum = new Enumeration(enumName);
+            this.addEnumeration(resultingEnum);
+        }
+        return resultingEnum;
+    }
+
     public Class createOrGetClassByName(String className) {
         Class resultingClass = null;
         if(this.hasClass(className)) {

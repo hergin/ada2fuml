@@ -7,6 +7,7 @@ import exceptions.UnhandledTypeException;
 //import exceptions.UnknownTypeException;
 import model.*;
 import model.Class;
+import model.EnumerationLiteral;
 import model.Package;
 import model.enums.DirectionEnum;
 import model.enums.PlaceholderPreferenceEnum;
@@ -82,7 +83,50 @@ public class Extractor {
                 theClass.addSuperClass(superClass);
             }
 
-            for (OrdinaryTypeDeclaration theType : thePackage.getOrdinaryTypes()) {
+            for(OrdinaryTypeDeclaration theEnumerationOrdinaryType : thePackage.getEnumerationOrdinaryTypes()) {
+                String enumName = theEnumerationOrdinaryType.getName();
+
+                Enumeration theEnum = null;
+                Package thePackageInWhichEnumIs = null;
+
+                // packageX + typeX => classX
+                if (packageName.equals(enumName)) {
+                    theEnum = resultingUML.createOrGetEnumByName(enumName);
+                }
+
+                // If there is a . in the package name, we will create subpackage.
+                if(classNameAfterPackageName.contains(".")) {
+                    String higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
+                    packageName = higherLevelPackage;
+                    if(higherLevelPackage.contains("_"))
+                        higherLevelPackage = higherLevelPackage.split("_")[0];
+                    classNameAfterPackageName = classNameAfterPackageName.split("\\.")[1];
+
+                    Package dottedSuperPackage = resultingUML.createOrGetPackageByName(higherLevelPackage);
+
+                    // packageX + typeY => packageX + classY
+                    if (!packageName.equals(enumName)) {
+                        Package subpackage = dottedSuperPackage.createOrGetSubPackageByName(packageName);
+                        thePackageInWhichEnumIs = subpackage;
+                        theEnum = subpackage.createOrGetEnumByName(enumName);
+                    }
+
+                } else {
+                    // packageX + typeY => packageX + classY
+                    if (!packageName.equals(enumName)) {
+                        Package packageNamedAfterAdaPackage = resultingUML.createOrGetPackageByName(packageName);
+                        thePackageInWhichEnumIs = packageNamedAfterAdaPackage;
+                        theEnum = packageNamedAfterAdaPackage.createOrGetEnumByName(enumName);
+                    }
+                }
+
+                for (String anEnumLiteral:theEnumerationOrdinaryType.getEnumLiterals()) {
+                    theEnum.addLiteral(new EnumerationLiteral(anEnumLiteral));
+                }
+
+            }
+
+            for (OrdinaryTypeDeclaration theType : thePackage.getOrdinaryTypesOtherThanEnumeration()) {
 
                 try {
 
