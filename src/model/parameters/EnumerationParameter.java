@@ -2,10 +2,12 @@ package model.parameters;
 
 import model.EnumerationLiteral;
 import model.Parameter;
+import model.auxiliary.HierarchicalElement;
+import model.auxiliary.IPlaceholderedElement;
 import model.enums.DirectionEnum;
 import model.Enumeration;
 
-public class EnumerationParameter extends Parameter {
+public class EnumerationParameter extends Parameter implements IPlaceholderedElement {
 
     private Enumeration type;
     private EnumerationLiteral defaultValue;
@@ -27,6 +29,21 @@ public class EnumerationParameter extends Parameter {
 
     public String getPlaceholder() {
         return placeholder;
+    }
+
+    public void fixType(Enumeration theEnum) {
+        this.type = theEnum;
+        this.placeholder = "";
+    }
+
+    @Override
+    public void fixType(HierarchicalElement theReplacement) {
+        fixType(((Enumeration) theReplacement));
+    }
+
+    @Override
+    public Class getRootType() {
+        return Enumeration.class;
     }
 
     public Enumeration getType() {

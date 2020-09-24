@@ -33,6 +33,7 @@ public class Package extends HierarchicalElement {
         List<IPlaceholderReplacement> result = new ArrayList<>();
 
         result.addAll(aPackage.getClasses());
+        result.addAll(aPackage.getEnumerations());
 
         for (Package subPackage : aPackage.getSubPackages()) {
             result.addAll(Package.getAllPlaceholderReplacementsRecursively(subPackage));
@@ -43,6 +44,10 @@ public class Package extends HierarchicalElement {
 
     public static List<IPlaceholderedElement> getAllElementsWithPlaceholdersRecursively(Package aPackage) {
         List<IPlaceholderedElement> result = new ArrayList<>();
+
+        for(Enumeration anEnum:aPackage.getEnumerations()) {
+            result.addAll(anEnum.getElementsWithPlaceholder());
+        }
 
         for (Class aClass:aPackage.getClasses()) {
             result.addAll(aClass.getElementsWithPlaceholder());
@@ -56,6 +61,12 @@ public class Package extends HierarchicalElement {
     }
 
     public boolean hasPlaceholders() {
+
+        for(Enumeration anEnum:enumerations) {
+            if(anEnum.hasPlaceholders())
+                return true;
+        }
+
         for(Class classs:classes) {
             if(classs.hasPlaceholders())
                 return true;

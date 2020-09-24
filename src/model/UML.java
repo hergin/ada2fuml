@@ -6,8 +6,10 @@ import model.auxiliary.IPlaceholderedElement;
 import model.enums.PlaceholderPreferenceEnum;
 import model.enums.VisibilityEnum;
 import model.parameters.ClassParameter;
+import model.parameters.EnumerationParameter;
 import model.properties.AssociationProperty;
 import model.properties.ClassProperty;
+import model.properties.EnumerationProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +69,11 @@ public class UML extends HierarchicalElement {
 
     public boolean hasPlaceholders() {
 
+        for(Enumeration anEnum:enumerations) {
+            if(anEnum.hasPlaceholders())
+                return true;
+        }
+
         for(Class aClass:classes) {
             if(aClass.hasPlaceholders())
                 return true;
@@ -96,8 +103,51 @@ public class UML extends HierarchicalElement {
                 if ((preference.equals(PlaceholderPreferenceEnum.Global) && theReplacement.getSignature().equals(placeholder))
                         || (preference.equals(PlaceholderPreferenceEnum.Local) && !placeholder.contains(".") && theReplacement.getName().equals(placeholder))) {
 
-                    anElementWithPlaceholder.fixType(aPlaceholderReplacer.getRealTypeOfPlaceholder());
-                    replacedElement = theReplacement;
+                    if(!aPlaceholderReplacer.getClass().equals(anElementWithPlaceholder.getRootType())) {
+                        // TODO replace anElementWithPlaceholder with a suitable aPlaceHolderReplacer
+                        if(anElementWithPlaceholder instanceof EnumerationProperty) {
+                            EnumerationProperty castedProperty = ((EnumerationProperty) anElementWithPlaceholder);
+                            HierarchicalElement parent = castedProperty.getParent();
+                            if(parent instanceof Enumeration) {
+                                Enumeration castedParent = ((Enumeration) parent);
+                                castedParent.addProperty(new ClassProperty(castedProperty.getName(),castedProperty.getVisibility(), ((Class) aPlaceholderReplacer)));
+                                castedParent.getProperties().remove(castedProperty);
+                            } else if(parent instanceof Class) {
+                                Class castedParent = ((Class) parent);
+                                castedParent.addProperty(new ClassProperty(castedProperty.getName(),castedProperty.getVisibility(), ((Class) aPlaceholderReplacer)));
+                                castedParent.getProperties().remove(castedProperty);
+                            }
+                        } else if(anElementWithPlaceholder instanceof ClassProperty) {
+                            ClassProperty castedProperty = ((ClassProperty) anElementWithPlaceholder);
+                            HierarchicalElement parent = castedProperty.getParent();
+                            if(parent instanceof Enumeration) {
+                                Enumeration castedParent = ((Enumeration) parent);
+                                castedParent.addProperty(new EnumerationProperty(castedProperty.getName(),((Enumeration) aPlaceholderReplacer)));
+                                castedParent.getProperties().remove(castedProperty);
+                            } else if(parent instanceof Class) {
+                                Class castedParent = ((Class) parent);
+                                castedParent.addProperty(new EnumerationProperty(castedProperty.getName(),((Enumeration) aPlaceholderReplacer)));
+                                castedParent.getProperties().remove(castedProperty);
+                            }
+                        } else if(anElementWithPlaceholder instanceof EnumerationParameter) {
+                            EnumerationParameter castedParameter = ((EnumerationParameter) anElementWithPlaceholder);
+                            HierarchicalElement parent = castedParameter.getParent();
+                            Operation castedParent = ((Operation) parent);
+                            castedParent.addParameter(new ClassParameter(castedParameter.getName(),castedParameter.getDirection(), ((Class) aPlaceholderReplacer)));
+                            castedParent.getParameters().remove(castedParameter);
+                        } else if(anElementWithPlaceholder instanceof ClassParameter) {
+                            ClassParameter castedParameter = ((ClassParameter) anElementWithPlaceholder);
+                            HierarchicalElement parent = castedParameter.getParent();
+                            Operation castedParent = ((Operation) parent);
+                            castedParent.addParameter(new EnumerationParameter(castedParameter.getName(),castedParameter.getDirection(), ((Enumeration) aPlaceholderReplacer)));
+                            castedParent.getParameters().remove(castedParameter);
+                        }
+                        // TODO looks like there should be lots of IFs and ELSEs.
+                        //  Maybe implement first and then find a more elegant way of this replacement.
+                    } else {
+                        anElementWithPlaceholder.fixType(aPlaceholderReplacer.getRealTypeOfPlaceholder());
+                        replacedElement = theReplacement;
+                    }
                 }
             }
 
@@ -138,6 +188,10 @@ public class UML extends HierarchicalElement {
     public List<IPlaceholderedElement> collectAllPlaceholderedElements() {
         List<IPlaceholderedElement> result = new ArrayList<>();
 
+        for(Enumeration anEnum:enumerations) {
+            result.addAll(anEnum.getElementsWithPlaceholder());
+        }
+
         for (Class aClass:classes) {
             result.addAll(aClass.getElementsWithPlaceholder());
         }
@@ -153,6 +207,7 @@ public class UML extends HierarchicalElement {
         List<IPlaceholderReplacement> result = new ArrayList<>();
 
         result.addAll(this.classes);
+        result.addAll(this.enumerations);
 
         for(Package aPackage:packages) {
             result.addAll(Package.getAllPlaceholderReplacementsRecursively(aPackage));

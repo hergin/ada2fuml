@@ -36,6 +36,11 @@ public class ClassParameter extends Parameter implements IPlaceholderedElement {
         fixType(((Class) theReplacement));
     }
 
+    @Override
+    public java.lang.Class getRootType() {
+        return Class.class;
+    }
+
     public Class getType() {
         return type;
     }

@@ -4,7 +4,9 @@ import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.parameters.ClassParameter;
+import model.parameters.EnumerationParameter;
 import model.properties.ClassProperty;
+import model.properties.EnumerationProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +30,15 @@ public class Class extends HierarchicalElement implements IPlaceholderReplacemen
         List<IPlaceholderedElement> result = new ArrayList<>();
 
         for (Property property:properties) {
-            if(property instanceof ClassProperty)
-                result.add(((ClassProperty) property));
+            if(property instanceof ClassProperty
+                    || property instanceof EnumerationProperty)
+                result.add(((IPlaceholderedElement) property));
         }
 
         for (Operation operation:operations) {
             for (Parameter parameter:operation.getParameters()) {
-                if (parameter instanceof ClassParameter)
+                if (parameter instanceof ClassParameter
+                        || parameter instanceof EnumerationParameter)
                     result.add(((ClassParameter) parameter));
             }
         }

@@ -3,9 +3,11 @@ package model.properties;
 import model.Enumeration;
 import model.EnumerationLiteral;
 import model.Property;
+import model.auxiliary.HierarchicalElement;
+import model.auxiliary.IPlaceholderedElement;
 import model.enums.VisibilityEnum;
 
-public class EnumerationProperty extends Property {
+public class EnumerationProperty extends Property implements IPlaceholderedElement {
 
     private Enumeration type;
     private EnumerationLiteral defaultValue;
@@ -35,7 +37,23 @@ public class EnumerationProperty extends Property {
         return placeholder;
     }
 
+    public void fixType(Enumeration theEnum) {
+        this.type = theEnum;
+        this.placeholder = "";
+    }
+
+    @Override
+    public void fixType(HierarchicalElement theReplacement) {
+        fixType(((Enumeration) theReplacement));
+    }
+
+    @Override
+    public Class getRootType() {
+        return Enumeration.class;
+    }
+
     public Enumeration getType() {
         return type;
     }
+
 }

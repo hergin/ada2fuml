@@ -6,4 +6,5 @@ public interface IPlaceholderedElement {
         return getPlaceholder()!=null && !getPlaceholder().isEmpty();
     }
     void fixType(HierarchicalElement theReplacement);
+    Class getRootType();
 }

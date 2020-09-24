@@ -40,4 +40,9 @@ public class ClassProperty extends Property implements IPlaceholderedElement {
     public void fixType(HierarchicalElement theReplacement) {
         fixType(((Class) theReplacement));
     }
+
+    @Override
+    public java.lang.Class getRootType() {
+        return Class.class;
+    }
 }

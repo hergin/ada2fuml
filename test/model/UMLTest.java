@@ -136,7 +136,7 @@ public class UMLTest {
     }
 
     @Test
-    void testPlaceholderFixScenario4_veryBasic_Local_Enums_and_Classes_Mix() {
+    void testPlaceholderFixScenario4_veryBasic_Local_Enums_and_Classes_Mix_EnumPropWithClassPlaceholderInEnum() {
         UML uml = new UML("UML1");
         Package p1 = new Package("P1");
         uml.addPackage(p1);
@@ -148,6 +148,101 @@ public class UMLTest {
 
         Class c2 = new Class("C2");
         p1.addClass(c2);
+
+        uml.fixPlaceholders(PlaceholderPreferenceEnum.Local);
+
+        assertFalse(uml.hasPlaceholders());
+    }
+
+    @Test
+    void testPlaceholderFixScenario4_veryBasic_Local_Enums_and_Classes_Mix_EnumPropWithClassPlaceholderInClass() {
+        UML uml = new UML("UML1");
+        Package p1 = new Package("P1");
+        uml.addPackage(p1);
+        Class e1 = new Class("E1");
+        e1.addProperty(new EnumerationProperty("EP1","C2"));
+        p1.addClass(e1);
+
+        assertTrue(uml.hasPlaceholders());
+
+        Class c2 = new Class("C2");
+        p1.addClass(c2);
+
+        uml.fixPlaceholders(PlaceholderPreferenceEnum.Local);
+
+        assertFalse(uml.hasPlaceholders());
+    }
+
+    @Test
+    void testPlaceholderFixScenario4_veryBasic_Local_Enums_and_Classes_Mix_ClassPropWithEnumPlaceholderInEnum() {
+        UML uml = new UML("UML1");
+        Package p1 = new Package("P1");
+        uml.addPackage(p1);
+        Enumeration e1 = new Enumeration("E1");
+        e1.addProperty(new ClassProperty("CP1",VisibilityEnum.Public,"E2"));
+        p1.addEnumeration(e1);
+
+        assertTrue(uml.hasPlaceholders());
+
+        Enumeration e2 = new Enumeration("E2");
+        p1.addEnumeration(e2);
+
+        uml.fixPlaceholders(PlaceholderPreferenceEnum.Local);
+
+        assertFalse(uml.hasPlaceholders());
+    }
+
+    @Test
+    void testPlaceholderFixScenario4_veryBasic_Local_Enums_and_Classes_Mix_ClassPropWithEnumPlaceholderInClass() {
+        UML uml = new UML("UML1");
+        Package p1 = new Package("P1");
+        uml.addPackage(p1);
+        Class e1 = new Class("E1");
+        e1.addProperty(new ClassProperty("CP1",VisibilityEnum.Public,"E2"));
+        p1.addClass(e1);
+
+        assertTrue(uml.hasPlaceholders());
+
+        Enumeration e2 = new Enumeration("E2");
+        p1.addEnumeration(e2);
+
+        uml.fixPlaceholders(PlaceholderPreferenceEnum.Local);
+
+        assertFalse(uml.hasPlaceholders());
+    }
+
+    @Test
+    void testPlaceholderFixScenario4_veryBasic_Local_Enums_and_Classes_Mix_ClassPropWithClassPlaceholderInClass() {
+        UML uml = new UML("UML1");
+        Package p1 = new Package("P1");
+        uml.addPackage(p1);
+        Class e1 = new Class("E1");
+        e1.addProperty(new ClassProperty("CP1",VisibilityEnum.Public,"E2"));
+        p1.addClass(e1);
+
+        assertTrue(uml.hasPlaceholders());
+
+        Class e2 = new Class("E2");
+        p1.addClass(e2);
+
+        uml.fixPlaceholders(PlaceholderPreferenceEnum.Local);
+
+        assertFalse(uml.hasPlaceholders());
+    }
+
+    @Test
+    void testPlaceholderFixScenario4_veryBasic_Local_Enums_and_Classes_Mix_EnumPropWithEnumPlaceholderInEnum() {
+        UML uml = new UML("UML1");
+        Package p1 = new Package("P1");
+        uml.addPackage(p1);
+        Enumeration e1 = new Enumeration("E1");
+        e1.addProperty(new EnumerationProperty("CP1","E2"));
+        p1.addEnumeration(e1);
+
+        assertTrue(uml.hasPlaceholders());
+
+        Enumeration e2 = new Enumeration("E2");
+        p1.addEnumeration(e2);
 
         uml.fixPlaceholders(PlaceholderPreferenceEnum.Local);
 
