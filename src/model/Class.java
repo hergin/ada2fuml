@@ -1,6 +1,7 @@
 package model;
 
 import model.auxiliary.HierarchicalElement;
+import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.parameters.ClassParameter;
 import model.properties.ClassProperty;
@@ -8,7 +9,7 @@ import model.properties.ClassProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Class extends HierarchicalElement {
+public class Class extends HierarchicalElement implements IPlaceholderReplacement {
 
     private List<Property> properties;
     private List<Operation> operations;
@@ -23,18 +24,18 @@ public class Class extends HierarchicalElement {
         nestedClasses = new ArrayList<>();
     }
 
-    public List<HierarchicalElement> findElementsWithPlaceholder() {
-        List<HierarchicalElement> result = new ArrayList<>();
+    public List<IPlaceholderedElement> getElementsWithPlaceholder() {
+        List<IPlaceholderedElement> result = new ArrayList<>();
 
         for (Property property:properties) {
-            if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
-                result.add(property);
+            if(property instanceof ClassProperty)
+                result.add(((ClassProperty) property));
         }
 
         for (Operation operation:operations) {
             for (Parameter parameter:operation.getParameters()) {
-                if (parameter instanceof ClassParameter && ((ClassParameter) parameter).getPlaceholder() != null && !((ClassParameter) parameter).getPlaceholder().isEmpty())
-                    result.add(parameter);
+                if (parameter instanceof ClassParameter)
+                    result.add(((ClassParameter) parameter));
             }
         }
 
@@ -95,5 +96,10 @@ public class Class extends HierarchicalElement {
 
     public List<Class> getNestedClasses() {
         return nestedClasses;
+    }
+
+    @Override
+    public HierarchicalElement getRealTypeOfPlaceholder() {
+        return this;
     }
 }

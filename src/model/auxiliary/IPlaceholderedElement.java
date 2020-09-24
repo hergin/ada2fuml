@@ -5,4 +5,5 @@ public interface IPlaceholderedElement {
     default Boolean hasPlaceholder() {
         return getPlaceholder()!=null && !getPlaceholder().isEmpty();
     }
+    void fixType(HierarchicalElement theReplacement);
 }

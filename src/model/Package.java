@@ -1,8 +1,11 @@
 package model;
 
 import model.auxiliary.HierarchicalElement;
+import model.auxiliary.IPlaceholderReplacement;
+import model.auxiliary.IPlaceholderedElement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Package extends HierarchicalElement {
@@ -24,6 +27,32 @@ public class Package extends HierarchicalElement {
         interfaces = new ArrayList<>();
         subPackages = new ArrayList<>();
         properties = new ArrayList<>();
+    }
+
+    public static List<IPlaceholderReplacement> getAllPlaceholderReplacementsRecursively(Package aPackage) {
+        List<IPlaceholderReplacement> result = new ArrayList<>();
+
+        result.addAll(aPackage.getClasses());
+
+        for (Package subPackage : aPackage.getSubPackages()) {
+            result.addAll(Package.getAllPlaceholderReplacementsRecursively(subPackage));
+        }
+
+        return result;
+    }
+
+    public static List<IPlaceholderedElement> getAllElementsWithPlaceholdersRecursively(Package aPackage) {
+        List<IPlaceholderedElement> result = new ArrayList<>();
+
+        for (Class aClass:aPackage.getClasses()) {
+            result.addAll(aClass.getElementsWithPlaceholder());
+        }
+
+        for (Package subPackage:aPackage.getSubPackages()) {
+            result.addAll(Package.getAllElementsWithPlaceholdersRecursively(subPackage));
+        }
+
+        return result;
     }
 
     public boolean hasPlaceholders() {

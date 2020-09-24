@@ -7,6 +7,7 @@ import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import model.auxiliary.HierarchicalElement;
 import model.UML;
+import model.auxiliary.IPlaceholderedElement;
 import model.enums.PlaceholderPreferenceEnum;
 import model.parameters.ClassParameter;
 import model.properties.ClassProperty;
@@ -84,8 +85,8 @@ public class Main {
 
             } catch (StillHavePlaceHolderException shphe) {
                 System.out.println("\nWARNING: "+shphe.getMessage()+" But the tool will try to resolve them when combined! Below are the items with placeholders:");
-                for(HierarchicalElement item:shphe.getItems()) {
-                    System.out.println("NAME: "+item.getName()+" PLACEHOLDER: "+(item instanceof ClassProperty? ((ClassProperty) item).getPlaceholder(): ((ClassParameter) item).getPlaceholder()));
+                for(IPlaceholderedElement item:shphe.getItems()) {
+                    System.out.println("NAME: "+ ((HierarchicalElement) item).getName()+" PLACEHOLDER: "+(item instanceof ClassProperty? ((ClassProperty) item).getPlaceholder(): ((ClassParameter) item).getPlaceholder()));
                 }
                 System.out.println();
             } catch (Exception e) {
@@ -104,8 +105,8 @@ public class Main {
 
             if(overallUML.hasPlaceholders()) {
                 System.out.println(" WARNING: The resulting UML still has placeholders but the tool will export anyway! Below are the items with placeholders:");
-                for(HierarchicalElement item:overallUML.getItemsWithPlaceholders()) {
-                    System.out.println("NAME: "+item.getName()+" PLACEHOLDER: "+(item instanceof ClassProperty? ((ClassProperty) item).getPlaceholder(): ((ClassParameter) item).getPlaceholder()));
+                for(IPlaceholderedElement item:overallUML.getItemsWithPlaceholders()) {
+                    System.out.println("NAME: "+ ((HierarchicalElement) item).getName()+" PLACEHOLDER: "+(item instanceof ClassProperty? ((ClassProperty) item).getPlaceholder(): ((ClassParameter) item).getPlaceholder()));
                 }
             } else {
                 System.out.println(" OK: All placeholders are fixed!");

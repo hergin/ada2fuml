@@ -1,6 +1,8 @@
 package model.parameters;
 
 import model.Parameter;
+import model.auxiliary.HierarchicalElement;
+import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.DirectionEnum;
 import model.Class;
@@ -27,6 +29,11 @@ public class ClassParameter extends Parameter implements IPlaceholderedElement {
 
     public String getPlaceholder() {
         return placeholder;
+    }
+
+    @Override
+    public void fixType(HierarchicalElement theReplacement) {
+        fixType(((Class) theReplacement));
     }
 
     public Class getType() {

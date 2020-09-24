@@ -2,6 +2,8 @@ package model.properties;
 
 import model.Class;
 import model.Property;
+import model.auxiliary.HierarchicalElement;
+import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.VisibilityEnum;
 
@@ -32,5 +34,10 @@ public class ClassProperty extends Property implements IPlaceholderedElement {
 
     public String getPlaceholder() {
         return placeholder;
+    }
+
+    @Override
+    public void fixType(HierarchicalElement theReplacement) {
+        fixType(((Class) theReplacement));
     }
 }

@@ -75,8 +75,5 @@ public class SubTypeFromRoyTests {
         Assertions.assertEquals("Thirteen", resultUml.getPackages().get(0).getEnumerations().get(0).getLiterals().get(16).getName());
         Assertions.assertEquals("Forty_One", resultUml.getPackages().get(0).getEnumerations().get(0).getLiterals().get(44).getName());
         Assertions.assertEquals("Ninety_Nine", resultUml.getPackages().get(0).getEnumerations().get(0).getLiterals().get(102).getName());
-
-        String result = Processor.processUML(resultUml, StillHavePlaceholderExceptionPolicy.Throw);
-        int a =1;
     }
 }

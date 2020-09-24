@@ -1,6 +1,8 @@
 package model;
 
 import model.auxiliary.HierarchicalElement;
+import model.auxiliary.IPlaceholderReplacement;
+import model.auxiliary.IPlaceholderedElement;
 import model.enums.PlaceholderPreferenceEnum;
 import model.enums.VisibilityEnum;
 import model.parameters.ClassParameter;
@@ -34,12 +36,12 @@ public class UML extends HierarchicalElement {
         this.fileName = fileName;
     }
 
-    public List<HierarchicalElement> getItemsWithPlaceholders() {
+    public List<IPlaceholderedElement> getItemsWithPlaceholders() {
         List<Class> allClasses = collectAllClasses();
         List<Class> classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
 
-        List<HierarchicalElement> result = new ArrayList<HierarchicalElement>();
-        classesThatHavePlaceholders.stream().forEach(c->result.addAll(c.findElementsWithPlaceholder()));
+        List<IPlaceholderedElement> result = new ArrayList<IPlaceholderedElement>();
+        classesThatHavePlaceholders.stream().forEach(c->result.addAll(c.getElementsWithPlaceholder()));
 
         return result;
     }
@@ -79,81 +81,84 @@ public class UML extends HierarchicalElement {
     }
 
     public void fixPlaceholders(PlaceholderPreferenceEnum preference) {
-        List<Class> allClasses = collectAllClasses();
-        List<Class> classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
 
-        for (Class aClass:classesThatHavePlaceholders) {
-            List<HierarchicalElement> elementsWithPlaceholder = aClass.findElementsWithPlaceholder();
+        List<IPlaceholderReplacement> allPlaceholderReplacers = collectAllPlaceholderReplacements();
+        List<IPlaceholderedElement> allElementsWithPlaceholdersPossibly = collectAllPlaceholderedElements();
+        List<IPlaceholderedElement> allElementsWithPlaceholders = allElementsWithPlaceholdersPossibly.stream().filter(c->c.hasPlaceholder()).collect(Collectors.toList());
 
-            for (HierarchicalElement anElement:elementsWithPlaceholder) {
-                String placeholder = anElement instanceof ClassProperty? ((ClassProperty) anElement).getPlaceholder(): ((ClassParameter) anElement).getPlaceholder();
+        for (IPlaceholderedElement anElementWithPlaceholder:allElementsWithPlaceholders) {
+            String placeholder = anElementWithPlaceholder.getPlaceholder();
+            HierarchicalElement replacedElement = null;
 
-                for (Class someClass:allClasses) {
-                    if ((preference.equals(PlaceholderPreferenceEnum.Global) && someClass.getSignature().equals(placeholder))
-                        || (preference.equals(PlaceholderPreferenceEnum.Local) && !placeholder.contains(".") && someClass.getName().equals(placeholder))) {
-                        if(anElement instanceof ClassProperty) {
-                            ClassProperty castedProperty = ((ClassProperty) anElement);
-                            castedProperty.fixType(someClass);
+            for(IPlaceholderReplacement aPlaceholderReplacer:allPlaceholderReplacers) {
+                HierarchicalElement theReplacement = ((HierarchicalElement) aPlaceholderReplacer);
 
-                            if(preference.equals(PlaceholderPreferenceEnum.Global)) {
-                                Association association = new Association("associationOf" + castedProperty.getName(), ((Class) castedProperty.getParent()), someClass);
-                                addAssociation(association);
+                if ((preference.equals(PlaceholderPreferenceEnum.Global) && theReplacement.getSignature().equals(placeholder))
+                        || (preference.equals(PlaceholderPreferenceEnum.Local) && !placeholder.contains(".") && theReplacement.getName().equals(placeholder))) {
 
-                                AssociationProperty associationPropertyInSource = new AssociationProperty("assocationPropertyOf" + castedProperty.getName(), VisibilityEnum.Public, association);
-                                ((Class) castedProperty.getParent()).addProperty(associationPropertyInSource);
-                                association.addProperty(associationPropertyInSource);
+                    anElementWithPlaceholder.fixType(aPlaceholderReplacer.getRealTypeOfPlaceholder());
+                    replacedElement = theReplacement;
+                }
+            }
 
-                                AssociationProperty associationPropertyInTarget = new AssociationProperty("associationPropertyOf" + castedProperty.getName(), VisibilityEnum.Public, association);
-                                someClass.addProperty(associationPropertyInTarget);
-                                association.addProperty(associationPropertyInTarget);
-                            }
-                        } else {
-                            ClassParameter castedParameter = ((ClassParameter)anElement);
-                            castedParameter.fixType(someClass);
-                        }
+            // If it still has placeholders after trying to fix, we need to find by brute force.
+            //    This basically might mean maybe because the package name and type name is the same,
+            //       we have created a class in the same name as package.
+            //          Place holder might end with class name but signatures might be different.
+            if(preference.equals(PlaceholderPreferenceEnum.Global)
+                    && anElementWithPlaceholder.hasPlaceholder()) {
+                for(IPlaceholderReplacement aPlaceholderReplacer:allPlaceholderReplacers) {
+                    HierarchicalElement theReplacement = ((HierarchicalElement) aPlaceholderReplacer);
+
+                    if(placeholder.endsWith(theReplacement.getName())) {
+                        anElementWithPlaceholder.fixType(aPlaceholderReplacer.getRealTypeOfPlaceholder());
+                        replacedElement = theReplacement;
                     }
                 }
             }
-        }
 
-        // If it still has placeholders after global fixing, we need to find by brute force.
-        //    This basically might mean maybe because the package name and type name is the same,
-        //       we have created a class in the same name as package.
-        //          Place holder might end with class name but signatures might be different.
-        if(preference.equals(PlaceholderPreferenceEnum.Global) && hasPlaceholders()) {
-            allClasses = collectAllClasses();
-            classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
+            if(preference.equals(PlaceholderPreferenceEnum.Global)
+                    && replacedElement!=null
+                    && anElementWithPlaceholder instanceof ClassProperty) {
+                ClassProperty castedProperty = ((ClassProperty) anElementWithPlaceholder);
+                Association association = new Association("associationOf" + castedProperty.getName(), ((Class) castedProperty.getParent()), ((Class) replacedElement));
+                addAssociation(association);
 
-            for (Class aClass:classesThatHavePlaceholders) {
-                List<HierarchicalElement> elementsWithPlaceholder = aClass.findElementsWithPlaceholder();
+                AssociationProperty associationPropertyInSource = new AssociationProperty("assocationPropertyOf" + castedProperty.getName(), VisibilityEnum.Public, association);
+                ((Class) castedProperty.getParent()).addProperty(associationPropertyInSource);
+                association.addProperty(associationPropertyInSource);
 
-                for (HierarchicalElement anElement:elementsWithPlaceholder) {
-                    String placeholder = anElement instanceof ClassProperty? ((ClassProperty) anElement).getPlaceholder(): ((ClassParameter) anElement).getPlaceholder();
-
-                    for (Class someClass:allClasses) {
-                        if (placeholder.endsWith(someClass.getName())) {
-                            if(anElement instanceof ClassProperty) {
-                                ClassProperty castedProperty = ((ClassProperty) anElement);
-                                castedProperty.fixType(someClass);
-                                Association association = new Association("associationOf"+castedProperty.getName(), ((Class) castedProperty.getParent()),someClass);
-                                addAssociation(association);
-
-                                AssociationProperty associationPropertyInSource = new AssociationProperty("assocationPropertyOf"+castedProperty.getName(), VisibilityEnum.Public,association);
-                                ((Class) castedProperty.getParent()).addProperty(associationPropertyInSource);
-                                association.addProperty(associationPropertyInSource);
-
-                                AssociationProperty associationPropertyInTarget = new AssociationProperty("associationPropertyOf"+castedProperty.getName(),VisibilityEnum.Public,association);
-                                someClass.addProperty(associationPropertyInTarget);
-                                association.addProperty(associationPropertyInTarget);
-                            } else {
-                                ClassParameter castedParameter = ((ClassParameter)anElement);
-                                castedParameter.fixType(someClass);
-                            }
-                        }
-                    }
-                }
+                AssociationProperty associationPropertyInTarget = new AssociationProperty("associationPropertyOf" + castedProperty.getName(), VisibilityEnum.Public, association);
+                ((Class) replacedElement).addProperty(associationPropertyInTarget);
+                association.addProperty(associationPropertyInTarget);
             }
         }
+    }
+
+    public List<IPlaceholderedElement> collectAllPlaceholderedElements() {
+        List<IPlaceholderedElement> result = new ArrayList<>();
+
+        for (Class aClass:classes) {
+            result.addAll(aClass.getElementsWithPlaceholder());
+        }
+
+        for(Package aPackage:packages) {
+            result.addAll(Package.getAllElementsWithPlaceholdersRecursively(aPackage));
+        }
+
+        return result;
+    }
+
+    public List<IPlaceholderReplacement> collectAllPlaceholderReplacements() {
+        List<IPlaceholderReplacement> result = new ArrayList<>();
+
+        result.addAll(this.classes);
+
+        for(Package aPackage:packages) {
+            result.addAll(Package.getAllPlaceholderReplacementsRecursively(aPackage));
+        }
+
+        return result;
     }
 
     public List<Class> collectAllClasses() {
