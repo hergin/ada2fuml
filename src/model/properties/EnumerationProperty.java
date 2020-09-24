@@ -1,5 +1,6 @@
 package model.properties;
 
+import model.Class;
 import model.Enumeration;
 import model.EnumerationLiteral;
 import model.Property;
@@ -48,7 +49,7 @@ public class EnumerationProperty extends Property implements IPlaceholderedEleme
     }
 
     @Override
-    public Class getRootType() {
+    public java.lang.Class getRootType() {
         return Enumeration.class;
     }
 
@@ -56,4 +57,16 @@ public class EnumerationProperty extends Property implements IPlaceholderedEleme
         return type;
     }
 
+    public void changeToClassProperty(Class type) {
+        HierarchicalElement parent = getParent();
+        if(parent instanceof Enumeration) {
+            Enumeration castedParent = ((Enumeration) parent);
+            castedParent.addProperty(new ClassProperty(getName(),getVisibility(), type));
+            castedParent.getProperties().remove(this);
+        } else if(parent instanceof Class) {
+            Class castedParent = ((Class) parent);
+            castedParent.addProperty(new ClassProperty(getName(),getVisibility(), type));
+            castedParent.getProperties().remove(this);
+        }
+    }
 }

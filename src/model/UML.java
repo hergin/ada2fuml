@@ -104,46 +104,22 @@ public class UML extends HierarchicalElement {
                         || (preference.equals(PlaceholderPreferenceEnum.Local) && !placeholder.contains(".") && theReplacement.getName().equals(placeholder))) {
 
                     if(!aPlaceholderReplacer.getClass().equals(anElementWithPlaceholder.getRootType())) {
-                        // TODO replace anElementWithPlaceholder with a suitable aPlaceHolderReplacer
+                        // replace anElementWithPlaceholder with a suitable aPlaceHolderReplacer
+                        // sometimes we might need that, because at the time of the placeholder creation,
+                        // we don't know if it is class or enum parameter or property.
                         if(anElementWithPlaceholder instanceof EnumerationProperty) {
                             EnumerationProperty castedProperty = ((EnumerationProperty) anElementWithPlaceholder);
-                            HierarchicalElement parent = castedProperty.getParent();
-                            if(parent instanceof Enumeration) {
-                                Enumeration castedParent = ((Enumeration) parent);
-                                castedParent.addProperty(new ClassProperty(castedProperty.getName(),castedProperty.getVisibility(), ((Class) aPlaceholderReplacer)));
-                                castedParent.getProperties().remove(castedProperty);
-                            } else if(parent instanceof Class) {
-                                Class castedParent = ((Class) parent);
-                                castedParent.addProperty(new ClassProperty(castedProperty.getName(),castedProperty.getVisibility(), ((Class) aPlaceholderReplacer)));
-                                castedParent.getProperties().remove(castedProperty);
-                            }
+                            castedProperty.changeToClassProperty(((Class) aPlaceholderReplacer));
                         } else if(anElementWithPlaceholder instanceof ClassProperty) {
                             ClassProperty castedProperty = ((ClassProperty) anElementWithPlaceholder);
-                            HierarchicalElement parent = castedProperty.getParent();
-                            if(parent instanceof Enumeration) {
-                                Enumeration castedParent = ((Enumeration) parent);
-                                castedParent.addProperty(new EnumerationProperty(castedProperty.getName(),((Enumeration) aPlaceholderReplacer)));
-                                castedParent.getProperties().remove(castedProperty);
-                            } else if(parent instanceof Class) {
-                                Class castedParent = ((Class) parent);
-                                castedParent.addProperty(new EnumerationProperty(castedProperty.getName(),((Enumeration) aPlaceholderReplacer)));
-                                castedParent.getProperties().remove(castedProperty);
-                            }
+                            castedProperty.changeToEnumerationProperty(((Enumeration) aPlaceholderReplacer));
                         } else if(anElementWithPlaceholder instanceof EnumerationParameter) {
                             EnumerationParameter castedParameter = ((EnumerationParameter) anElementWithPlaceholder);
-                            HierarchicalElement parent = castedParameter.getParent();
-                            Operation castedParent = ((Operation) parent);
-                            castedParent.addParameter(new ClassParameter(castedParameter.getName(),castedParameter.getDirection(), ((Class) aPlaceholderReplacer)));
-                            castedParent.getParameters().remove(castedParameter);
+                            castedParameter.changeToClassParameter(((Class) aPlaceholderReplacer));
                         } else if(anElementWithPlaceholder instanceof ClassParameter) {
                             ClassParameter castedParameter = ((ClassParameter) anElementWithPlaceholder);
-                            HierarchicalElement parent = castedParameter.getParent();
-                            Operation castedParent = ((Operation) parent);
-                            castedParent.addParameter(new EnumerationParameter(castedParameter.getName(),castedParameter.getDirection(), ((Enumeration) aPlaceholderReplacer)));
-                            castedParent.getParameters().remove(castedParameter);
+                            castedParameter.changeToEnumerationParameter(((Enumeration) aPlaceholderReplacer));
                         }
-                        // TODO looks like there should be lots of IFs and ELSEs.
-                        //  Maybe implement first and then find a more elegant way of this replacement.
                     } else {
                         anElementWithPlaceholder.fixType(aPlaceholderReplacer.getRealTypeOfPlaceholder());
                         replacedElement = theReplacement;

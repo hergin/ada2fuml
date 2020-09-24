@@ -1,6 +1,8 @@
 package model.parameters;
 
 import model.EnumerationLiteral;
+import model.Operation;
+import model.Class;
 import model.Parameter;
 import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderedElement;
@@ -42,11 +44,18 @@ public class EnumerationParameter extends Parameter implements IPlaceholderedEle
     }
 
     @Override
-    public Class getRootType() {
+    public java.lang.Class getRootType() {
         return Enumeration.class;
     }
 
     public Enumeration getType() {
         return type;
+    }
+
+    public void changeToClassParameter(Class type) {
+        HierarchicalElement parent = getParent();
+        Operation castedParent = ((Operation) parent);
+        castedParent.addParameter(new ClassParameter(getName(),getDirection(),type));
+        castedParent.getParameters().remove(this);
     }
 }

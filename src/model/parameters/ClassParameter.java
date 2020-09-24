@@ -1,5 +1,7 @@
 package model.parameters;
 
+import model.Enumeration;
+import model.Operation;
 import model.Parameter;
 import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderReplacement;
@@ -43,5 +45,12 @@ public class ClassParameter extends Parameter implements IPlaceholderedElement {
 
     public Class getType() {
         return type;
+    }
+
+    public void changeToEnumerationParameter(Enumeration enumeration) {
+        HierarchicalElement parent = getParent();
+        Operation castedParent = ((Operation) parent);
+        castedParent.addParameter(new EnumerationParameter(getName(),getDirection(), enumeration));
+        castedParent.getParameters().remove(this);
     }
 }

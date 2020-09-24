@@ -1,6 +1,7 @@
 package model.properties;
 
 import model.Class;
+import model.Enumeration;
 import model.Property;
 import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderReplacement;
@@ -44,5 +45,18 @@ public class ClassProperty extends Property implements IPlaceholderedElement {
     @Override
     public java.lang.Class getRootType() {
         return Class.class;
+    }
+
+    public void changeToEnumerationProperty(Enumeration enumeration) {
+        HierarchicalElement parent = getParent();
+        if(parent instanceof Enumeration) {
+            Enumeration castedParent = ((Enumeration) parent);
+            castedParent.addProperty(new EnumerationProperty(getName(),enumeration));
+            castedParent.getProperties().remove(this);
+        } else if(parent instanceof Class) {
+            Class castedParent = ((Class) parent);
+            castedParent.addProperty(new EnumerationProperty(getName(),enumeration));
+            castedParent.getProperties().remove(this);
+        }
     }
 }
