@@ -136,7 +136,7 @@ public class Extractor {
                 try {
 
                     String typeName = theType.getName();
-
+                    Package thePackageInWhichTheSubTypeClass = null;
                     Class theClass = null;
 
                     // packageX + typeX => classX
@@ -158,18 +158,17 @@ public class Extractor {
                         if (!packageName.equals(typeName)) {
                             Package subpackage = dottedSuperPackage.createOrGetSubPackageByName(packageName);
                             theClass = subpackage.createOrGetClassByName(typeName);
+                            thePackageInWhichTheSubTypeClass = subpackage;
                         }
 
                     } else {
                         // packageX + typeY => packageX + classY
                         if (!packageName.equals(typeName)) {
                             Package packageNamedAfterAdaPackage = resultingUML.createOrGetPackageByName(packageName);
-
                             theClass = packageNamedAfterAdaPackage.createOrGetClassByName(typeName);
+                            thePackageInWhichTheSubTypeClass = packageNamedAfterAdaPackage;
                         }
                     }
-
-                    // TODO ordinaryTypes with an extension, means there is a superclass involved. See @RoyTests.md_example4-nest test
 
                     if (theClass != null) {
                         List<ComponentDeclaration> components = theType.getComponentDeclarations();
@@ -246,6 +245,11 @@ public class Extractor {
                                 ClassProperty classProperty = new ClassProperty(name, VisibilityEnum.Public, type);
                                 theClass.addProperty(classProperty);
                             }
+                        }
+
+                        String superClassName = theType.getSuperClassName();
+                        if(superClassName!=null) {
+                            theClass.addSuperClass(thePackageInWhichTheSubTypeClass.createOrGetClassByName(superClassName));
                         }
                     }
                 } catch (Exception e) {

@@ -70,6 +70,30 @@ public class OrdinaryTypeDeclaration
 
     /**
      * HELPER_METHOD
+     * If it has "controlled" in it, we are not interested to create a superclasss at this point.
+     * See md_example6.ads in the test resources.
+     * @return
+     */
+    public String getSuperClassName() {
+        String returnVal = null;
+        if (getTypeDeclarationViewQ() != null
+                && getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition() != null
+                && getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getParentSubtypeIndicationQ() != null
+                && getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getParentSubtypeIndicationQ().getSubtypeIndication() != null
+                && getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getParentSubtypeIndicationQ().getSubtypeIndication().getSubtypeMarkQ() != null) {
+            if (getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getParentSubtypeIndicationQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier() != null) {
+                returnVal = getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getParentSubtypeIndicationQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
+            } else if (getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getParentSubtypeIndicationQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent() != null
+                    && getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getParentSubtypeIndicationQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ() != null
+                    && getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getParentSubtypeIndicationQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier() != null) {
+                returnVal = getTypeDeclarationViewQ().getDerivedRecordExtensionDefinition().getParentSubtypeIndicationQ().getSubtypeIndication().getSubtypeMarkQ().getSelectedComponent().getSelectorQ().getIdentifier().getRefName();
+            }
+        }
+        return returnVal != null && returnVal.contains("Controlled") ? null : returnVal;
+    }
+
+    /**
+     * HELPER_METHOD
      * @return
      */
     public List<String> getEnumLiterals() {
