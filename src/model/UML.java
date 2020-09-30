@@ -23,6 +23,7 @@ public class UML extends HierarchicalElement {
     private List<Interface> interfaces;
     private List<Enumeration> enumerations;
     private List<Association> associations;
+    private List<CustomPrimitive> customPrimitives;
 
     public UML(String name) {
         super(name);
@@ -31,6 +32,7 @@ public class UML extends HierarchicalElement {
         interfaces = new ArrayList<>();
         enumerations = new ArrayList<>();
         associations = new ArrayList<>();
+        customPrimitives = new ArrayList<>();
     }
 
     public UML(String name, String fileName) {
@@ -265,6 +267,11 @@ public class UML extends HierarchicalElement {
         return resultingClass;
     }
 
+    public void addCustomPrimitive(CustomPrimitive aCustomPrimitive) {
+        aCustomPrimitive.setParent(this);
+        customPrimitives.add(aCustomPrimitive);
+    }
+
     public void addEnumeration(Enumeration inputEnumeration) {
         inputEnumeration.setParent(this);
         enumerations.add(inputEnumeration);
@@ -336,5 +343,9 @@ public class UML extends HierarchicalElement {
 
     public List<Enumeration> getEnumerations() {
         return enumerations;
+    }
+
+    public List<CustomPrimitive> getCustomPrimitives() {
+        return customPrimitives;
     }
 }

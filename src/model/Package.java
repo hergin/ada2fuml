@@ -17,6 +17,7 @@ public class Package extends HierarchicalElement {
     private List<Enumeration> enumerations;
     private List<Interface> interfaces;
     private List<Package> subPackages;
+    private List<CustomPrimitive> customPrimitives;
 
     public Package(String name) {
         super(name);
@@ -27,6 +28,7 @@ public class Package extends HierarchicalElement {
         interfaces = new ArrayList<>();
         subPackages = new ArrayList<>();
         properties = new ArrayList<>();
+        customPrimitives = new ArrayList<>();
     }
 
     public static List<IPlaceholderReplacement> getAllPlaceholderReplacementsRecursively(Package aPackage) {
@@ -210,6 +212,11 @@ public class Package extends HierarchicalElement {
         subPackages.add(inputPackage);
     }
 
+    public void addCustomPrimitive(CustomPrimitive aCustomPrimitive) {
+        aCustomPrimitive.setParent(this);
+        customPrimitives.add(aCustomPrimitive);
+    }
+
     public boolean hasProperties() {
         return (properties != null) && (! properties.isEmpty());
     }
@@ -240,6 +247,10 @@ public class Package extends HierarchicalElement {
 
     public List<Package> getSubPackages() {
         return subPackages;
+    }
+
+    public List<CustomPrimitive> getCustomPrimitives() {
+        return customPrimitives;
     }
 
 }
