@@ -30,16 +30,14 @@ public class Class extends HierarchicalElement implements IPlaceholderReplacemen
         List<IPlaceholderedElement> result = new ArrayList<>();
 
         for (Property property:properties) {
-            if(property instanceof ClassProperty
-                    || property instanceof EnumerationProperty)
+            if(property instanceof IPlaceholderedElement)
                 result.add(((IPlaceholderedElement) property));
         }
 
         for (Operation operation:operations) {
             for (Parameter parameter:operation.getParameters()) {
-                if (parameter instanceof ClassParameter
-                        || parameter instanceof EnumerationParameter)
-                    result.add(((ClassParameter) parameter));
+                if (parameter instanceof IPlaceholderedElement)
+                    result.add(((IPlaceholderedElement) parameter));
             }
         }
 

@@ -66,8 +66,7 @@ public class Enumeration extends HierarchicalElement implements IPlaceholderRepl
         List<IPlaceholderedElement> result = new ArrayList<>();
 
         for (Property property:properties) {
-            if(property instanceof ClassProperty
-                    || property instanceof EnumerationProperty)
+            if(property instanceof IPlaceholderedElement)
                 result.add(((IPlaceholderedElement) property));
         }
 
