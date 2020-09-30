@@ -53,6 +53,7 @@ public class UML extends HierarchicalElement {
     public void combine(UML otherUML) {
         otherUML.getClasses().forEach(c->addClass(c));
         otherUML.getEnumerations().forEach(e->addEnumeration(e));
+        otherUML.getCustomPrimitives().forEach(cp->addCustomPrimitive(cp));
 
         for(Package otherPackage:otherUML.getPackages()) {
             List<Package> sameNamedPackages = packages.stream().filter(p->p.getName().equals(otherPackage.getName())).collect(Collectors.toList());
@@ -61,6 +62,7 @@ public class UML extends HierarchicalElement {
                 otherPackage.getClasses().forEach(c->sameNamedPackage.addClass(c));
                 otherPackage.getEnumerations().forEach(e->sameNamedPackage.addEnumeration(e));
                 otherPackage.getSubPackages().forEach(sb->sameNamedPackage.addSubPackage(sb));
+                otherPackage.getCustomPrimitives().forEach(cp->sameNamedPackage.addCustomPrimitive(cp));
             } else {
                 addPackage(otherPackage);
             }

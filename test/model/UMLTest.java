@@ -6,6 +6,7 @@ import exceptions.*;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
 import model.enums.PlaceholderPreferenceEnum;
+import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
 import model.properties.ClassProperty;
 import model.properties.EnumerationProperty;
@@ -250,7 +251,94 @@ public class UMLTest {
     }
 
     @Test
-    void combine() {
-        fail("write a test for this one!");
+    void combine_verySimple() {
+        UML uml1 = new UML("uml1");
+        Package p1 = new Package("P1");
+        uml1.addPackage(p1);
+        Class c1 = new Class("C1");
+        p1.addClass(c1);
+
+        UML uml2 = new UML("uml2");
+        Package p2 = new Package("P2");
+        uml2.addPackage(p2);
+
+        uml1.combine(uml2);
+        assertEquals(2,uml1.getPackages().size());
+
+        assertEquals(1,uml1.getPackages().get(0).getClasses().size());
+    }
+
+    @Test
+    void combine_verySimple_sameNamePackage() {
+        UML uml1 = new UML("uml1");
+        Package p1 = new Package("P1");
+        uml1.addPackage(p1);
+
+        UML uml2 = new UML("uml2");
+        Package p2 = new Package("P1");
+        uml2.addPackage(p2);
+        Class c2 = new Class("C2");
+        p2.addClass(c2);
+
+        uml1.combine(uml2);
+        assertEquals(1,uml1.getPackages().size());
+
+        assertEquals(1,uml1.getPackages().get(0).getClasses().size());
+    }
+
+    @Test
+    void combine_verySimple_sameNamePackage_3umls() {
+        UML uml1 = new UML("uml1");
+        Package p1 = new Package("P1");
+        uml1.addPackage(p1);
+
+        UML uml2 = new UML("uml2");
+        Package p2 = new Package("P1");
+        uml2.addPackage(p2);
+        Class c2 = new Class("C2");
+        p2.addClass(c2);
+
+        UML uml3 = new UML("uml3");
+        Package p3 = new Package("P1");
+        uml3.addPackage(p3);
+        Class c3 = new Class("C3");
+        p3.addClass(c3);
+
+        uml1.combine(uml2);
+        uml1.combine(uml3);
+        assertEquals(1,uml1.getPackages().size());
+
+        assertEquals(2,uml1.getPackages().get(0).getClasses().size());
+    }
+
+    @Test
+    void combine_VariousElements() {
+        UML uml1 = new UML("uml1");
+        Package p1 = new Package("P1");
+        uml1.addPackage(p1);
+
+        UML uml2 = new UML("uml2");
+        Package p2 = new Package("P1");
+        uml2.addPackage(p2);
+        Class c2 = new Class("C2");
+        p2.addClass(c2);
+        Enumeration e1 = new Enumeration("E1");
+        p2.addEnumeration(e1);
+
+        UML uml3 = new UML("uml3");
+        Package p3 = new Package("P1");
+        uml3.addPackage(p3);
+        Class c3 = new Class("C3");
+        p3.addClass(c3);
+        CustomPrimitive cp1 = new CustomPrimitive("CP1", TypeEnum.Integer);
+        p3.addCustomPrimitive(cp1);
+
+        uml1.combine(uml2);
+        uml1.combine(uml3);
+        assertEquals(1,uml1.getPackages().size());
+
+        assertEquals(2,uml1.getPackages().get(0).getClasses().size());
+        assertEquals(1,uml1.getPackages().get(0).getEnumerations().size());
+        assertEquals(1,uml1.getPackages().get(0).getCustomPrimitives().size());
     }
 }
