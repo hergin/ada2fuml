@@ -36,6 +36,7 @@ public class Package extends HierarchicalElement {
 
         result.addAll(aPackage.getClasses());
         result.addAll(aPackage.getEnumerations());
+        result.addAll(aPackage.getCustomPrimitives());
 
         for (Package subPackage : aPackage.getSubPackages()) {
             result.addAll(Package.getAllPlaceholderReplacementsRecursively(subPackage));
@@ -92,6 +93,35 @@ public class Package extends HierarchicalElement {
 
     public boolean hasInterface(String inputInterfacesName) {
         return interfaces.stream().filter(c->c.getName().equals(inputInterfacesName)).count()!=0;
+    }
+
+    public CustomPrimitive createOrGetCustomPrimitiveByName(String customPrimitiveName) {
+        CustomPrimitive resultingCustomPrimitive = null;
+        if(this.hasCustomPrimitive(customPrimitiveName)) {
+            resultingCustomPrimitive = this.getCustomPrimitiveByName(customPrimitiveName);
+        } else {
+            resultingCustomPrimitive = new CustomPrimitive(customPrimitiveName);
+            this.addCustomPrimitive(resultingCustomPrimitive);
+        }
+        return resultingCustomPrimitive;
+    }
+
+    private CustomPrimitive getCustomPrimitiveByName(String customPrimitiveName) {
+        for (CustomPrimitive thePrimitive:customPrimitives) {
+            if(thePrimitive.getName().equals(customPrimitiveName)) {
+                return thePrimitive;
+            }
+        }
+        return null;
+    }
+
+    private boolean hasCustomPrimitive(String customPrimitiveName) {
+        for (CustomPrimitive thePrimitive:customPrimitives) {
+            if(thePrimitive.getName().equals(customPrimitiveName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Enumeration createOrGetEnumByName(String enumName) {

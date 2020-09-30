@@ -6,7 +6,12 @@ import exporter.Processor;
 import exporter.StillHavePlaceholderExceptionPolicy;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
+import model.Property;
 import model.UML;
+import model.enums.TypeEnum;
+import model.properties.CustomPrimitiveProperty;
+import model.properties.EnumerationProperty;
+import model.properties.PrimitiveProperty;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import xmlparsing.AdaXmlParser;
@@ -27,19 +32,15 @@ public class SubTypeFromRoyTests {
         UML resultUml = Extractor.extractHighLevelConcepts(compilationUnit);
 
         Assertions.assertEquals(1, resultUml.getPackages().size());
-        Assertions.assertEquals(4, resultUml.getPackages().get(0).getClasses().size());
+        Assertions.assertEquals(0, resultUml.getPackages().get(0).getClasses().size());
+        Assertions.assertEquals(2, resultUml.getPackages().get(0).getCustomPrimitives().size());
 
-        Assertions.assertEquals("Name_Length_Type", resultUml.getPackages().get(0).getClasses().get(0).getName());
-        Assertions.assertEquals(1, resultUml.getPackages().get(0).getClasses().get(0).getSuperClasses().size());
-        Assertions.assertEquals("Positive", resultUml.getPackages().get(0).getClasses().get(0).getSuperClasses().get(0).getName());
+        Assertions.assertEquals("Name_Length_Type", resultUml.getPackages().get(0).getCustomPrimitives().get(0).getName());
+        Assertions.assertEquals(TypeEnum.Integer, resultUml.getPackages().get(0).getCustomPrimitives().get(0).getSuperPrimitive());
 
-        Assertions.assertEquals("Positive", resultUml.getPackages().get(0).getClasses().get(1).getName());
-
-        Assertions.assertEquals("Name_Type", resultUml.getPackages().get(0).getClasses().get(2).getName());
-        Assertions.assertEquals(1, resultUml.getPackages().get(0).getClasses().get(2).getSuperClasses().size());
-        Assertions.assertEquals("String", resultUml.getPackages().get(0).getClasses().get(2).getSuperClasses().get(0).getName());
-
-        Assertions.assertEquals("String", resultUml.getPackages().get(0).getClasses().get(3).getName());
+        Assertions.assertEquals("Name_Type", resultUml.getPackages().get(0).getCustomPrimitives().get(1).getName());
+        Assertions.assertEquals(TypeEnum.String, resultUml.getPackages().get(0).getCustomPrimitives().get(1).getSuperPrimitive());
+        Assertions.assertEquals(0, resultUml.getPackages().get(0).getCustomPrimitives().get(1).getSuperCustomPrimitives().size());
     }
 
     @Test
@@ -52,28 +53,41 @@ public class SubTypeFromRoyTests {
 
 
         Assertions.assertEquals(1, resultUml.getPackages().size());
-        Assertions.assertEquals(5, resultUml.getPackages().get(0).getClasses().size());
+        Assertions.assertEquals(2, resultUml.getPackages().get(0).getCustomPrimitives().size());
+
+        Assertions.assertEquals("Extended_Numeric_Rank_Type", resultUml.getPackages().get(0).getCustomPrimitives().get(0).getName());
+        Assertions.assertEquals(TypeEnum.Integer, resultUml.getPackages().get(0).getCustomPrimitives().get(0).getSuperPrimitive());
+        Assertions.assertEquals(0, resultUml.getPackages().get(0).getCustomPrimitives().get(0).getSuperCustomPrimitives().size());
+
+        Assertions.assertEquals("Numeric_Rank_Type", resultUml.getPackages().get(0).getCustomPrimitives().get(1).getName());
+        Assertions.assertNull(resultUml.getPackages().get(0).getCustomPrimitives().get(1).getSuperPrimitive());
+        Assertions.assertEquals(1, resultUml.getPackages().get(0).getCustomPrimitives().get(1).getSuperCustomPrimitives().size());
+        Assertions.assertEquals("Extended_Numeric_Rank_Type", resultUml.getPackages().get(0).getCustomPrimitives().get(1).getSuperCustomPrimitives().get(0).getName());
+
         Assertions.assertEquals(1, resultUml.getPackages().get(0).getEnumerations().size());
-
-        Assertions.assertEquals("Extended_Numeric_Rank_Type", resultUml.getPackages().get(0).getClasses().get(0).getName());
-        Assertions.assertEquals(1, resultUml.getPackages().get(0).getClasses().get(0).getSuperClasses().size());
-        Assertions.assertEquals("Integer", resultUml.getPackages().get(0).getClasses().get(0).getSuperClasses().get(0).getName());
-
-        Assertions.assertEquals("Integer", resultUml.getPackages().get(0).getClasses().get(1).getName());
-
-        Assertions.assertEquals("Numeric_Rank_Type", resultUml.getPackages().get(0).getClasses().get(2).getName());
-        Assertions.assertEquals(1, resultUml.getPackages().get(0).getClasses().get(2).getSuperClasses().size());
-        Assertions.assertEquals("Extended_Numeric_Rank_Type", resultUml.getPackages().get(0).getClasses().get(2).getSuperClasses().get(0).getName());
-
-        Assertions.assertEquals("Unit_Numeric_Rank_Type", resultUml.getPackages().get(0).getClasses().get(3).getName());
-
-        Assertions.assertEquals("Unit_Rank_Type", resultUml.getPackages().get(0).getClasses().get(4).getName());
-
         Assertions.assertEquals("Rank_Type", resultUml.getPackages().get(0).getEnumerations().get(0).getName());
         Assertions.assertEquals(103, resultUml.getPackages().get(0).getEnumerations().get(0).getLiterals().size());
         Assertions.assertEquals("Unknown", resultUml.getPackages().get(0).getEnumerations().get(0).getLiterals().get(0).getName());
         Assertions.assertEquals("Thirteen", resultUml.getPackages().get(0).getEnumerations().get(0).getLiterals().get(16).getName());
         Assertions.assertEquals("Forty_One", resultUml.getPackages().get(0).getEnumerations().get(0).getLiterals().get(44).getName());
         Assertions.assertEquals("Ninety_Nine", resultUml.getPackages().get(0).getEnumerations().get(0).getLiterals().get(102).getName());
+
+
+        Assertions.assertEquals(2, resultUml.getPackages().get(0).getClasses().size());
+        Assertions.assertEquals("Unit_Numeric_Rank_Type", resultUml.getPackages().get(0).getClasses().get(0).getName());
+        Assertions.assertEquals(2, resultUml.getPackages().get(0).getClasses().get(0).getProperties().size());
+        Assertions.assertEquals(PrimitiveProperty.class, resultUml.getPackages().get(0).getClasses().get(0).getProperties().get(0).getClass());
+        Assertions.assertEquals("Unit", resultUml.getPackages().get(0).getClasses().get(0).getProperties().get(0).getName());
+        Assertions.assertEquals(CustomPrimitiveProperty.class, resultUml.getPackages().get(0).getClasses().get(0).getProperties().get(1).getClass());
+        Assertions.assertEquals("Rank", resultUml.getPackages().get(0).getClasses().get(0).getProperties().get(1).getName());
+        Assertions.assertEquals("Numeric_Rank_Type", ((CustomPrimitiveProperty) resultUml.getPackages().get(0).getClasses().get(0).getProperties().get(1)).getType().getName());
+
+        Assertions.assertEquals("Unit_Rank_Type", resultUml.getPackages().get(0).getClasses().get(1).getName());
+        Assertions.assertEquals(2, resultUml.getPackages().get(0).getClasses().get(1).getProperties().size());
+        Assertions.assertEquals(PrimitiveProperty.class, resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(0).getClass());
+        Assertions.assertEquals("Unit", resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(0).getName());
+        Assertions.assertEquals(EnumerationProperty.class, resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(1).getClass());
+        Assertions.assertEquals("Rank", resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(1).getName());
+        Assertions.assertEquals("Rank_Type", ((EnumerationProperty) resultUml.getPackages().get(0).getClasses().get(1).getProperties().get(1)).getType().getName());
     }
 }

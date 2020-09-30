@@ -1,9 +1,7 @@
 package model.properties;
 
+import model.*;
 import model.Class;
-import model.Enumeration;
-import model.EnumerationLiteral;
-import model.Property;
 import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.VisibilityEnum;
@@ -66,6 +64,19 @@ public class EnumerationProperty extends Property implements IPlaceholderedEleme
         } else if(parent instanceof Class) {
             Class castedParent = ((Class) parent);
             castedParent.addProperty(new ClassProperty(getName(),getVisibility(), type));
+            castedParent.getProperties().remove(this);
+        }
+    }
+
+    public void changeToCustomPrimitiveProperty(CustomPrimitive type) {
+        HierarchicalElement parent = getParent();
+        if(parent instanceof Enumeration) {
+            Enumeration castedParent = ((Enumeration) parent);
+            castedParent.addProperty(new CustomPrimitiveProperty(getName(),getVisibility(), type));
+            castedParent.getProperties().remove(this);
+        } else if(parent instanceof Class) {
+            Class castedParent = ((Class) parent);
+            castedParent.addProperty(new CustomPrimitiveProperty(getName(),getVisibility(), type));
             castedParent.getProperties().remove(this);
         }
     }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CustomPrimitive extends HierarchicalElement implements IPlaceholderReplacement {
 
-    private TypeEnum superPrimitive;
+    private TypeEnum superPrimitive = null;
     private List<CustomPrimitive> superCustomPrimitives;
 
     public CustomPrimitive(String name) {
@@ -29,6 +29,10 @@ public class CustomPrimitive extends HierarchicalElement implements IPlaceholder
 
     public TypeEnum getSuperPrimitive() {
         return superPrimitive;
+    }
+
+    public void setSuperPrimitive(TypeEnum superPrimitive) {
+        this.superPrimitive = superPrimitive;
     }
 
     public List<CustomPrimitive> getSuperCustomPrimitives() {

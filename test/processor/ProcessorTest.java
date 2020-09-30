@@ -24,11 +24,18 @@ import utils.StringUtils;
 
 import java.lang.reflect.Type;
 
+import static org.assertj.core.api.Assertions.fail;
+
 class ProcessorTest {
 
     @BeforeEach
     void init() {
         Processor.ID_COUNTER = 0;
+    }
+
+    @Test
+    void processCustomPrimitives() {
+        fail("Write these tests");
     }
 
     @Test

@@ -1,13 +1,11 @@
 package model.parameters;
 
-import model.Enumeration;
-import model.Operation;
-import model.Parameter;
+import model.*;
+import model.Class;
 import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.DirectionEnum;
-import model.Class;
 
 public class ClassParameter extends Parameter implements IPlaceholderedElement {
 
@@ -51,6 +49,13 @@ public class ClassParameter extends Parameter implements IPlaceholderedElement {
         HierarchicalElement parent = getParent();
         Operation castedParent = ((Operation) parent);
         castedParent.addParameter(new EnumerationParameter(getName(),getDirection(), enumeration));
+        castedParent.getParameters().remove(this);
+    }
+
+    public void changeToCustomPrimitiveParameter(CustomPrimitive customPrimitive) {
+        HierarchicalElement parent = getParent();
+        Operation castedParent = ((Operation) parent);
+        castedParent.addParameter(new CustomPrimitiveParameter(getName(),getDirection(), customPrimitive));
         castedParent.getParameters().remove(this);
     }
 }

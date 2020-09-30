@@ -66,11 +66,11 @@ public class SubtypeDeclaration
      * HELPER_METHOD
      * @return
      */
-    public String getSuperClassName() throws NamingException {
+    public String getSuperPrimitiveName() throws NamingException {
         try {
             return getTypeDeclarationViewQ().getSubtypeIndication().getSubtypeMarkQ().getIdentifier().getRefName();
         } catch (Exception e) {
-            throw new NamingException("Subtype's superclass has some different naming structure than expected!", e);
+            throw new NamingException("Subtype's super primitive has some different naming structure than expected!", e);
         }
     }
 

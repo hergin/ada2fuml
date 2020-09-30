@@ -45,12 +45,12 @@ public class Extractor {
             for(SubtypeDeclaration theSubtype : thePackage.getSubtypes()) {
                 String subtypeName = theSubtype.getName();
 
-                Class theClass = null;
+                CustomPrimitive thePrimitive = null;
                 Package thePackageInWhichTheSubTypeClass = null;
 
                 // packageX + typeX => classX
                 if (packageName.equals(subtypeName)) {
-                    theClass = resultingUML.createOrGetClassByName(subtypeName);
+                    thePrimitive = resultingUML.createOrGetCustomPrimitiveByName(subtypeName);
                 }
 
                 // If there is a . in the package name, we will create subpackage.
@@ -67,7 +67,7 @@ public class Extractor {
                     if (!packageName.equals(subtypeName)) {
                         Package subpackage = dottedSuperPackage.createOrGetSubPackageByName(packageName);
                         thePackageInWhichTheSubTypeClass = subpackage;
-                        theClass = subpackage.createOrGetClassByName(subtypeName);
+                        thePrimitive = subpackage.createOrGetCustomPrimitiveByName(subtypeName);
                     }
 
                 } else {
@@ -75,12 +75,17 @@ public class Extractor {
                     if (!packageName.equals(subtypeName)) {
                         Package packageNamedAfterAdaPackage = resultingUML.createOrGetPackageByName(packageName);
                         thePackageInWhichTheSubTypeClass = packageNamedAfterAdaPackage;
-                        theClass = packageNamedAfterAdaPackage.createOrGetClassByName(subtypeName);
+                        thePrimitive = packageNamedAfterAdaPackage.createOrGetCustomPrimitiveByName(subtypeName);
                     }
                 }
 
-                Class superClass = thePackageInWhichTheSubTypeClass.createOrGetClassByName(theSubtype.getSuperClassName());
-                theClass.addSuperClass(superClass);
+                String theSuperPrimitiveName = theSubtype.getSuperPrimitiveName();
+                if(isPrimitive(theSuperPrimitiveName)) {
+                    thePrimitive.setSuperPrimitive(convertToTypeEnum(theSuperPrimitiveName));
+                } else {
+                    CustomPrimitive superCustomPrimitive = thePackageInWhichTheSubTypeClass.createOrGetCustomPrimitiveByName(theSuperPrimitiveName);
+                    thePrimitive.addSuperCustomPrimitive(superCustomPrimitive);
+                }
             }
 
             for(OrdinaryTypeDeclaration theEnumerationOrdinaryType : thePackage.getEnumerationOrdinaryTypes()) {
@@ -529,7 +534,8 @@ public class Extractor {
                 || type.equals("Natural")
                 || type.equals("Real")
                 || type.equals("Float")
-                || type.equals("Void");
+                || type.equals("Void")
+                || type.equals("Positive");
     }
 
     public static TypeEnum convertToTypeEnum(String type) {
@@ -537,6 +543,8 @@ public class Extractor {
             return TypeEnum.UnlimitedNatural;
         else if(type.equals("Float"))
             return TypeEnum.Real;
+        else if(type.equals("Positive"))
+            return TypeEnum.Integer;
         else
             return TypeEnum.valueOf(type);
     }

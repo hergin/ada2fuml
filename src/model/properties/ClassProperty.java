@@ -1,6 +1,7 @@
 package model.properties;
 
 import model.Class;
+import model.CustomPrimitive;
 import model.Enumeration;
 import model.Property;
 import model.auxiliary.HierarchicalElement;
@@ -56,6 +57,19 @@ public class ClassProperty extends Property implements IPlaceholderedElement {
         } else if(parent instanceof Class) {
             Class castedParent = ((Class) parent);
             castedParent.addProperty(new EnumerationProperty(getName(),enumeration));
+            castedParent.getProperties().remove(this);
+        }
+    }
+
+    public void changeToCustomPrimitiveProperty(CustomPrimitive customPrimitive) {
+        HierarchicalElement parent = getParent();
+        if(parent instanceof Enumeration) {
+            Enumeration castedParent = ((Enumeration) parent);
+            castedParent.addProperty(new CustomPrimitiveProperty(getName(),getVisibility(),customPrimitive));
+            castedParent.getProperties().remove(this);
+        } else if(parent instanceof Class) {
+            Class castedParent = ((Class) parent);
+            castedParent.addProperty(new CustomPrimitiveProperty(getName(),getVisibility(),customPrimitive));
             castedParent.getProperties().remove(this);
         }
     }

@@ -111,16 +111,28 @@ public class UML extends HierarchicalElement {
                         // we don't know if it is class or enum parameter or property.
                         if(anElementWithPlaceholder instanceof EnumerationProperty) {
                             EnumerationProperty castedProperty = ((EnumerationProperty) anElementWithPlaceholder);
-                            castedProperty.changeToClassProperty(((Class) aPlaceholderReplacer));
+                            if(aPlaceholderReplacer instanceof Class)
+                                castedProperty.changeToClassProperty(((Class) aPlaceholderReplacer));
+                            else if(aPlaceholderReplacer instanceof CustomPrimitive)
+                                castedProperty.changeToCustomPrimitiveProperty(((CustomPrimitive) aPlaceholderReplacer));
                         } else if(anElementWithPlaceholder instanceof ClassProperty) {
                             ClassProperty castedProperty = ((ClassProperty) anElementWithPlaceholder);
-                            castedProperty.changeToEnumerationProperty(((Enumeration) aPlaceholderReplacer));
+                            if(aPlaceholderReplacer instanceof Enumeration)
+                                castedProperty.changeToEnumerationProperty(((Enumeration) aPlaceholderReplacer));
+                            else if(aPlaceholderReplacer instanceof CustomPrimitive)
+                                castedProperty.changeToCustomPrimitiveProperty(((CustomPrimitive) aPlaceholderReplacer));
                         } else if(anElementWithPlaceholder instanceof EnumerationParameter) {
                             EnumerationParameter castedParameter = ((EnumerationParameter) anElementWithPlaceholder);
-                            castedParameter.changeToClassParameter(((Class) aPlaceholderReplacer));
+                            if(aPlaceholderReplacer instanceof Class)
+                                castedParameter.changeToClassParameter(((Class) aPlaceholderReplacer));
+                            else if(aPlaceholderReplacer instanceof CustomPrimitive)
+                                castedParameter.changeToCustomPrimitiveParameter(((CustomPrimitive) aPlaceholderReplacer));
                         } else if(anElementWithPlaceholder instanceof ClassParameter) {
                             ClassParameter castedParameter = ((ClassParameter) anElementWithPlaceholder);
-                            castedParameter.changeToEnumerationParameter(((Enumeration) aPlaceholderReplacer));
+                            if(aPlaceholderReplacer instanceof Enumeration)
+                                castedParameter.changeToEnumerationParameter(((Enumeration) aPlaceholderReplacer));
+                            else if(aPlaceholderReplacer instanceof CustomPrimitive)
+                                castedParameter.changeToCustomPrimitiveParameter(((CustomPrimitive) aPlaceholderReplacer));
                         }
                     } else {
                         anElementWithPlaceholder.fixType(aPlaceholderReplacer.getRealTypeOfPlaceholder());
@@ -186,6 +198,7 @@ public class UML extends HierarchicalElement {
 
         result.addAll(this.classes);
         result.addAll(this.enumerations);
+        result.addAll(this.customPrimitives);
 
         for(Package aPackage:packages) {
             result.addAll(Package.getAllPlaceholderReplacementsRecursively(aPackage));
@@ -265,6 +278,35 @@ public class UML extends HierarchicalElement {
             this.addClass(resultingClass);
         }
         return resultingClass;
+    }
+
+    public CustomPrimitive createOrGetCustomPrimitiveByName(String customPrimitiveName) {
+        CustomPrimitive resultingCustomPrimitive = null;
+        if(this.hasCustomPrimitive(customPrimitiveName)) {
+            resultingCustomPrimitive = this.getCustomPrimitiveByName(customPrimitiveName);
+        } else {
+            resultingCustomPrimitive = new CustomPrimitive(customPrimitiveName);
+            this.addCustomPrimitive(resultingCustomPrimitive);
+        }
+        return resultingCustomPrimitive;
+    }
+
+    private CustomPrimitive getCustomPrimitiveByName(String customPrimitiveName) {
+        for (CustomPrimitive thePrimitive:customPrimitives) {
+            if(thePrimitive.getName().equals(customPrimitiveName)) {
+                return thePrimitive;
+            }
+        }
+        return null;
+    }
+
+    private boolean hasCustomPrimitive(String customPrimitiveName) {
+        for (CustomPrimitive thePrimitive:customPrimitives) {
+            if(thePrimitive.getName().equals(customPrimitiveName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addCustomPrimitive(CustomPrimitive aCustomPrimitive) {
