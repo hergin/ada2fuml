@@ -22,6 +22,11 @@ public class CustomPrimitive extends HierarchicalElement implements IPlaceholder
         this.superPrimitive = aSuperPrimitive;
     }
 
+    public CustomPrimitive(String name, CustomPrimitive aSuperCustomPrimitive) {
+        this(name);
+        this.superCustomPrimitives.add(aSuperCustomPrimitive);
+    }
+
     public void addSuperCustomPrimitive(CustomPrimitive aSuperCustomPrimitive) {
         aSuperCustomPrimitive.setParent(this);
         superCustomPrimitives.add(aSuperCustomPrimitive);

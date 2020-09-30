@@ -12,9 +12,11 @@ import model.enums.DirectionEnum;
 import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
 import model.parameters.ClassParameter;
+import model.parameters.CustomPrimitiveParameter;
 import model.parameters.PrimitiveParameter;
 import model.properties.AssociationProperty;
 import model.properties.ClassProperty;
+import model.properties.CustomPrimitiveProperty;
 import model.properties.PrimitiveProperty;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,8 +36,90 @@ class ProcessorTest {
     }
 
     @Test
-    void processCustomPrimitives() {
-        fail("Write these tests");
+    void processCustomPrimitiveProperty() throws UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException {
+        UML uml = new UML("uml1");
+        Class c1 = new Class("C1");
+        uml.addClass(c1);
+        CustomPrimitive cp1 = new CustomPrimitive("CP1",TypeEnum.Integer);
+        uml.addCustomPrimitive(cp1);
+        CustomPrimitiveProperty cpp1 = new CustomPrimitiveProperty("CPP1",VisibilityEnum.Public,cp1);
+        c1.addProperty(cpp1);
+
+        String result = Processor.processUML(uml,StillHavePlaceholderExceptionPolicy.Throw);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"> <uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"uml1\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID1\" name=\"C1\"><ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"ID3\" name=\"CPP1\" visibility=\"public\" type=\"ID2\"/></packagedElement><packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"ID2\" name=\"CP1\"><generalization xmi:type=\"uml:Generalization\" xmi:id=\"ID4\"><general href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer\"/></generalization></packagedElement> </uml:Model></xmi:XMI>";
+
+        XmlAssert.assertThat(expected)
+                .and(StringUtils.sanitize(result))
+                .ignoreWhitespace()
+                .areIdentical();
+    }
+
+    @Test
+    void processCustomPrimitiveParameter() throws UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException {
+        UML uml = new UML("uml1");
+        Class c1 = new Class("C1");
+        uml.addClass(c1);
+        CustomPrimitive cp1 = new CustomPrimitive("CP1",TypeEnum.Integer);
+        uml.addCustomPrimitive(cp1);
+        Operation o1 = new Operation("O1",VisibilityEnum.Public);
+        c1.addOperation(o1);
+        CustomPrimitiveParameter cpp1 = new CustomPrimitiveParameter("CPP1",DirectionEnum.In,cp1);
+        o1.addParameter(cpp1);
+
+        String result = Processor.processUML(uml,StillHavePlaceholderExceptionPolicy.Throw);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"> <uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"uml1\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID1\" name=\"C1\"><ownedOperation xmi:type=\"uml:Operation\" xmi:id=\"ID3\" name=\"O1\" visibility=\"public\"><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID4\" name=\"CPP1\" visibility=\"public\" type=\"ID2\" direction=\"in\"/></ownedOperation></packagedElement><packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"ID2\" name=\"CP1\"><generalization xmi:type=\"uml:Generalization\" xmi:id=\"ID5\"><general href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer\"/></generalization></packagedElement> </uml:Model></xmi:XMI>";
+
+        XmlAssert.assertThat(expected)
+                .and(StringUtils.sanitize(result))
+                .ignoreWhitespace()
+                .areIdentical();
+    }
+
+    @Test
+    void processCustomPrimitives_noSuperPrimitive() throws UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException {
+        UML uml = new UML("uml1");
+        CustomPrimitive primitive1 = new CustomPrimitive("CP2",TypeEnum.String);
+        uml.addCustomPrimitive(primitive1);
+
+        String result = Processor.processUML(uml,StillHavePlaceholderExceptionPolicy.Throw);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"> <uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"uml1\"><packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"ID1\" name=\"CP2\"><generalization xmi:type=\"uml:Generalization\" xmi:id=\"ID2\"><general href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String\"/></generalization></packagedElement> </uml:Model></xmi:XMI>";
+
+        XmlAssert.assertThat(expected)
+                .and(StringUtils.sanitize(result))
+                .ignoreWhitespace()
+                .areIdentical();
+    }
+
+    @Test
+    void processCustomPrimitives_customSuperPrimitive() throws UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException {
+        UML uml = new UML("uml1");
+        CustomPrimitive superPrimitive1 = new CustomPrimitive("CP1",TypeEnum.Integer);
+        CustomPrimitive primitive1 = new CustomPrimitive("CP2",superPrimitive1);
+        uml.addCustomPrimitive(primitive1);
+        uml.addCustomPrimitive(superPrimitive1);
+
+        String result = Processor.processUML(uml,StillHavePlaceholderExceptionPolicy.Throw);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"> <uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"uml1\"><packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"ID2\" name=\"CP2\"><generalization xmi:type=\"uml:Generalization\" xmi:id=\"ID3\" general=\"ID1\"/></packagedElement><packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"ID1\" name=\"CP1\"><generalization xmi:type=\"uml:Generalization\" xmi:id=\"ID4\"><general href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer\"/></generalization></packagedElement> </uml:Model></xmi:XMI>";
+
+        XmlAssert.assertThat(expected)
+                .and(StringUtils.sanitize(result))
+                .ignoreWhitespace()
+                .areIdentical();
+    }
+
+    @Test
+    void processCustomPrimitives_regularSuperPrimitive() throws UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException {
+        UML uml = new UML("uml1");
+        CustomPrimitive primitive1 = new CustomPrimitive("CP1",TypeEnum.Integer);
+        uml.addCustomPrimitive(primitive1);
+
+        String result = Processor.processUML(uml,StillHavePlaceholderExceptionPolicy.Throw);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\"\r\n         xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\"\r\n         xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\">\r\n   <uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"uml1\">\r\n<packagedElement xmi:type=\"uml:PrimitiveType\" xmi:id=\"ID1\" name=\"CP1\"><generalization xmi:type=\"uml:Generalization\" xmi:id=\"ID2\"><general href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer\"/></generalization></packagedElement>\r\n   </uml:Model>\r\n</xmi:XMI>";
+
+        XmlAssert.assertThat(expected)
+                .and(StringUtils.sanitize(result))
+                .ignoreWhitespace()
+                .areIdentical();
     }
 
     @Test

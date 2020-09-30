@@ -6,14 +6,8 @@ import exceptions.UnknownPropertyException;
 import model.*;
 import model.Class;
 import model.Package;
-import model.parameters.ClassParameter;
-import model.parameters.EnumerationParameter;
-import model.parameters.StructParameter;
-import model.parameters.PrimitiveParameter;
-import model.properties.AssociationProperty;
-import model.properties.ClassProperty;
-import model.properties.PrimitiveProperty;
-import model.properties.Variable;
+import model.parameters.*;
+import model.properties.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,11 +48,34 @@ public class Processor {
         for (Enumeration e : inputUML.getEnumerations()) {
             string.append(processEnumeration(e));
         }
+        for (CustomPrimitive cp:inputUML.getCustomPrimitives()) {
+            string.append(processCustomPrimitive(cp));
+        }
 
         string.append(System.lineSeparator() + "   </uml:Model>" + System.lineSeparator());
         string.append("</xmi:XMI>");
 
         return string.toString().replace("'", "\"");
+    }
+
+    private static String processCustomPrimitive(CustomPrimitive cp) {
+        StringBuilder string = new StringBuilder();
+
+        string.append("<packagedElement xmi:type='uml:PrimitiveType' xmi:id='"+cp.getId()+"' name='"+cp.getName()+"'>");
+
+        if(cp.getSuperPrimitive()!=null) {
+            // this has regular super primitive
+            string.append("<generalization xmi:type='uml:Generalization' xmi:id='"+Processor.uuidGenerator()+"'>");
+            string.append("<general href='http://www.omg.org/spec/UML/" + specDate
+                    + "/PrimitiveTypes.xmi#" + cp.getSuperPrimitive().toString() + "'/>");
+            string.append("</generalization>");
+        } else if(cp.getSuperCustomPrimitives().size()!=0) {
+            string.append("<generalization xmi:type='uml:Generalization' xmi:id='"+Processor.uuidGenerator()+"' general='"+cp.getSuperCustomPrimitives().get(0).getId()+"'/>");
+        }
+
+        string.append("</packagedElement>");
+
+        return string.toString();
     }
 
     private static String processAssociation(Association a) {
@@ -129,6 +146,9 @@ public class Processor {
         }
         for (Enumeration e : p.getEnumerations()) {
             string.append(processEnumeration(e));
+        }
+        for (CustomPrimitive cp:p.getCustomPrimitives()) {
+            string.append(processCustomPrimitive(cp));
         }
         for (Except e : p.getExceptions()) {
             string.append(processException(e));
@@ -321,7 +341,7 @@ public class Processor {
                 string.append("<defaultValue xmi:type='uml:Literal" + pParam.getType().toString() + "' xmi:id='" + Processor.uuidGenerator() + "' value='" + pParam.getDefaultValue().toString() + "'/>");
             }
             string.append("</ownedParameter>");
-        } else if (param instanceof ClassParameter) {
+        }  else if (param instanceof ClassParameter) {
             ClassParameter cParam = (ClassParameter) param;
             if(cParam.hasPlaceholder()) {
                 string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + cParam.getPlaceholder() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
@@ -331,16 +351,29 @@ public class Processor {
         } else if (param instanceof EnumerationParameter) {
         	EnumerationParameter eParam = (EnumerationParameter) param;
             // string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + eParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
-        	
-            string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"
-                         + eParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
-        	
+        	if(eParam.hasPlaceholder()) {
+                string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"
+                        + eParam.getPlaceholder() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+            } else {
+                string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"
+                        + eParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+            }
         } else if (param instanceof StructParameter) {
         	StructParameter sParam = (StructParameter) param;
             // string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + sParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
             string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"
                          + sParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
 
+        } else if (param instanceof CustomPrimitiveParameter) {
+            CustomPrimitiveParameter cpParam = (CustomPrimitiveParameter) param;
+
+            if(cpParam.hasPlaceholder()) {
+                string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"
+                        + cpParam.getPlaceholder() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+            } else {
+                string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"
+                        + cpParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
+            }
         } else {
             throw new UnknownParameterException("An unknown parameter (than Primitive or Class) showed up. Signature: "+param.getSignature());
         }
@@ -386,6 +419,20 @@ public class Processor {
                 string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getPlaceholder() + "'/>");
             } else {
                 string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getType().getId() + "'/>");
+            }
+        } else if (p instanceof EnumerationProperty) {
+            EnumerationProperty ep = (EnumerationProperty) p;
+            if(ep.hasPlaceholder()) {
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + ep.getPlaceholder() + "'/>");
+            } else {
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + ep.getType().getId() + "'/>");
+            }
+        } else if (p instanceof CustomPrimitiveProperty) {
+            CustomPrimitiveProperty cpp1 = (CustomPrimitiveProperty) p;
+            if(cpp1.hasPlaceholder()) {
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cpp1.getPlaceholder() + "'/>");
+            } else {
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cpp1.getType().getId() + "'/>");
             }
         } else {
             throw new UnknownPropertyException("An unknown parameter (than Primitive, Class, or Association) showed up. Signature: "+p.getSignature());
