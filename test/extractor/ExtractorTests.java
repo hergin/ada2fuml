@@ -24,7 +24,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-class ExtractorTests {
+public class ExtractorTests {
 
     public static String GetAdaXMLFromResource(String name) {
         try {
