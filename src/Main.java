@@ -86,7 +86,7 @@ public class Main {
             } catch (StillHavePlaceHolderException shphe) {
                 System.out.println("\nWARNING: "+shphe.getMessage()+" But the tool will try to resolve them when combined! Below are the items with placeholders:");
                 for(IPlaceholderedElement item:shphe.getItems()) {
-                    System.out.println("NAME: "+ ((HierarchicalElement) item).getName()+" PLACEHOLDER: "+(item instanceof ClassProperty? ((ClassProperty) item).getPlaceholder(): ((ClassParameter) item).getPlaceholder()));
+                    System.out.println("NAME: "+ ((HierarchicalElement) item).getName()+" PLACEHOLDER: "+item.getPlaceholder());
                 }
                 System.out.println();
             } catch (Exception e) {
@@ -106,7 +106,7 @@ public class Main {
             if(overallUML.hasPlaceholders()) {
                 System.out.println(" WARNING: The resulting UML still has placeholders but the tool will export anyway! Below are the items with placeholders:");
                 for(IPlaceholderedElement item:overallUML.getItemsWithPlaceholders()) {
-                    System.out.println("NAME: "+ ((HierarchicalElement) item).getName()+" PLACEHOLDER: "+(item instanceof ClassProperty? ((ClassProperty) item).getPlaceholder(): ((ClassParameter) item).getPlaceholder()));
+                    System.out.println("NAME: "+ ((HierarchicalElement) item).getName()+" PLACEHOLDER: "+item.getPlaceholder());
                 }
             } else {
                 System.out.println(" OK: All placeholders are fixed!");

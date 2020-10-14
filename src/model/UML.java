@@ -152,7 +152,36 @@ public class UML extends HierarchicalElement {
                 for(IPlaceholderReplacement aPlaceholderReplacer:allPlaceholderReplacers) {
                     HierarchicalElement theReplacement = ((HierarchicalElement) aPlaceholderReplacer);
 
-                    if(placeholder.endsWith(theReplacement.getName())) {
+                    if(!aPlaceholderReplacer.getClass().equals(anElementWithPlaceholder.getRootType())) {
+                        // replace anElementWithPlaceholder with a suitable aPlaceHolderReplacer
+                        // sometimes we might need that, because at the time of the placeholder creation,
+                        // we don't know if it is class or enum parameter or property.
+                        if(anElementWithPlaceholder instanceof EnumerationProperty) {
+                            EnumerationProperty castedProperty = ((EnumerationProperty) anElementWithPlaceholder);
+                            if(aPlaceholderReplacer instanceof Class)
+                                castedProperty.changeToClassProperty(((Class) aPlaceholderReplacer));
+                            else if(aPlaceholderReplacer instanceof CustomPrimitive)
+                                castedProperty.changeToCustomPrimitiveProperty(((CustomPrimitive) aPlaceholderReplacer));
+                        } else if(anElementWithPlaceholder instanceof ClassProperty) {
+                            ClassProperty castedProperty = ((ClassProperty) anElementWithPlaceholder);
+                            if(aPlaceholderReplacer instanceof Enumeration)
+                                castedProperty.changeToEnumerationProperty(((Enumeration) aPlaceholderReplacer));
+                            else if(aPlaceholderReplacer instanceof CustomPrimitive)
+                                castedProperty.changeToCustomPrimitiveProperty(((CustomPrimitive) aPlaceholderReplacer));
+                        } else if(anElementWithPlaceholder instanceof EnumerationParameter) {
+                            EnumerationParameter castedParameter = ((EnumerationParameter) anElementWithPlaceholder);
+                            if(aPlaceholderReplacer instanceof Class)
+                                castedParameter.changeToClassParameter(((Class) aPlaceholderReplacer));
+                            else if(aPlaceholderReplacer instanceof CustomPrimitive)
+                                castedParameter.changeToCustomPrimitiveParameter(((CustomPrimitive) aPlaceholderReplacer));
+                        } else if(anElementWithPlaceholder instanceof ClassParameter) {
+                            ClassParameter castedParameter = ((ClassParameter) anElementWithPlaceholder);
+                            if(aPlaceholderReplacer instanceof Enumeration)
+                                castedParameter.changeToEnumerationParameter(((Enumeration) aPlaceholderReplacer));
+                            else if(aPlaceholderReplacer instanceof CustomPrimitive)
+                                castedParameter.changeToCustomPrimitiveParameter(((CustomPrimitive) aPlaceholderReplacer));
+                        }
+                    } else {
                         anElementWithPlaceholder.fixType(aPlaceholderReplacer.getRealTypeOfPlaceholder());
                         replacedElement = theReplacement;
                     }
