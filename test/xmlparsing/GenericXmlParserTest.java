@@ -7,12 +7,26 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.util.List;
 
 import static extractor.ExtractorTests.GetAdaXMLFromResource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GenericXmlParserTest {
+
+    @Test
+    void xpathTests() throws XPathExpressionException {
+        String xmlString = GetAdaXMLFromResource("ExamplesFromRoy/xmi-files/globals_example1.ads.xml");
+        Document xmlDocument = GenericXmlParser.getDocumentFromXML(xmlString);
+
+        XPath xpath = XPathFactory.newInstance().newXPath();
+        NodeList ordinaryTypeDefinitions = (NodeList) xpath.evaluate("/compilation_unit/unit_declaration_q/package_declaration/visible_part_declarative_items_ql/ordinary_type_declaration",xmlDocument, XPathConstants.NODESET);
+        assertEquals(4,ordinaryTypeDefinitions.getLength());
+    }
 
     @Test
     void getNodeWithSignature() throws InvalidSignatureException {
