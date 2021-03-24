@@ -26,6 +26,9 @@ class GenericXmlParserTest {
         XPath xpath = XPathFactory.newInstance().newXPath();
         NodeList ordinaryTypeDefinitions = (NodeList) xpath.evaluate("/compilation_unit/unit_declaration_q/package_declaration/visible_part_declarative_items_ql/ordinary_type_declaration",xmlDocument, XPathConstants.NODESET);
         assertEquals(4,ordinaryTypeDefinitions.getLength());
+
+        NodeList ordinaryTypeDefinitionNames = (NodeList) xpath.evaluate("/compilation_unit/unit_declaration_q/package_declaration/visible_part_declarative_items_ql/ordinary_type_declaration/names_ql/defining_identifier/@def_name",xmlDocument, XPathConstants.NODESET);
+        assertEquals(4,ordinaryTypeDefinitionNames.getLength());
     }
 
     @Test
