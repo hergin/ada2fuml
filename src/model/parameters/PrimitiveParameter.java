@@ -18,6 +18,12 @@ public class PrimitiveParameter extends Parameter {
         super(name, direction);
         this.type = type;
         this.defaultValue = defaultValue;
+        if(defaultValue!=null && defaultValue instanceof String && ((String) defaultValue).trim().equals("\"\""))
+            this.defaultValue = "";
+    }
+
+    public boolean hasDefault() {
+        return defaultValue != null && !defaultValue.toString().isEmpty();
     }
 
     public TypeEnum getType() {

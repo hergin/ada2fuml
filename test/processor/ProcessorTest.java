@@ -205,6 +205,60 @@ class ProcessorTest {
                 .and(StringUtils.sanitize(result))
                 .ignoreWhitespace()
                 .areIdentical();
+    }
+
+    @Test
+    void TestProcessPrimitiveStringPropertyWithEmptyDefaultValue() throws UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException {
+        UML uml = new UML("uml");
+        Class SomeClass = new Class("SomeClass");
+        PrimitiveProperty somePP = new PrimitiveProperty("someAttribute", VisibilityEnum.Private, TypeEnum.String,"");
+
+        SomeClass.addProperty(somePP);
+        uml.addClass(SomeClass);
+
+        String result = Processor.processUML(uml, StillHavePlaceholderExceptionPolicy.Throw);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"><uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"uml\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID1\" name=\"SomeClass\"><ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"ID2\" name=\"someAttribute\" visibility=\"private\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String\"/></ownedAttribute></packagedElement></uml:Model></xmi:XMI>";
+
+        XmlAssert.assertThat(expected)
+                .and(StringUtils.sanitize(result))
+                .ignoreWhitespace()
+                .areIdentical();
+    }
+
+    @Test
+    void TestProcessPrimitiveStringPropertyWithQuotesEmptyDefaultValue() throws UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException {
+        UML uml = new UML("uml");
+        Class SomeClass = new Class("SomeClass");
+        PrimitiveProperty somePP = new PrimitiveProperty("someAttribute", VisibilityEnum.Private, TypeEnum.String,"\"\"");
+
+        SomeClass.addProperty(somePP);
+        uml.addClass(SomeClass);
+
+        String result = Processor.processUML(uml, StillHavePlaceholderExceptionPolicy.Throw);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"><uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"uml\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID1\" name=\"SomeClass\"><ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"ID2\" name=\"someAttribute\" visibility=\"private\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String\"/></ownedAttribute></packagedElement></uml:Model></xmi:XMI>";
+
+        XmlAssert.assertThat(expected)
+                .and(StringUtils.sanitize(result))
+                .ignoreWhitespace()
+                .areIdentical();
+    }
+
+    @Test
+    void TestProcessPrimitiveStringPropertyWithNonEmptyDefaultValue() throws UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException {
+        UML uml = new UML("uml");
+        Class SomeClass = new Class("SomeClass");
+        PrimitiveProperty somePP = new PrimitiveProperty("someAttribute", VisibilityEnum.Private, TypeEnum.String,"default");
+
+        SomeClass.addProperty(somePP);
+        uml.addClass(SomeClass);
+
+        String result = Processor.processUML(uml, StillHavePlaceholderExceptionPolicy.Throw);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"><uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"uml\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID1\" name=\"SomeClass\"><ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"ID2\" name=\"someAttribute\" visibility=\"private\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String\"/><defaultValue value=\"default\" xmi:id=\"ID3\" xmi:type=\"uml:LiteralString\"/></ownedAttribute></packagedElement></uml:Model></xmi:XMI>";
+
+        XmlAssert.assertThat(expected)
+                .and(StringUtils.sanitize(result))
+                .ignoreWhitespace()
+                .areIdentical();
 
         //Assertions.assertEquals(expected,result);
     }

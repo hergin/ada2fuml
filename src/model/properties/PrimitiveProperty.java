@@ -13,6 +13,8 @@ public class PrimitiveProperty extends Property {
         super(name,visibility);
         this.type = type;
         this.defaultValue = defaultValue;
+        if(defaultValue!=null && defaultValue instanceof String && ((String) defaultValue).trim().equals("\"\""))
+            this.defaultValue = "";
     }
 
     public TypeEnum getType() {
@@ -20,7 +22,7 @@ public class PrimitiveProperty extends Property {
     }
 
     public boolean hasDefault() {
-    	return defaultValue != null;
+    	return defaultValue != null && !defaultValue.toString().isEmpty();
     }
 
     public Object getDefaultValue() {

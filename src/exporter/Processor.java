@@ -337,7 +337,7 @@ public class Processor {
             PrimitiveParameter pParam = (PrimitiveParameter) param;
             string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' direction='" + param.getDirection().toString().toLowerCase() + "'>"); // Todo Check if visibility matters here
             string.append("<type href='http://www.omg.org/spec/UML/" + specDate + "/PrimitiveTypes.xmi#" + pParam.getType().toString() + "'/>");
-            if (pParam.getDefaultValue() != null) {
+            if (pParam.hasDefault()) {
                 string.append("<defaultValue xmi:type='uml:Literal" + pParam.getType().toString() + "' xmi:id='" + Processor.uuidGenerator() + "' value='" + pParam.getDefaultValue().toString() + "'/>");
             }
             string.append("</ownedParameter>");
