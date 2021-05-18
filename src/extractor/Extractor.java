@@ -1,6 +1,7 @@
 package extractor;
 
 import adaschema.*;
+import exceptions.InvalidSignatureException;
 import exceptions.NamingException;
 import exceptions.PartialUMLException;
 import exceptions.UnhandledTypeException;
@@ -17,6 +18,9 @@ import model.parameters.ClassParameter;
 import model.parameters.PrimitiveParameter;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import xmlparsing.GenericXmlParser;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -25,12 +29,76 @@ import java.util.List;
 
 public class Extractor {
 
+    public static UML extractHighLevelConcepts(Document document) throws InvalidSignatureException {
+        UML resultingUML = new UML(document.getDocumentElement().getAttribute("def_name"), document.getDocumentElement().getAttribute("source_file"));
+
+        List<Node> packageDeclarations = GenericXmlParser.getNodesWithSignature(document, "compilation_unit>unit_declaration_q>package_declaration");
+        if (packageDeclarations.size() > 0) {
+            Node packageDeclaration = packageDeclarations.get(0);
+            String packageName = GenericXmlParser.getNodesWithSignatureStartingFrom(packageDeclaration, "package_declaration>names_ql>defining_identifier").get(0).getAttributes().getNamedItem("def_name").getNodeValue();
+            String classNameAfterPackageName = packageName;
+
+            // If this is true, then we will create the package name just before the _ but everything else will remain same.
+            //      check the excel file by ROY to see what happens the naming when underscore is involved for more info.
+            if (packageName.contains("_")) {
+                packageName = packageName.split("_")[0];
+            }
+
+            List<Node> ordinaryTypeDeclarations = GenericXmlParser.getNodesWithSignatureStartingFrom(packageDeclaration, "package_declaration>visible_part_declarative_items_ql>ordinary_type_declaration");
+            // combine with private part types
+            ordinaryTypeDeclarations.addAll(GenericXmlParser.getNodesWithSignatureStartingFrom(packageDeclaration, "package_declaration>private_part_declarative_items_ql>ordinary_type_declaration"));
+
+            for (Node ordinaryType : ordinaryTypeDeclarations) {
+                String typeName = GenericXmlParser.getNodesWithSignatureStartingFrom(ordinaryType, "ordinary_type_declaration>names_ql>defining_identifier").get(0).getAttributes().getNamedItem("def_name").getNodeValue();
+                Package thePackageInWhichTheTypeClass = null;
+                Class theClass = null;
+
+                // packageX + typeX => classX
+                if (packageName.equals(typeName)) {
+                    theClass = resultingUML.createOrGetClassByName(typeName);
+                }
+
+                // If there is a . in the package name, we will create subpackage.
+                if (classNameAfterPackageName.contains(".")) {
+                    String higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
+                    packageName = higherLevelPackage;
+                    if (higherLevelPackage.contains("_"))
+                        higherLevelPackage = higherLevelPackage.split("_")[0];
+                    classNameAfterPackageName = classNameAfterPackageName.split("\\.")[1];
+
+                    Package dottedSuperPackage = resultingUML.createOrGetPackageByName(higherLevelPackage);
+
+                    // packageX + typeY => packageX + classY
+                    if (!packageName.equals(typeName)) {
+                        Package subpackage = dottedSuperPackage.createOrGetSubPackageByName(packageName);
+                        theClass = subpackage.createOrGetClassByName(typeName);
+                        thePackageInWhichTheTypeClass = subpackage;
+                    }
+
+                } else {
+                    // packageX + typeY => packageX + classY
+                    if (!packageName.equals(typeName)) {
+                        Package packageNamedAfterAdaPackage = resultingUML.createOrGetPackageByName(packageName);
+                        theClass = packageNamedAfterAdaPackage.createOrGetClassByName(typeName);
+                        thePackageInWhichTheTypeClass = packageNamedAfterAdaPackage;
+                    }
+                }
+
+                if (theClass != null) {
+                    // TODO extract components
+                }
+            }
+        }
+
+        return resultingUML;
+    }
+
     public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) throws NamingException, PartialUMLException {
-        UML resultingUML = new UML(compilationUnit.getDefName(),compilationUnit.getSourceFile());
+        UML resultingUML = new UML(compilationUnit.getDefName(), compilationUnit.getSourceFile());
 
         List<Exception> exceptions = new ArrayList<>();
 
-        if (compilationUnit.getUnitDeclarationQ().getPackageDeclaration()!=null) {
+        if (compilationUnit.getUnitDeclarationQ().getPackageDeclaration() != null) {
 
             PackageDeclaration thePackage = compilationUnit.getUnitDeclarationQ().getPackageDeclaration();
             String packageName = thePackage.getName();
@@ -38,11 +106,11 @@ public class Extractor {
 
             // If this is true, then we will create the package name just before the _ but everything else will remain same.
             //      check the excel file by ROY to see what happens the naming when underscore is involved for more info.
-            if(packageName.contains("_")) {
+            if (packageName.contains("_")) {
                 packageName = packageName.split("_")[0];
             }
 
-            for(SubtypeDeclaration theSubtype : thePackage.getSubtypes()) {
+            for (SubtypeDeclaration theSubtype : thePackage.getSubtypes()) {
                 String subtypeName = theSubtype.getName();
 
                 CustomPrimitive thePrimitive = null;
@@ -54,10 +122,10 @@ public class Extractor {
                 }
 
                 // If there is a . in the package name, we will create subpackage.
-                if(classNameAfterPackageName.contains(".")) {
+                if (classNameAfterPackageName.contains(".")) {
                     String higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
                     packageName = higherLevelPackage;
-                    if(higherLevelPackage.contains("_"))
+                    if (higherLevelPackage.contains("_"))
                         higherLevelPackage = higherLevelPackage.split("_")[0];
                     classNameAfterPackageName = classNameAfterPackageName.split("\\.")[1];
 
@@ -80,7 +148,7 @@ public class Extractor {
                 }
 
                 String theSuperPrimitiveName = theSubtype.getSuperPrimitiveName();
-                if(isPrimitive(theSuperPrimitiveName)) {
+                if (isPrimitive(theSuperPrimitiveName)) {
                     thePrimitive.setSuperPrimitive(convertToTypeEnum(theSuperPrimitiveName));
                 } else {
                     CustomPrimitive superCustomPrimitive = thePackageInWhichTheSubTypeClass.createOrGetCustomPrimitiveByName(theSuperPrimitiveName);
@@ -88,7 +156,7 @@ public class Extractor {
                 }
             }
 
-            for(OrdinaryTypeDeclaration theEnumerationOrdinaryType : thePackage.getEnumerationOrdinaryTypes()) {
+            for (OrdinaryTypeDeclaration theEnumerationOrdinaryType : thePackage.getEnumerationOrdinaryTypes()) {
                 String enumName = theEnumerationOrdinaryType.getName();
 
                 Enumeration theEnum = null;
@@ -100,10 +168,10 @@ public class Extractor {
                 }
 
                 // If there is a . in the package name, we will create subpackage.
-                if(classNameAfterPackageName.contains(".")) {
+                if (classNameAfterPackageName.contains(".")) {
                     String higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
                     packageName = higherLevelPackage;
-                    if(higherLevelPackage.contains("_"))
+                    if (higherLevelPackage.contains("_"))
                         higherLevelPackage = higherLevelPackage.split("_")[0];
                     classNameAfterPackageName = classNameAfterPackageName.split("\\.")[1];
 
@@ -125,7 +193,7 @@ public class Extractor {
                     }
                 }
 
-                for (String anEnumLiteral:theEnumerationOrdinaryType.getEnumLiterals()) {
+                for (String anEnumLiteral : theEnumerationOrdinaryType.getEnumLiterals()) {
                     theEnum.addLiteral(new EnumerationLiteral(anEnumLiteral));
                 }
 
@@ -145,10 +213,10 @@ public class Extractor {
                     }
 
                     // If there is a . in the package name, we will create subpackage.
-                    if(classNameAfterPackageName.contains(".")) {
+                    if (classNameAfterPackageName.contains(".")) {
                         String higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
                         packageName = higherLevelPackage;
-                        if(higherLevelPackage.contains("_"))
+                        if (higherLevelPackage.contains("_"))
                             higherLevelPackage = higherLevelPackage.split("_")[0];
                         classNameAfterPackageName = classNameAfterPackageName.split("\\.")[1];
 
@@ -248,7 +316,7 @@ public class Extractor {
                         }
 
                         String superClassName = theType.getSuperClassName();
-                        if(superClassName!=null) {
+                        if (superClassName != null) {
                             theClass.addSuperClass(thePackageInWhichTheSubTypeClass.createOrGetClassByName(superClassName));
                         }
                     }
@@ -524,7 +592,7 @@ public class Extractor {
         // Try to fix the local placeholders because if they don't have . in their place holder, probably these classes are in the same UML.
         resultingUML.fixPlaceholders(PlaceholderPreferenceEnum.Local);
 
-        if(!exceptions.isEmpty())
+        if (!exceptions.isEmpty())
             throw new PartialUMLException("This UML has thrown some exceptions!", resultingUML, exceptions);
 
         return resultingUML;
@@ -543,11 +611,11 @@ public class Extractor {
     }
 
     public static TypeEnum convertToTypeEnum(String type) {
-        if(type.equals("Natural"))
+        if (type.equals("Natural"))
             return TypeEnum.UnlimitedNatural;
-        else if(type.equals("Float"))
+        else if (type.equals("Float"))
             return TypeEnum.Real;
-        else if(type.equals("Positive"))
+        else if (type.equals("Positive"))
             return TypeEnum.Integer;
         else
             return TypeEnum.valueOf(type);
