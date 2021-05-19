@@ -2,6 +2,7 @@ package template;
 
 import extractor.Extractor;
 import model.Class;
+import model.Package;
 import model.UML;
 import model.auxiliary.HierarchicalElement;
 import model.enums.VisibilityEnum;
@@ -32,6 +33,8 @@ public class TemplateInterpreter {
                         processFurther(currentNode, element, item.getSubItems());
                         if (element instanceof UML) {
                             uml.combine(((UML) element));
+                        } else if (element instanceof Package) {
+                            uml.addPackage(((Package) element));
                         }
                     }
                 }
@@ -84,8 +87,19 @@ public class TemplateInterpreter {
                 if (element instanceof Class) {
                     ((UML) parentElement).addClass(((Class) element));
                 }
+            } else if (attributeName.equals("packages")) {
+                if (element instanceof Package) {
+                    ((UML) parentElement).addPackage(((Package) element));
+                }
+            }
+        } else if (parentElement instanceof Package) {
+            if (attributeName.equals("classes")) {
+                if (element instanceof Class) {
+                    ((Package) parentElement).addClass(((Class) element));
+                }
             }
         }
+
     }
 
     public static Field getField(java.lang.Class<?> type, String fieldName) {
@@ -107,6 +121,8 @@ public class TemplateInterpreter {
                 return new UML("");
             case "Class":
                 return new Class("");
+            case "Package":
+                return new Package("");
             default:
                 if (name.startsWith("PrimitiveProperty")) {
                     return new PrimitiveProperty("", VisibilityEnum.Public, Extractor.convertToTypeEnum(name.substring(18, name.length() - 1)), null);
