@@ -83,5 +83,8 @@ class TemplateInterpreterTest {
         UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(adaXML), adaTemplate);
         //assertEquals("Globals_Example1",result.getName());
         assertEquals(1, result.getPackages().size());
+        assertEquals(4, result.getPackages().get(0).getClasses().size());
+        assertEquals("Itype", result.getPackages().get(0).getClasses().get(0).getName());
+        assertEquals("Record_With_Float_Rtype", result.getPackages().get(0).getClasses().get(3).getName());
     }
 }
