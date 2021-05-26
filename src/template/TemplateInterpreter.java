@@ -56,9 +56,18 @@ public class TemplateInterpreter {
                     }
                 }
             } else if (item.getLhs() instanceof LHSAttribute) {
-                String value = getAttributeValueOfNode(parentNode, ((LHSAttribute) item.getLhs()).getName());
-                if (item.getRhs() instanceof RHSAttribute) {
-                    setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
+                if (((LHSAttribute) item.getLhs()).getPath().isEmpty()) {
+                    String value = getAttributeValueOfNode(parentNode, ((LHSAttribute) item.getLhs()).getName());
+                    if (item.getRhs() instanceof RHSAttribute) {
+                        setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
+                    }
+                } else {
+                    Node currentNode = XMLUtils.getAllNodesWithThePath(parentNode, item.getLhs().getPath()).item(0);
+                    // TODO this assumes we will only have 1 sub-nodes. Should be researched more.
+                    String value = getAttributeValueOfNode(currentNode, ((LHSAttribute) item.getLhs()).getName());
+                    if (item.getRhs() instanceof RHSAttribute) {
+                        setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
+                    }
                 }
             }
         }

@@ -1,11 +1,18 @@
 package template;
 
+import Integration.RoyTests;
 import model.UML;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import template.model.*;
 import utils.XMLUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -67,5 +74,14 @@ class TemplateInterpreterTest {
     void interpretTest() {
         UML result = TemplateInterpreter.interpret(bookXmlDocument, bookTemplate);
         assertEquals(4, result.getClasses().size());
+    }
+
+    @Test
+    void basicAdaXMLTest() throws URISyntaxException, IOException {
+        Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/basicAdaTemplate.template").toURI())));
+        String adaXML = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("ExamplesFromRoy/xmi-files/globals_example1.ads.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(adaXML), adaTemplate);
+        //assertEquals("Globals_Example1",result.getName());
+        assertEquals(1, result.getPackages().size());
     }
 }
