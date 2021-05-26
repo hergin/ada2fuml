@@ -3,9 +3,11 @@ package template;
 import extractor.Extractor;
 import model.Class;
 import model.Package;
+import model.Property;
 import model.UML;
 import model.auxiliary.HierarchicalElement;
 import model.enums.VisibilityEnum;
+import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -107,6 +109,12 @@ public class TemplateInterpreter {
                     ((Package) parentElement).addClass(((Class) element));
                 }
             }
+        } else if (parentElement instanceof Class) {
+            if (attributeName.equals("properties")) {
+                if (element instanceof Property) {
+                    ((Class) parentElement).addProperty(((Property) element));
+                }
+            }
         }
 
     }
@@ -132,6 +140,8 @@ public class TemplateInterpreter {
                 return new Class("");
             case "Package":
                 return new Package("");
+            case "ClassProperty":
+                return new ClassProperty("",VisibilityEnum.Public,"SomePlaceholder"); // TODO this placeholdering should change!
             default:
                 if (name.startsWith("PrimitiveProperty")) {
                     return new PrimitiveProperty("", VisibilityEnum.Public, Extractor.convertToTypeEnum(name.substring(18, name.length() - 1)), null);
