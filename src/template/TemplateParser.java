@@ -23,7 +23,15 @@ public class TemplateParser {
 
             LHS lhsOfTheItem = null;
             if (lhsWithoutLevel.contains("@")) { // attribute
-                lhsOfTheItem = new LHSAttribute(lhsWithoutLevel.replace("@", "").trim());
+                if (lhsWithoutLevel.contains("/")) { // there is a path before the attribute name
+                    String[] pathTokens = lhsWithoutLevel.split("@");
+                    String path = pathTokens[0].trim();
+                    String attributeName = pathTokens[1].trim();
+                    lhsOfTheItem = new LHSAttribute(path, attributeName);
+                } else {
+                    String attributeName = lhsWithoutLevel.replace("@", "").trim();
+                    lhsOfTheItem = new LHSAttribute(attributeName);
+                }
             } else if (!lhsWithoutLevel.contains("@")) { // tag
                 lhsOfTheItem = new LHSTag(lhsWithoutLevel);
             }

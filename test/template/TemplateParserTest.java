@@ -1,10 +1,15 @@
 package template;
 
+import Integration.RoyTests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import template.model.*;
 import utils.XMLUtils;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,5 +47,13 @@ class TemplateParserTest {
         Template result = TemplateParser.parseTemplateFromString(bookTemplate);
         assertEquals(1, result.getItems().size());
         assertEquals("PrimitiveProperty(Real)", ((RHSAttributeInClass) result.getItems().get(0).getSubItems().get(0).getSubItems().get(4).getRhs()).getClassName());
+    }
+
+    @Test
+    void parseAdaTemplateWithAttributeInPath() throws URISyntaxException, IOException {
+        Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateParserTest.class.getClassLoader().getResource("template/basicAdaTemplate.template").toURI())));
+        assertEquals(((LHSAttribute) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs()).getPath(), "names_ql/defining_identifier");
+        assertEquals(((LHSAttribute) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs()).getName(), "def_name");
+        assertEquals(adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs().toString(), "names_ql/defining_identifier/@def_name");
     }
 }
