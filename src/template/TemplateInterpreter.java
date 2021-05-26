@@ -16,6 +16,7 @@ import template.model.*;
 import utils.XMLUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,30 +94,15 @@ public class TemplateInterpreter {
 
     // TODO add element to the attribute of the parentElement by REFLECTION
     private static void addElementToTheList(HierarchicalElement element, HierarchicalElement parentElement, String attributeName) {
-        if (parentElement instanceof UML) {
-            if (attributeName.equals("classes")) {
-                if (element instanceof Class) {
-                    ((UML) parentElement).addClass(((Class) element));
-                }
-            } else if (attributeName.equals("packages")) {
-                if (element instanceof Package) {
-                    ((UML) parentElement).addPackage(((Package) element));
-                }
-            }
-        } else if (parentElement instanceof Package) {
-            if (attributeName.equals("classes")) {
-                if (element instanceof Class) {
-                    ((Package) parentElement).addClass(((Class) element));
-                }
-            }
-        } else if (parentElement instanceof Class) {
-            if (attributeName.equals("properties")) {
-                if (element instanceof Property) {
-                    ((Class) parentElement).addProperty(((Property) element));
-                }
-            }
+        Method addMethod = getMethod(parentElement.getClass(), "add" + element.getClass().getSimpleName());
+        if (addMethod == null) {
+            addMethod = getMethod(parentElement.getClass(), "add" + element.getClass().getSuperclass().getSimpleName()); // TODO find more elegant solution. This is for PrimitiveProperty or any subclass or property. They don't have addPrimitiveProperty method, so we have to find addProperty instead.
         }
-
+        try {
+            addMethod.invoke(parentElement, element);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Field getField(java.lang.Class<?> type, String fieldName) {
@@ -131,21 +117,32 @@ public class TemplateInterpreter {
         return null;
     }
 
+    public static Method getMethod(java.lang.Class<?> type, String methodName) {
+        for (java.lang.Class<?> c = type; c != null; c = c.getSuperclass()) {
+            for (Method method : Arrays.asList(c.getDeclaredMethods())) {
+                if (method.getName().equals(methodName)) {
+                    method.setAccessible(true);
+                    return method;
+                }
+            }
+        }
+        return null;
+    }
+
     // TODO create element to the attribute of the parentElement by REFLECTION
     private static HierarchicalElement createTheElement(String name) {
-        switch (name) {
-            case "UML":
-                return new UML("");
-            case "Class":
-                return new Class("");
-            case "Package":
-                return new Package("");
-            case "ClassProperty":
-                return new ClassProperty("",VisibilityEnum.Public,"SomePlaceholder"); // TODO this placeholdering should change!
-            default:
-                if (name.startsWith("PrimitiveProperty")) {
-                    return new PrimitiveProperty("", VisibilityEnum.Public, Extractor.convertToTypeEnum(name.substring(18, name.length() - 1)), null);
+        if (name.startsWith("PrimitiveProperty")) {
+            return new PrimitiveProperty("", VisibilityEnum.Public, Extractor.convertToTypeEnum(name.substring(18, name.length() - 1)), null);
+        } else {
+            try {
+                return (HierarchicalElement) java.lang.Class.forName("model." + name).getConstructor(String.class).newInstance("");
+            } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                try {
+                    return (HierarchicalElement) java.lang.Class.forName("model.properties." + name).getConstructor(String.class).newInstance("");
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException inner) {
+                    inner.printStackTrace();
                 }
+            }
         }
         return null;
     }

@@ -15,6 +15,11 @@ public class ClassProperty extends Property implements IPlaceholderedElement {
 
     private String placeholder;
 
+    public ClassProperty(String name) {
+        super(name, VisibilityEnum.Public);
+        this.placeholder = "placeholdered"; // TODO this placeholdering should be taken care of!
+    }
+
     public ClassProperty(String name, VisibilityEnum visibility, String placeholder) {
         super(name, visibility);
         this.placeholder = placeholder;
@@ -50,26 +55,26 @@ public class ClassProperty extends Property implements IPlaceholderedElement {
 
     public void changeToEnumerationProperty(Enumeration enumeration) {
         HierarchicalElement parent = getParent();
-        if(parent instanceof Enumeration) {
+        if (parent instanceof Enumeration) {
             Enumeration castedParent = ((Enumeration) parent);
-            castedParent.addProperty(new EnumerationProperty(getName(),enumeration));
+            castedParent.addProperty(new EnumerationProperty(getName(), enumeration));
             castedParent.getProperties().remove(this);
-        } else if(parent instanceof Class) {
+        } else if (parent instanceof Class) {
             Class castedParent = ((Class) parent);
-            castedParent.addProperty(new EnumerationProperty(getName(),enumeration));
+            castedParent.addProperty(new EnumerationProperty(getName(), enumeration));
             castedParent.getProperties().remove(this);
         }
     }
 
     public void changeToCustomPrimitiveProperty(CustomPrimitive customPrimitive) {
         HierarchicalElement parent = getParent();
-        if(parent instanceof Enumeration) {
+        if (parent instanceof Enumeration) {
             Enumeration castedParent = ((Enumeration) parent);
-            castedParent.addProperty(new CustomPrimitiveProperty(getName(),getVisibility(),customPrimitive));
+            castedParent.addProperty(new CustomPrimitiveProperty(getName(), getVisibility(), customPrimitive));
             castedParent.getProperties().remove(this);
-        } else if(parent instanceof Class) {
+        } else if (parent instanceof Class) {
             Class castedParent = ((Class) parent);
-            castedParent.addProperty(new CustomPrimitiveProperty(getName(),getVisibility(),customPrimitive));
+            castedParent.addProperty(new CustomPrimitiveProperty(getName(), getVisibility(), customPrimitive));
             castedParent.getProperties().remove(this);
         }
     }
