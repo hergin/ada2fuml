@@ -37,7 +37,7 @@ public class TemplateGUI extends JFrame implements ActionListener {
         setContentPane(panel);
 
         JLabel templateLabel = new JLabel("Template");
-        GridBagConstraints templateLabelConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        GridBagConstraints templateLabelConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(templateLabel, templateLabelConstraints);
 
         templateArea = new JTextArea();
@@ -52,11 +52,12 @@ public class TemplateGUI extends JFrame implements ActionListener {
                 ">>> @value              -- defaultValue\n" +
                 ">> price                -- PrimitiveProperty(Real) in properties\n" +
                 ">>> @value              -- defaultValue");
-        GridBagConstraints templateAreaConstraints = new GridBagConstraints(0, 1, 1, 10, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        GridBagConstraints templateAreaConstraints = new GridBagConstraints(1, 1, 1, 10, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        templateArea.setPreferredSize(new Dimension(100,100));
         panel.add(templateArea, templateAreaConstraints);
 
         JLabel xmlLabel = new JLabel("XML");
-        GridBagConstraints xmlLabelConstraints = new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        GridBagConstraints xmlLabelConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         panel.add(xmlLabel, xmlLabelConstraints);
 
         xmlArea = new JTextArea();
@@ -90,7 +91,8 @@ public class TemplateGUI extends JFrame implements ActionListener {
                 "<price>39.95</price>\n" +
                 "</book>\n" +
                 "</bookstore>");
-        GridBagConstraints xmlAreaConstraints = new GridBagConstraints(1, 1, 1, 10, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        GridBagConstraints xmlAreaConstraints = new GridBagConstraints(0, 1, 1, 10, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        xmlArea.setPreferredSize(new Dimension(100,100));
         panel.add(xmlArea, xmlAreaConstraints);
 
         JButton generateUML = new JButton("Generate UML");
