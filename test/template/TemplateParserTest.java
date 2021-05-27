@@ -52,8 +52,8 @@ class TemplateParserTest {
     @Test
     void parseAdaTemplateWithAttributeInPath() throws URISyntaxException, IOException {
         Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateParserTest.class.getClassLoader().getResource("template/basicAdaTemplate.template").toURI())));
-        assertEquals(((LHSAttribute) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs()).getPath(), "names_ql/defining_identifier");
-        assertEquals(((LHSAttribute) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs()).getName(), "def_name");
+        assertEquals(((LHSAttributeWithPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs()).getPath(), "names_ql/defining_identifier");
+        assertEquals(((LHSAttributeWithPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs()).getAttributeName(), "def_name");
         assertEquals(adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs().toString(), "names_ql/defining_identifier/@def_name");
     }
 }

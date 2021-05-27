@@ -27,7 +27,7 @@ public class TemplateParser {
                     String[] pathTokens = lhsWithoutLevel.split("@");
                     String path = pathTokens[0].trim();
                     String attributeName = pathTokens[1].trim();
-                    lhsOfTheItem = new LHSAttribute(path, attributeName);
+                    lhsOfTheItem = new LHSAttributeWithPath(attributeName, path);
                 } else {
                     String attributeName = lhsWithoutLevel.replace("@", "").trim();
                     lhsOfTheItem = new LHSAttribute(attributeName);

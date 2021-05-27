@@ -2,12 +2,18 @@ package template.model;
 
 public class LHSTag extends LHS {
 
-    public LHSTag(String path) {
-        super(path);
+    String tag;
+
+    public LHSTag(String tag) {
+        this.tag = tag;
     }
 
     @Override
     public String toString() {
-        return path;
+        return tag;
+    }
+
+    public String getTag() {
+        return tag;
     }
 }

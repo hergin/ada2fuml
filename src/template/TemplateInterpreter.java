@@ -28,7 +28,7 @@ public class TemplateInterpreter {
         UML uml = new UML("overall");
         for (TemplateItem item : template.getItems()) {
             if (item.getLhs() instanceof LHSTag) {
-                NodeList nodes = XMLUtils.getAllNodesWithThePath(xmlDocument, item.getLhs().getPath());
+                NodeList nodes = XMLUtils.getAllNodesWithThePath(xmlDocument, ((LHSTag) item.getLhs()).getTag());
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node currentNode = nodes.item(i);
                     if (item.getRhs() instanceof RHSClass) {
@@ -49,7 +49,7 @@ public class TemplateInterpreter {
     private static void processFurther(Node parentNode, HierarchicalElement parentElement, List<TemplateItem> subItems) {
         for (TemplateItem item : subItems) {
             if (item.getLhs() instanceof LHSTag) {
-                NodeList nodes = XMLUtils.getAllNodesWithThePath(parentNode, item.getLhs().getPath());
+                NodeList nodes = XMLUtils.getAllNodesWithThePath(parentNode, ((LHSTag) item.getLhs()).getTag());
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node currentNode = nodes.item(i);
                     if (item.getRhs() instanceof RHSAttributeInClass) {
@@ -59,18 +59,16 @@ public class TemplateInterpreter {
                     }
                 }
             } else if (item.getLhs() instanceof LHSAttribute) {
-                if (((LHSAttribute) item.getLhs()).getPath().isEmpty()) {
-                    String value = getAttributeValueOfNode(parentNode, ((LHSAttribute) item.getLhs()).getName());
-                    if (item.getRhs() instanceof RHSAttribute) {
-                        setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
-                    }
-                } else {
-                    Node currentNode = XMLUtils.getAllNodesWithThePath(parentNode, item.getLhs().getPath()).item(0);
-                    // TODO this assumes we will only have 1 sub-nodes. Should be researched more.
-                    String value = getAttributeValueOfNode(currentNode, ((LHSAttribute) item.getLhs()).getName());
-                    if (item.getRhs() instanceof RHSAttribute) {
-                        setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
-                    }
+                String value = getAttributeValueOfNode(parentNode, ((LHSAttribute) item.getLhs()).getName());
+                if (item.getRhs() instanceof RHSAttribute) {
+                    setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
+                }
+            } else if (item.getLhs() instanceof LHSAttributeWithPath) {
+                Node currentNode = XMLUtils.getAllNodesWithThePath(parentNode, ((LHSAttributeWithPath) item.getLhs()).getPath()).item(0);
+                // TODO this assumes we will only have 1 sub-nodes. Should be researched more.
+                String value = getAttributeValueOfNode(currentNode, ((LHSAttributeWithPath) item.getLhs()).getAttributeName());
+                if (item.getRhs() instanceof RHSAttribute) {
+                    setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
                 }
             }
         }
