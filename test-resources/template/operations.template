@@ -1,0 +1,8 @@
+/compilation_unit                                                   -- UML
+> @def_name                                                         -- name
+> unit_declaration_q/package_declaration                            -- Package in packages
+>> names_ql/defining_identifier/@def_name                           -- name
+>> visible_part_declarative_items_ql/ordinary_type_declaration      -- Class in classes
+>>> names_ql/defining_identifier/@def_name                          -- name
+>>> type_declaration_view_q/record_type_definition/record_definition_q/record_definition/record_components_ql/component_declaration -- Operation in operations
+>>>> names_ql/defining_identifier/@def_name                         -- name

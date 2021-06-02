@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TemplateInterpreterTest {
 
-    Document bookXmlDocument;
-    Template bookTemplate;
+    @Test
+    void interpretTest() {
+        Document bookXmlDocument;
+        Template bookTemplate;
 
-    @BeforeEach
-    void setUp() {
         String xmlString = "<bookstore>\n" +
                 "<book category=\"cooking\">\n" +
                 "<title lang=\"en\">Everyday Italian</title>\n" +
@@ -68,10 +68,6 @@ class TemplateInterpreterTest {
         book.addSubItem(title);
         TemplateItem value = new TemplateItem(new LHSAttribute("value"), new RHSAttribute("defaultValue"));
         title.addSubItem(value);
-    }
-
-    @Test
-    void interpretTest() {
         UML result = TemplateInterpreter.interpret(bookXmlDocument, bookTemplate);
         assertEquals(4, result.getClasses().size());
     }
@@ -86,5 +82,17 @@ class TemplateInterpreterTest {
         assertEquals(4, result.getPackages().get(0).getClasses().size());
         assertEquals("Itype", result.getPackages().get(0).getClasses().get(0).getName());
         assertEquals("Record_With_Float_Rtype", result.getPackages().get(0).getClasses().get(3).getName());
+    }
+
+    @Test
+    void operationTest() throws URISyntaxException, IOException {
+        Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/operations.template").toURI())));
+        String adaXML = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/operations.ads.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(adaXML), adaTemplate);
+        //assertEquals("Globals_Example1",result.getName());
+        assertEquals(1, result.getPackages().size());
+        assertEquals(1, result.getPackages().get(0).getClasses().size());
+        assertEquals("SomeClass", result.getPackages().get(0).getClasses().get(0).getName());
+        assertEquals(1, result.getPackages().get(0).getClasses().get(0).getOperations().size());
     }
 }

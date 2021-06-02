@@ -1,6 +1,7 @@
 package model;
 
 // import model.enums.TypeEnum;
+
 import model.auxiliary.HierarchicalElement;
 import model.enums.VisibilityEnum;
 
@@ -11,6 +12,13 @@ public class Operation extends HierarchicalElement {
     private List<Parameter> parameters;
     private List<Except> exceptions;
     private VisibilityEnum visibility;
+
+    public Operation(String name) {
+        super(name);
+        parameters = new ArrayList<>();
+        exceptions = new ArrayList<>();
+        this.visibility = VisibilityEnum.Public;
+    }
 
     public Operation(String name, VisibilityEnum visibility) {
         super(name);
@@ -26,7 +34,7 @@ public class Operation extends HierarchicalElement {
     }
 
     public Operation addException(Except exception) {
-    	exception.setParent(this);
+        exception.setParent(this);
         exceptions.add(exception);
         return this;
     }
