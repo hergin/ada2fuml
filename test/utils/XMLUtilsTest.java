@@ -57,4 +57,10 @@ class XMLUtilsTest {
         Document xmlDocument = XMLUtils.convertStringToDocument(xmlString);
         assertEquals(4, xmlDocument.getElementsByTagName("book").getLength());
     }
+
+    @Test
+    void stripNamespace() {
+        assertEquals("/compilation_unit",XMLUtils.stripNamespace("/compilation_unit"));
+        assertEquals("/schema",XMLUtils.stripNamespace("/xsd:schema"));
+    }
 }

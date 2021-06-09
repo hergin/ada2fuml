@@ -1,0 +1,3 @@
+/xsd:schema                                                         -- UML
+> xsd:complexType                                                   -- Class in classes
+>> @name                                                            -- name

@@ -95,4 +95,13 @@ class TemplateInterpreterTest {
         assertEquals("SomeClass", result.getPackages().get(0).getClasses().get(0).getName());
         assertEquals(1, result.getPackages().get(0).getClasses().get(0).getOperations().size());
     }
+
+    @Test
+    void schemaXmlTest() throws URISyntaxException, IOException {
+        Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/ada-schema.template").toURI())));
+        String adaXML = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/ada-schema.xsd").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(adaXML), adaTemplate);
+        assertEquals(0, result.getPackages().size());
+        assertEquals(487, result.getClasses().size());
+    }
 }

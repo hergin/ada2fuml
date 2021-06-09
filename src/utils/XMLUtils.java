@@ -17,13 +17,17 @@ public class XMLUtils {
         XPath xpath = xPathfactory.newXPath();
         XPathExpression expr = null;
         try {
-            expr = xpath.compile(path);
+            expr = xpath.compile(stripNamespace(path));
             NodeList nl = (NodeList) expr.evaluate(xmlNode, XPathConstants.NODESET);
             return nl;
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String stripNamespace(String path) {
+        return path.replaceAll("[a-zA-Z0-9]*:", "");
     }
 
     public static Document convertStringToDocument(String xmlStr) {
