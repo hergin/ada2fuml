@@ -103,5 +103,8 @@ class TemplateInterpreterTest {
         UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(adaXML), adaTemplate);
         assertEquals(0, result.getPackages().size());
         assertEquals(487, result.getClasses().size());
+        assertEquals("Source_Location", result.getClasses().get(0).getName());
+        assertEquals(4, result.getClasses().get(0).getProperties().size());
+        assertEquals("endcol", result.getClasses().get(0).getProperties().get(3).getName());
     }
 }
