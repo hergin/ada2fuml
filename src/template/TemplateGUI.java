@@ -47,7 +47,7 @@ public class TemplateGUI extends JFrame implements ActionListener {
                 ">> names_ql/defining_identifier/@def_name                           -- name\n" +
                 ">> visible_part_declarative_items_ql/ordinary_type_declaration      -- Class in classes\n" +
                 ">>> names_ql/defining_identifier/@def_name                          -- name\n" +
-                ">>> type_declaration_view_q/record_type_definition/record_definition_q/record_definition/record_components_ql/component_declaration -- ClassProperty in properties\n" +
+                ">>> type_declaration_view_q/record_type_definition/record_definition_q/record_definition/record_components_ql/component_declaration -- Property in properties\n" +
                 ">>>> names_ql/defining_identifier/@def_name                         -- name\n" +
                 ">> visible_part_declarative_items_ql/subtype_declaration            -- Primitive in primitives\n" +
                 ">>> names_ql/defining_identifier/@def_name                          -- name\n" +

@@ -374,6 +374,9 @@ public class Processor {
                 string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='"
                         + cpParam.getType().getId() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
             }
+        } else if(param instanceof Parameter) {
+            Parameter tParam = ((Parameter) param);
+            string.append("<ownedParameter xmi:type='uml:Parameter' xmi:id='" + param.getId() + "' name='" + param.getName() + "' visibility='public' type='" + tParam.getReference() + "' direction='" + param.getDirection().toString().toLowerCase() + "'/>");
         } else {
             throw new UnknownParameterException("An unknown parameter (than Primitive or Class) showed up. Signature: "+param.getSignature());
         }
@@ -434,6 +437,9 @@ public class Processor {
             } else {
                 string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cpp1.getType().getId() + "'/>");
             }
+        } else if(p instanceof Property) {
+            Property p1 = (Property) p;
+            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + p1.getReference() + "'/>");
         } else {
             throw new UnknownPropertyException("An unknown parameter (than Primitive, Class, or Association) showed up. Signature: "+p.getSignature());
         }
