@@ -66,6 +66,11 @@ public class TemplateInterpreter {
                 if (item.getRhs() instanceof RHSAttribute) {
                     setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
                 }
+            } else if (item.getLhs() instanceof LHSLiteral) {
+                String value = ((LHSLiteral) item.getLhs()).getValue();
+                if (item.getRhs() instanceof RHSAttribute) {
+                    setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
+                }
             }
         }
     }

@@ -26,6 +26,7 @@ class TemplateParserTest {
                 ">> @category            --    name\n" +
                 ">> title                --    PrimitiveProperty(String) in properties\n" +
                 ">>> @value              --   defaultValue\n" +
+                ">>> [String]              --   reference\n" +
                 ">> author               --    PrimitiveProperty(String) in properties\n" +
                 ">>> @value              --   defaultValue\n" +
                 ">> year                 --    PrimitiveProperty(Integer) in properties\n" +
@@ -39,6 +40,9 @@ class TemplateParserTest {
         List<String> list = Arrays.asList(bookTemplate.split("\n"));
         Template result = TemplateParser.parseTemplateFromString(list);
         assertEquals(1, result.getItems().size());
+        assertEquals("PrimitiveProperty(String)", ((RHSAttributeInClass) result.getItems().get(0).getSubItems().get(0).getSubItems().get(1).getRhs()).getClassName());
+        assertEquals(LHSLiteral.class, result.getItems().get(0).getSubItems().get(0).getSubItems().get(1).getSubItems().get(1).getLhs().getClass());
+        assertEquals("String", ((LHSLiteral) result.getItems().get(0).getSubItems().get(0).getSubItems().get(1).getSubItems().get(1).getLhs()).getValue());
         assertEquals("PrimitiveProperty(Real)", ((RHSAttributeInClass) result.getItems().get(0).getSubItems().get(0).getSubItems().get(4).getRhs()).getClassName());
     }
 

@@ -1,7 +1,9 @@
 package template;
 
 import Integration.RoyTests;
+import model.AbstractProperty;
 import model.UML;
+import model.properties.Property;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
@@ -66,12 +68,14 @@ class TemplateInterpreterTest {
         book.addSubItem(category);
         TemplateItem title = new TemplateItem(new LHSTag("title"), new RHSAttributeInClass("Property", "properties"));
         book.addSubItem(title);
-        TemplateItem reference = new TemplateItem(new LHSAttribute("lang"),new RHSAttribute("reference"));
+        TemplateItem reference = new TemplateItem(new LHSLiteral("String"), new RHSAttribute("reference"));
         title.addSubItem(reference);
         TemplateItem value = new TemplateItem(new LHSAttribute("value"), new RHSAttribute("name"));
         title.addSubItem(value);
         UML result = TemplateInterpreter.interpret(bookXmlDocument, bookTemplate);
         assertEquals(4, result.getClasses().size());
+        assertEquals("String", ((Property) result.getClasses().get(0).getProperties().get(0)).getReference());
+        assertEquals("Everyday Italian", ((Property) result.getClasses().get(0).getProperties().get(0)).getName());
     }
 
     @Test

@@ -22,7 +22,10 @@ public class TemplateParser {
             String lhsWithoutLevel = lhs.replace(">", "").trim();
 
             LHS lhsOfTheItem = null;
-            if (lhsWithoutLevel.contains("@")) { // attribute
+            if (lhsWithoutLevel.contains("[")) { // literal
+                String valueOfTheLiteral = lhsWithoutLevel.replace("[", "").replace("]", "");
+                lhsOfTheItem = new LHSLiteral(valueOfTheLiteral);
+            } else if (lhsWithoutLevel.contains("@")) { // attribute
                 if (lhsWithoutLevel.contains("/")) { // there is a path before the attribute name
                     String[] pathTokens = lhsWithoutLevel.split("@");
                     String path = pathTokens[0].trim();
