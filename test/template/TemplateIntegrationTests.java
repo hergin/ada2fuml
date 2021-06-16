@@ -15,14 +15,14 @@ public class TemplateIntegrationTests {
         String bookTemplate = "/bookstore              --      UML\n" +
                 "> book                  --     Class in classes\n" +
                 ">> @category            --    name\n" +
-                ">> title                --    PrimitiveProperty(String) in properties\n" +
-                ">>> @value              --   defaultValue\n" +
-                ">> author               --    PrimitiveProperty(String) in properties\n" +
-                ">>> @value              --   defaultValue\n" +
-                ">> year                 --    PrimitiveProperty(Integer) in properties\n" +
-                ">>> @value              --   defaultValue\n" +
-                ">> price                --    PrimitiveProperty(Real) in properties\n" +
-                ">>> @value              --   defaultValue";
+                ">> title                --    Property in properties\n" +
+                ">>> @value              --   value\n" +
+                ">> author               --    Property in properties\n" +
+                ">>> @value              --   value\n" +
+                ">> year                 --    Property in properties\n" +
+                ">>> @value              --   value\n" +
+                ">> price                --    Property in properties\n" +
+                ">>> @value              --   value";
         Template template = TemplateParser.parseTemplateFromString(bookTemplate);
 
         String xmlString = "<bookstore>\n" +

@@ -72,7 +72,7 @@ public class TemplateInterpreter {
 
     private static String getAttributeValueOfNode(Node parentNode, String attributeName) {
         if (attributeName.equals("value")) {
-            return parentNode.getNodeValue();
+            return parentNode.getFirstChild().getNodeValue();
         } else {
             return parentNode.getAttributes().getNamedItem(attributeName).getNodeValue();
         }

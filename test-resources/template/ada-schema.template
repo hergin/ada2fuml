@@ -1,5 +1,5 @@
 /xsd:schema                 -- UML
 > xsd:complexType           -- Class in classes
 >> @name                    -- name
->> xsd:attribute            -- ClassProperty in properties
+>> xsd:attribute            -- Property in properties
 >>> @name                   -- name
