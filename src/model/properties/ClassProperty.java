@@ -3,13 +3,12 @@ package model.properties;
 import model.Class;
 import model.CustomPrimitive;
 import model.Enumeration;
-import model.Property;
+import model.AbstractProperty;
 import model.auxiliary.HierarchicalElement;
-import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.VisibilityEnum;
 
-public class ClassProperty extends Property implements IPlaceholderedElement {
+public class ClassProperty extends AbstractProperty implements IPlaceholderedElement {
 
     private Class type;
 

@@ -1,10 +1,10 @@
 package model.parameters;
 
-import model.Parameter;
+import model.AbstractParameter;
 import model.enums.DirectionEnum;
 import model.Struct;
 
-public class StructParameter extends Parameter {
+public class StructParameter extends AbstractParameter {
 
     private Struct type;
 

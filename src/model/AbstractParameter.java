@@ -4,11 +4,11 @@ import model.auxiliary.HierarchicalElement;
 import model.enums.DirectionEnum;
 // import model.enums.TypeEnum;
 
-public abstract class Parameter extends HierarchicalElement {
+public abstract class AbstractParameter extends HierarchicalElement {
 
     private DirectionEnum direction;
 
-    public Parameter(String name, DirectionEnum direction) {
+    public AbstractParameter(String name, DirectionEnum direction) {
         super(name);
         this.direction = direction;
     }
@@ -17,4 +17,7 @@ public abstract class Parameter extends HierarchicalElement {
         return direction;
     }
 
+    public void setDirection(DirectionEnum direction) {
+        this.direction = direction;
+    }
 }

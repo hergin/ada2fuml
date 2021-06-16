@@ -1,10 +1,10 @@
 package model.properties;
 
-import model.Property;
+import model.AbstractProperty;
 import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
 
-public class PrimitiveProperty extends Property {
+public class PrimitiveProperty extends AbstractProperty {
 
     private TypeEnum type;
     private Object defaultValue;

@@ -107,7 +107,7 @@ public class Processor {
 
         string.append("<packagedElement xmi:type='uml:Enumeration' xmi:id='" + e.getId()
                       + "' name='" + e.getName() + "' visibility='" + e.getVisibility().toString().toLowerCase() + "'>");
-        for(Property aProperty:e.getProperties()) {
+        for(AbstractProperty aProperty:e.getProperties()) {
             string.append(processProperty(aProperty));
         }
         for (EnumerationLiteral aLiteral : e.getLiterals()) {
@@ -206,13 +206,13 @@ public class Processor {
         return string.toString();
     }
 
-    private static String processProperties(List<Property> properties) throws UnknownPropertyException {
+    private static String processProperties(List<AbstractProperty> properties) throws UnknownPropertyException {
 
         StringBuilder string = new StringBuilder();
 
     	string.append("<packagedElement xmi:type='uml:DataType' xmi:id='" + Processor.uuidGenerator() + "' name='Constants'>");
 
-        for (Property p : properties) {
+        for (AbstractProperty p : properties) {
         	Variable v = (Variable) p;
         	String isReadOnly = (v.isConstant()) ? " isReadOnly='true'" : "";
 
@@ -259,7 +259,7 @@ public class Processor {
     }
 
     private static void processClassContents(Class c, StringBuilder string) throws UnknownPropertyException, UnknownParameterException {
-        for (Property p : c.getProperties()) {
+        for (AbstractProperty p : c.getProperties()) {
             string.append(processProperty(p));
         }
         for (Operation o : c.getOperations()) {
@@ -271,13 +271,13 @@ public class Processor {
     }
 
     private static void processExceptContents(Except e, StringBuilder string) throws UnknownPropertyException {
-        for (Property p : e.getProperties()) {
+        for (AbstractProperty p : e.getProperties()) {
             string.append(processProperty(p));
         }
     }
 
     private static void processStructContents(Struct s, StringBuilder string) throws UnknownPropertyException {
-        for (Property p : s.getProperties()) {
+        for (AbstractProperty p : s.getProperties()) {
             string.append(processProperty(p));
         }
     }
@@ -285,7 +285,7 @@ public class Processor {
 
     private static void processInterfaceContents(Interface i, StringBuilder string)
     		throws UnknownPropertyException, UnknownParameterException {
-        for (Property p : i.getProperties()) {
+        for (AbstractProperty p : i.getProperties()) {
             string.append(processProperty(p));
         }
         for (Operation o : i.getOperations()) {
@@ -313,7 +313,7 @@ public class Processor {
         for (Except e : o.getExceptions()) {
             string.append(processExcept(e));
         }
-        for (Parameter p : o.getParameters()) {
+        for (AbstractParameter p : o.getParameters()) {
             string.append(processParameter(p));
         }
 
@@ -330,7 +330,7 @@ public class Processor {
     }
 
 
-    private static String processParameter(Parameter param) throws UnknownParameterException {
+    private static String processParameter(AbstractParameter param) throws UnknownParameterException {
         StringBuilder string = new StringBuilder();
 
         if (param instanceof PrimitiveParameter) {
@@ -382,7 +382,7 @@ public class Processor {
 
 
 
-    private static String processProperty(Property p) throws UnknownPropertyException {
+    private static String processProperty(AbstractProperty p) throws UnknownPropertyException {
         StringBuilder string = new StringBuilder();
 
         if (p instanceof Variable) {

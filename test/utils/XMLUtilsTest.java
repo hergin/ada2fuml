@@ -60,7 +60,8 @@ class XMLUtilsTest {
 
     @Test
     void stripNamespace() {
-        assertEquals("/compilation_unit",XMLUtils.stripNamespace("/compilation_unit"));
-        assertEquals("/schema",XMLUtils.stripNamespace("/xsd:schema"));
+        assertEquals("/compilation_unit", XMLUtils.stripNamespace("/compilation_unit"));
+        assertEquals("/schema", XMLUtils.stripNamespace("/xsd:schema"));
+        assertEquals("/schema/anothertag", XMLUtils.stripNamespace("/xsd:schema/xsd:anothertag"));
     }
 }

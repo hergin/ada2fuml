@@ -3,20 +3,22 @@ package model;
 import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
-import model.parameters.ClassParameter;
-import model.parameters.EnumerationParameter;
-import model.properties.ClassProperty;
-import model.properties.EnumerationProperty;
+import model.enums.VisibilityEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Class extends HierarchicalElement implements IPlaceholderReplacement {
 
-    private List<Property> properties;
+    private List<AbstractProperty> properties;
     private List<Operation> operations;
     private List<Class> superClasses;
     private List<Class> nestedClasses;
+    private VisibilityEnum visibility;
+
+    public Class() {
+        this("");
+    }
 
     public Class(String name) {
         super(name);
@@ -26,16 +28,24 @@ public class Class extends HierarchicalElement implements IPlaceholderReplacemen
         nestedClasses = new ArrayList<>();
     }
 
+    public VisibilityEnum getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(VisibilityEnum visibility) {
+        this.visibility = visibility;
+    }
+
     public List<IPlaceholderedElement> getElementsWithPlaceholder() {
         List<IPlaceholderedElement> result = new ArrayList<>();
 
-        for (Property property:properties) {
+        for (AbstractProperty property:properties) {
             if(property instanceof IPlaceholderedElement)
                 result.add(((IPlaceholderedElement) property));
         }
 
         for (Operation operation:operations) {
-            for (Parameter parameter:operation.getParameters()) {
+            for (AbstractParameter parameter:operation.getParameters()) {
                 if (parameter instanceof IPlaceholderedElement)
                     result.add(((IPlaceholderedElement) parameter));
             }
@@ -45,13 +55,13 @@ public class Class extends HierarchicalElement implements IPlaceholderReplacemen
     }
 
     public boolean hasPlaceholders() {
-        for (Property property:properties) {
+        for (AbstractProperty property:properties) {
             if(property instanceof IPlaceholderedElement && ((IPlaceholderedElement) property).hasPlaceholder())
                 return true;
         }
 
         for (Operation operation:operations) {
-            for (Parameter parameter:operation.getParameters()) {
+            for (AbstractParameter parameter:operation.getParameters()) {
                 if (parameter instanceof IPlaceholderedElement && ((IPlaceholderedElement) parameter).hasPlaceholder())
                     return true;
             }
@@ -65,7 +75,7 @@ public class Class extends HierarchicalElement implements IPlaceholderReplacemen
         return false;
     }
 
-    public void addProperty(Property someProperty) {
+    public void addProperty(AbstractProperty someProperty) {
         someProperty.setParent(this);
         properties.add(someProperty);
     }
@@ -84,7 +94,7 @@ public class Class extends HierarchicalElement implements IPlaceholderReplacemen
         nestedClasses.add(someClass);
     }
 
-    public List<Property> getProperties() {
+    public List<AbstractProperty> getProperties() {
         return properties;
     }
 

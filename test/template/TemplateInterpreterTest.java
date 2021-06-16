@@ -64,9 +64,11 @@ class TemplateInterpreterTest {
         bookstore.addSubItem(book);
         TemplateItem category = new TemplateItem(new LHSAttribute("category"), new RHSAttribute("name"));
         book.addSubItem(category);
-        TemplateItem title = new TemplateItem(new LHSTag("title"), new RHSAttributeInClass("PrimitiveProperty(String)", "properties"));
+        TemplateItem title = new TemplateItem(new LHSTag("title"), new RHSAttributeInClass("Property", "properties"));
         book.addSubItem(title);
-        TemplateItem value = new TemplateItem(new LHSAttribute("value"), new RHSAttribute("defaultValue"));
+        TemplateItem reference = new TemplateItem(new LHSAttribute("lang"),new RHSAttribute("reference"));
+        title.addSubItem(reference);
+        TemplateItem value = new TemplateItem(new LHSAttribute("value"), new RHSAttribute("name"));
         title.addSubItem(value);
         UML result = TemplateInterpreter.interpret(bookXmlDocument, bookTemplate);
         assertEquals(4, result.getClasses().size());

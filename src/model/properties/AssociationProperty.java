@@ -1,10 +1,10 @@
 package model.properties;
 
 import model.Association;
-import model.Property;
+import model.AbstractProperty;
 import model.enums.VisibilityEnum;
 
-public class AssociationProperty extends Property {
+public class AssociationProperty extends AbstractProperty {
 
     private Association association;
 

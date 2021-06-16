@@ -1,13 +1,10 @@
 package template;
 
 import extractor.Extractor;
-import model.Class;
 import model.Package;
-import model.Property;
 import model.UML;
 import model.auxiliary.HierarchicalElement;
 import model.enums.VisibilityEnum;
-import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -18,7 +15,6 @@ import utils.XMLUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -133,10 +129,10 @@ public class TemplateInterpreter {
             return new PrimitiveProperty("", VisibilityEnum.Public, Extractor.convertToTypeEnum(name.substring(18, name.length() - 1)), null);
         } else {
             try {
-                return (HierarchicalElement) java.lang.Class.forName("model." + name).getConstructor(String.class).newInstance("");
+                return (HierarchicalElement) java.lang.Class.forName("model." + name).getConstructor().newInstance();
             } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 try {
-                    return (HierarchicalElement) java.lang.Class.forName("model.properties." + name).getConstructor(String.class).newInstance("");
+                    return (HierarchicalElement) java.lang.Class.forName("model.properties." + name).getConstructor().newInstance();
                 } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException inner) {
                     inner.printStackTrace();
                 }

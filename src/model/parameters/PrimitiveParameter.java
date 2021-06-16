@@ -1,10 +1,10 @@
 package model.parameters;
 
-import model.Parameter;
+import model.AbstractParameter;
 import model.enums.DirectionEnum;
 import model.enums.TypeEnum;
 
-public class PrimitiveParameter extends Parameter {
+public class PrimitiveParameter extends AbstractParameter {
 
     private TypeEnum type;
     private Object defaultValue;

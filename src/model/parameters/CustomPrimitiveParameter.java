@@ -1,12 +1,12 @@
 package model.parameters;
 
 import model.CustomPrimitive;
-import model.Parameter;
+import model.AbstractParameter;
 import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.DirectionEnum;
 
-public class CustomPrimitiveParameter extends Parameter implements IPlaceholderedElement {
+public class CustomPrimitiveParameter extends AbstractParameter implements IPlaceholderedElement {
 
     private CustomPrimitive type;
     private String placeholder;

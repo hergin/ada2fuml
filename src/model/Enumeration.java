@@ -4,19 +4,14 @@ import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.VisibilityEnum;
-import model.parameters.ClassParameter;
-import model.parameters.EnumerationParameter;
-import model.properties.ClassProperty;
-import model.properties.EnumerationProperty;
 // import model.properties.ClassProperty;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Enumeration extends HierarchicalElement implements IPlaceholderReplacement {
 
-    private List<Property> properties;
+    private List<AbstractProperty> properties;
     private List<EnumerationLiteral> literals;
     private static final VisibilityEnum visibility = VisibilityEnum.Public;
 
@@ -27,7 +22,7 @@ public class Enumeration extends HierarchicalElement implements IPlaceholderRepl
     }
 
     public boolean hasPlaceholders() {
-        for (Property property:properties) {
+        for (AbstractProperty property:properties) {
             if(property instanceof IPlaceholderedElement && ((IPlaceholderedElement) property).hasPlaceholder())
                 return true;
         }
@@ -35,7 +30,7 @@ public class Enumeration extends HierarchicalElement implements IPlaceholderRepl
         return false;
     }
 
-    public void addProperty(Property aProperty) {
+    public void addProperty(AbstractProperty aProperty) {
         aProperty.setParent(this);
         properties.add(aProperty);
     }
@@ -45,7 +40,7 @@ public class Enumeration extends HierarchicalElement implements IPlaceholderRepl
         literals.add(aLiteral);
     }
 
-    public List<Property> getProperties() {
+    public List<AbstractProperty> getProperties() {
         return properties;
     }
 
@@ -65,7 +60,7 @@ public class Enumeration extends HierarchicalElement implements IPlaceholderRepl
     public List<IPlaceholderedElement> getElementsWithPlaceholder() {
         List<IPlaceholderedElement> result = new ArrayList<>();
 
-        for (Property property:properties) {
+        for (AbstractProperty property:properties) {
             if(property instanceof IPlaceholderedElement)
                 result.add(((IPlaceholderedElement) property));
         }

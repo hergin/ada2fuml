@@ -2,11 +2,8 @@ package Integration;
 
 import adaschema.CompilationUnit;
 import exceptions.*;
-import exporter.Processor;
-import exporter.StillHavePlaceholderExceptionPolicy;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
-import model.Property;
 import model.UML;
 import model.enums.TypeEnum;
 import model.properties.CustomPrimitiveProperty;

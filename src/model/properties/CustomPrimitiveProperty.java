@@ -1,13 +1,12 @@
 package model.properties;
 
 import model.CustomPrimitive;
-import model.Property;
+import model.AbstractProperty;
 import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderedElement;
-import model.enums.DirectionEnum;
 import model.enums.VisibilityEnum;
 
-public class CustomPrimitiveProperty extends Property implements IPlaceholderedElement {
+public class CustomPrimitiveProperty extends AbstractProperty implements IPlaceholderedElement {
 
     private CustomPrimitive type;
     private String placeholder;

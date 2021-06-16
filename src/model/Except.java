@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Except extends HierarchicalElement {
 
-    private List<Property> properties;
+    private List<AbstractProperty> properties;
     private VisibilityEnum visibility;
 
     public Except (String name) {
@@ -17,12 +17,12 @@ public class Except extends HierarchicalElement {
         this.visibility = VisibilityEnum.Public;
     }
 
-    public void addProperty(Property someProperty) {
+    public void addProperty(AbstractProperty someProperty) {
         someProperty.setParent(this);
         properties.add(someProperty);
     }
 
-    public List<Property> getProperties() {
+    public List<AbstractProperty> getProperties() {
         return properties;
     }
 

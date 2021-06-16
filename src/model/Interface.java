@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Interface extends HierarchicalElement {
 
-    private List<Property> properties;
+    private List<AbstractProperty> properties;
     private List<Operation> operations;
     private List<Except> exceptions;
     private List<Struct> structs;
@@ -29,13 +29,13 @@ public class Interface extends HierarchicalElement {
     public List<HierarchicalElement> findElementsWithPlaceholder() {
         List<HierarchicalElement> result = new ArrayList<>();
 
-        for (Property property:properties) {
+        for (AbstractProperty property:properties) {
             if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
                 result.add(property);
         }
 
         for (Operation operation:operations) {
-            for (Parameter parameter:operation.getParameters()) {
+            for (AbstractParameter parameter:operation.getParameters()) {
                 if (parameter instanceof ClassParameter && ((ClassParameter) parameter).getPlaceholder() != null && !((ClassParameter) parameter).getPlaceholder().isEmpty())
                     result.add(parameter);
             }
@@ -45,13 +45,13 @@ public class Interface extends HierarchicalElement {
     }
 
     public boolean hasPlaceholders() {
-        for (Property property:properties) {
+        for (AbstractProperty property:properties) {
             if(property instanceof ClassProperty && ((ClassProperty) property).getPlaceholder()!=null && !((ClassProperty) property).getPlaceholder().isEmpty())
                 return true;
         }
 
         for (Operation operation:operations) {
-            for (Parameter parameter:operation.getParameters()) {
+            for (AbstractParameter parameter:operation.getParameters()) {
                 if (parameter instanceof ClassParameter && ((ClassParameter) parameter).getPlaceholder() != null && !((ClassParameter) parameter).getPlaceholder().isEmpty())
                     return true;
             }
@@ -60,7 +60,7 @@ public class Interface extends HierarchicalElement {
         return false;
     }
 
-    public void addProperty(Property someProperty) {
+    public void addProperty(AbstractProperty someProperty) {
         someProperty.setParent(this);
         properties.add(someProperty);
     }
@@ -89,7 +89,7 @@ public class Interface extends HierarchicalElement {
     	superInterfaces.add(someInterface);
     }
 
-    public List<Property> getProperties() {
+    public List<AbstractProperty> getProperties() {
         return properties;
     }
 

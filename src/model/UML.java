@@ -25,6 +25,10 @@ public class UML extends HierarchicalElement {
     private List<Association> associations;
     private List<CustomPrimitive> customPrimitives;
 
+    public UML() {
+        this("");
+    }
+
     public UML(String name) {
         super(name);
         classes = new ArrayList<>();

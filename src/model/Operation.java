@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Operation extends HierarchicalElement {
-    private List<Parameter> parameters;
+    private List<AbstractParameter> parameters;
     private List<Except> exceptions;
     private VisibilityEnum visibility;
+
+    public Operation() {
+        this("");
+    }
 
     public Operation(String name) {
         super(name);
@@ -27,7 +31,7 @@ public class Operation extends HierarchicalElement {
         this.visibility = visibility;
     }
 
-    public Operation addParameter(Parameter parameter) {
+    public Operation addParameter(AbstractParameter parameter) {
         parameter.setParent(this);
         parameters.add(parameter);
         return this;
@@ -39,7 +43,7 @@ public class Operation extends HierarchicalElement {
         return this;
     }
 
-    public List<Parameter> getParameters() {
+    public List<AbstractParameter> getParameters() {
         return parameters;
     }
 
@@ -51,4 +55,7 @@ public class Operation extends HierarchicalElement {
         return visibility;
     }
 
+    public void setVisibility(VisibilityEnum visibility) {
+        this.visibility = visibility;
+    }
 }

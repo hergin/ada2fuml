@@ -6,7 +6,7 @@ import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.DirectionEnum;
 
-public class EnumerationParameter extends Parameter implements IPlaceholderedElement {
+public class EnumerationParameter extends AbstractParameter implements IPlaceholderedElement {
 
     private Enumeration type;
     private EnumerationLiteral defaultValue;

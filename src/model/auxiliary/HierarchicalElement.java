@@ -14,6 +14,10 @@ public class HierarchicalElement {
         id = Processor.uuidGenerator();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public HierarchicalElement getParent() {
         return parent;
     }

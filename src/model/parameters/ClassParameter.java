@@ -3,11 +3,10 @@ package model.parameters;
 import model.*;
 import model.Class;
 import model.auxiliary.HierarchicalElement;
-import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.DirectionEnum;
 
-public class ClassParameter extends Parameter implements IPlaceholderedElement {
+public class ClassParameter extends AbstractParameter implements IPlaceholderedElement {
 
     private Class type;
     private String placeholder;

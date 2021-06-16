@@ -6,7 +6,7 @@ import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.VisibilityEnum;
 
-public class EnumerationProperty extends Property implements IPlaceholderedElement {
+public class EnumerationProperty extends AbstractProperty implements IPlaceholderedElement {
 
     private Enumeration type;
     private EnumerationLiteral defaultValue;

@@ -459,7 +459,7 @@ public class Extractor {
                     // If there are more than 1 parameter, let's check the type of the first parameter.
                     // first parameter is the one after return parameter, so index is 1
                     if (theOperation.getParameters().size() > 1) {
-                        Parameter firstParameter = theOperation.getParameters().get(1);
+                        AbstractParameter firstParameter = theOperation.getParameters().get(1);
 
                         // If first parameter is primitive, then it is like no parameter than return.
                         // Else, fix the class of the first parameter and put it to that class as an operation
@@ -559,7 +559,7 @@ public class Extractor {
                     // If there are more than 1 parameter, let's check the type of the first parameter.
                     // first parameter is the one after return parameter, so index is 1
                     if (theOperation.getParameters().size() > 1) {
-                        Parameter firstParameter = theOperation.getParameters().get(1);
+                        AbstractParameter firstParameter = theOperation.getParameters().get(1);
 
                         // If first parameter is primitive, then it is like no parameter than return.
                         // Else, fix the class of the first parameter and put it to that class as an operation

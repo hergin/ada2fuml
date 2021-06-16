@@ -5,12 +5,11 @@ import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Package extends HierarchicalElement {
 
-    private List<Property> properties;
+    private List<AbstractProperty> properties;
     private List<Class> classes;
     private List<Struct> structs;
     private List<Except> exceptions;
@@ -18,6 +17,10 @@ public class Package extends HierarchicalElement {
     private List<Interface> interfaces;
     private List<Package> subPackages;
     private List<CustomPrimitive> customPrimitives;
+
+    public Package() {
+        this("");
+    }
 
     public Package(String name) {
         super(name);
@@ -188,7 +191,7 @@ public class Package extends HierarchicalElement {
         return interfaces.stream().filter(c->c.getName().equals(interfaceName)).findFirst().get();
     }
 
-    public void addProperty(Property someProperty) {
+    public void addProperty(AbstractProperty someProperty) {
         someProperty.setParent(this);
         properties.add(someProperty);
     }
@@ -251,7 +254,7 @@ public class Package extends HierarchicalElement {
         return (properties != null) && (! properties.isEmpty());
     }
 
-    public List<Property> getProperties() {
+    public List<AbstractProperty> getProperties() {
         return properties;
     }
 
