@@ -20,7 +20,6 @@ import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import xmlparsing.GenericXmlParser;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -28,70 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Extractor {
-
-    public static UML extractHighLevelConcepts(Document document) throws InvalidSignatureException {
-        UML resultingUML = new UML(document.getDocumentElement().getAttribute("def_name"), document.getDocumentElement().getAttribute("source_file"));
-
-        List<Node> packageDeclarations = GenericXmlParser.getNodesWithSignature(document, "compilation_unit>unit_declaration_q>package_declaration");
-        if (packageDeclarations.size() > 0) {
-            Node packageDeclaration = packageDeclarations.get(0);
-            String packageName = GenericXmlParser.getNodesWithSignatureStartingFrom(packageDeclaration, "package_declaration>names_ql>defining_identifier").get(0).getAttributes().getNamedItem("def_name").getNodeValue();
-            String classNameAfterPackageName = packageName;
-
-            // If this is true, then we will create the package name just before the _ but everything else will remain same.
-            //      check the excel file by ROY to see what happens the naming when underscore is involved for more info.
-            if (packageName.contains("_")) {
-                packageName = packageName.split("_")[0];
-            }
-
-            List<Node> ordinaryTypeDeclarations = GenericXmlParser.getNodesWithSignatureStartingFrom(packageDeclaration, "package_declaration>visible_part_declarative_items_ql>ordinary_type_declaration");
-            // combine with private part types
-            ordinaryTypeDeclarations.addAll(GenericXmlParser.getNodesWithSignatureStartingFrom(packageDeclaration, "package_declaration>private_part_declarative_items_ql>ordinary_type_declaration"));
-
-            for (Node ordinaryType : ordinaryTypeDeclarations) {
-                String typeName = GenericXmlParser.getNodesWithSignatureStartingFrom(ordinaryType, "ordinary_type_declaration>names_ql>defining_identifier").get(0).getAttributes().getNamedItem("def_name").getNodeValue();
-                Package thePackageInWhichTheTypeClass = null;
-                Class theClass = null;
-
-                // packageX + typeX => classX
-                if (packageName.equals(typeName)) {
-                    theClass = resultingUML.createOrGetClassByName(typeName);
-                }
-
-                // If there is a . in the package name, we will create subpackage.
-                if (classNameAfterPackageName.contains(".")) {
-                    String higherLevelPackage = classNameAfterPackageName.split("\\.")[0];
-                    packageName = higherLevelPackage;
-                    if (higherLevelPackage.contains("_"))
-                        higherLevelPackage = higherLevelPackage.split("_")[0];
-                    classNameAfterPackageName = classNameAfterPackageName.split("\\.")[1];
-
-                    Package dottedSuperPackage = resultingUML.createOrGetPackageByName(higherLevelPackage);
-
-                    // packageX + typeY => packageX + classY
-                    if (!packageName.equals(typeName)) {
-                        Package subpackage = dottedSuperPackage.createOrGetSubPackageByName(packageName);
-                        theClass = subpackage.createOrGetClassByName(typeName);
-                        thePackageInWhichTheTypeClass = subpackage;
-                    }
-
-                } else {
-                    // packageX + typeY => packageX + classY
-                    if (!packageName.equals(typeName)) {
-                        Package packageNamedAfterAdaPackage = resultingUML.createOrGetPackageByName(packageName);
-                        theClass = packageNamedAfterAdaPackage.createOrGetClassByName(typeName);
-                        thePackageInWhichTheTypeClass = packageNamedAfterAdaPackage;
-                    }
-                }
-
-                if (theClass != null) {
-                    // TODO extract components
-                }
-            }
-        }
-
-        return resultingUML;
-    }
 
     public static UML extractHighLevelConcepts(CompilationUnit compilationUnit) throws NamingException, PartialUMLException {
         UML resultingUML = new UML(compilationUnit.getDefName(), compilationUnit.getSourceFile());
