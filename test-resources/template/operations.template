@@ -1,11 +1,10 @@
-/compilation_unit                                                   -- UML
-> @def_name                                                         -- name
-> unit_declaration_q/package_declaration                            -- Package in packages
->> names_ql/defining_identifier/@def_name                           -- name
->> visible_part_declarative_items_ql/ordinary_type_declaration      -- Class in classes
->>> names_ql/defining_identifier/@def_name                          -- name
->>> ../function_declaration[]                                       -- Operation in operations
->>>> names_ql/defining_identifier/@def_name                         -- name
->>>> parameter_profile_ql/parameter_specification                   -- ClassParameter in parameters
->>>>> names_ql/defining_identifier/@def_name                        -- name
->>>>> @mode                                                         -- direction
+/uml                 -- UML
+> @title             -- name
+> class              -- Class in classes
+>> @title            -- name
+>> @visible          -- visibility
+>> operation         -- Operation in operations
+>>> @name            -- name
+>>> param            -- Parameter in parameters
+>>>> @name           -- name
+>>>> classRef/@name  -- reference

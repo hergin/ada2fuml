@@ -141,19 +141,12 @@ public class TemplateInterpreter {
         return null;
     }
 
-    // TODO create element to the attribute of the parentElement by REFLECTION
     private static HierarchicalElement createTheElement(String name) {
-        if (name.startsWith("PrimitiveProperty")) {
-            return new PrimitiveProperty("", VisibilityEnum.Public, Extractor.convertToTypeEnum(name.substring(18, name.length() - 1)), null);
-        } else {
+        String[] packagesToLookFor = new String[]{"model", "model.properties", "model.parameters"};
+        for (String pack : packagesToLookFor) {
             try {
-                return (HierarchicalElement) java.lang.Class.forName("model." + name).getConstructor().newInstance();
+                return (HierarchicalElement) java.lang.Class.forName(pack + "." + name).getConstructor().newInstance();
             } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                try {
-                    return (HierarchicalElement) java.lang.Class.forName("model.properties." + name).getConstructor().newInstance();
-                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException inner) {
-                    inner.printStackTrace();
-                }
             }
         }
         return null;

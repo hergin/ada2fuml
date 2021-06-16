@@ -1,17 +1,15 @@
 package template;
 
-import Integration.RoyTests;
-import model.AbstractProperty;
+import model.AbstractParameter;
 import model.UML;
 import model.enums.VisibilityEnum;
+import model.parameters.Parameter;
 import model.properties.Property;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import template.model.*;
 import utils.XMLUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -104,6 +102,16 @@ class TemplateInterpreterTest {
     }
 
     @Test
+    void puttingUnderTest() throws URISyntaxException, IOException {
+        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/putUnderParent.template").toURI())));
+        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/putUnderParent.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
+        assertEquals(2, result.getClasses().size());
+        assertEquals("helloWorld", result.getClasses().get(0).getName());
+        assertEquals(VisibilityEnum.Protected, result.getClasses().get(0).getVisibility());
+    }
+
+    @Test
     void visibilityMappingTest() throws URISyntaxException, IOException {
         Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/visibility.template").toURI())));
         String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/visibility.xml").toURI())));
@@ -116,13 +124,19 @@ class TemplateInterpreterTest {
     @Test
     void operationTest() throws URISyntaxException, IOException {
         Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/operations.template").toURI())));
-        String adaXML = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/operations.ads.xml").toURI())));
+        String adaXML = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/operations.xml").toURI())));
         UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(adaXML), adaTemplate);
         //assertEquals("Globals_Example1",result.getName());
-        assertEquals(1, result.getPackages().size());
-        assertEquals(1, result.getPackages().get(0).getClasses().size());
-        assertEquals("SomeClass", result.getPackages().get(0).getClasses().get(0).getName());
-        assertEquals(1, result.getPackages().get(0).getClasses().get(0).getOperations().size());
+        assertEquals(0, result.getPackages().size());
+        assertEquals(2, result.getClasses().size());
+        assertEquals("helloWorld", result.getClasses().get(0).getName());
+        assertEquals(1, result.getClasses().get(0).getOperations().size());
+        assertEquals("myOp", result.getClasses().get(0).getOperations().get(0).getName());
+        assertEquals(1, result.getClasses().get(0).getOperations().get(0).getParameters().size());
+        assertEquals("oneParam", result.getClasses().get(0).getOperations().get(0).getParameters().get(0).getName());
+        assertEquals("helloWorld", ((Parameter) result.getClasses().get(0).getOperations().get(0).getParameters().get(0)).getReference());
+        assertEquals("helloWorld2", result.getClasses().get(1).getName());
+        assertEquals(0, result.getClasses().get(1).getOperations().size());
     }
 
     @Test
