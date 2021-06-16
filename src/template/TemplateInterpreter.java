@@ -4,6 +4,7 @@ import extractor.Extractor;
 import model.Package;
 import model.UML;
 import model.auxiliary.HierarchicalElement;
+import model.enums.DirectionEnum;
 import model.enums.VisibilityEnum;
 import model.properties.PrimitiveProperty;
 import org.w3c.dom.Document;
@@ -16,6 +17,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 public class TemplateInterpreter {
@@ -85,7 +87,18 @@ public class TemplateInterpreter {
 
     private static void setAttributeValueOfParentElement(HierarchicalElement parentElement, String nameOfTheAttribute, String valueOfTheAttribute) {
         try {
-            getField(parentElement.getClass(), nameOfTheAttribute).set(parentElement, valueOfTheAttribute);
+            Field theField = getField(parentElement.getClass(), nameOfTheAttribute);
+            if(theField.getType().isEnum()) {
+                if(theField.getType().getSimpleName().equals("VisibilityEnum")) {
+                    theField.set(parentElement,Enum.valueOf(VisibilityEnum.class, valueOfTheAttribute));
+                } else if(theField.getType().getSimpleName().equals("DirectionEnum")) {
+                    theField.set(parentElement,Enum.valueOf(DirectionEnum.class, valueOfTheAttribute));
+                } else {
+                    // TODO other enum types either in reflection way or else-if way
+                }
+            } else {
+                theField.set(parentElement, valueOfTheAttribute);
+            }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,5 @@
+/uml        -- UML
+>@title      -- name
+>class      -- Class in classes
+>>name/@value    -- name
+>>@visible  -- visibility

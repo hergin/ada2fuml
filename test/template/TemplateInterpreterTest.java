@@ -3,6 +3,7 @@ package template;
 import Integration.RoyTests;
 import model.AbstractProperty;
 import model.UML;
+import model.enums.VisibilityEnum;
 import model.properties.Property;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -88,6 +89,16 @@ class TemplateInterpreterTest {
         assertEquals(4, result.getPackages().get(0).getClasses().size());
         assertEquals("Itype", result.getPackages().get(0).getClasses().get(0).getName());
         assertEquals("Record_With_Float_Rtype", result.getPackages().get(0).getClasses().get(3).getName());
+    }
+
+    @Test
+    void visibilityMappingTest() throws URISyntaxException, IOException {
+        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/visibility.template").toURI())));
+        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/visibility.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
+        assertEquals(1, result.getClasses().size());
+        assertEquals("Hello it is me", result.getClasses().get(0).getName());
+        assertEquals(VisibilityEnum.Protected, result.getClasses().get(0).getVisibility());
     }
 
     @Test

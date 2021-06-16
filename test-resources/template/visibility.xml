@@ -1,0 +1,5 @@
+<uml title="helloUML">
+    <class title="helloWorld" visible="Protected">
+        <name>Hello it is me</name>
+    </class>
+</uml>
