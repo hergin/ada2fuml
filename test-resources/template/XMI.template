@@ -1,0 +1,6 @@
+/xmi:XMI                                    -- UML
+> uml:Model/packagedElement/packagedElement -- Class in classes
+>> @name                                    -- name
+>> ownedAttribute                           -- Property in properties
+>>> @name                                   -- name
+>>> @visibility                             -- visibility

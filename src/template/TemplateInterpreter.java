@@ -88,11 +88,11 @@ public class TemplateInterpreter {
     private static void setAttributeValueOfParentElement(HierarchicalElement parentElement, String nameOfTheAttribute, String valueOfTheAttribute) {
         try {
             Field theField = getField(parentElement.getClass(), nameOfTheAttribute);
-            if(theField.getType().isEnum()) {
-                if(theField.getType().getSimpleName().equals("VisibilityEnum")) {
-                    theField.set(parentElement,Enum.valueOf(VisibilityEnum.class, valueOfTheAttribute));
-                } else if(theField.getType().getSimpleName().equals("DirectionEnum")) {
-                    theField.set(parentElement,Enum.valueOf(DirectionEnum.class, valueOfTheAttribute));
+            if (theField.getType().isEnum()) {
+                if (theField.getType().getSimpleName().equals("VisibilityEnum")) {
+                    theField.set(parentElement, Enum.valueOf(VisibilityEnum.class, valueOfTheAttribute.substring(0, 1).toUpperCase() + valueOfTheAttribute.substring(1).toLowerCase()));
+                } else if (theField.getType().getSimpleName().equals("DirectionEnum")) {
+                    theField.set(parentElement, Enum.valueOf(DirectionEnum.class, valueOfTheAttribute.substring(0, 1).toUpperCase() + valueOfTheAttribute.substring(1).toLowerCase()));
                 } else {
                     // TODO other enum types either in reflection way or else-if way
                 }

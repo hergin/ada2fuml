@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1"
+         xmlns:uml="http://www.omg.org/spec/UML/20110701"
+         xmlns:StandardProfile="http://www.omg.org/spec/UML/20110701/StandardProfile"
+         xmlns:xmi="http://www.omg.org/spec/XMI/20110701">
+    <uml:Model xmi:type="uml:Model" xmi:id="ID9" name="overall">
+        <packagedElement xmi:type="uml:Package" xmi:id="ID11" name="Globals_Example1">
+            <packagedElement xmi:type="uml:Class" xmi:id="ID12" name="Itype"></packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="ID13" name="Ftype"></packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="ID14" name="Record_With_Integer_Rtype">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="ID15" name="Attribute1" visibility="public" type="String"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="ID16" name="Record_With_Float_Rtype">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="ID17" name="Attribute2" visibility="public" type="String"/>
+            </packagedElement>
+        </packagedElement>
+    </uml:Model>
+</xmi:XMI>
+

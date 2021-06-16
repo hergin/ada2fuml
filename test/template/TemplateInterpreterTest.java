@@ -92,6 +92,18 @@ class TemplateInterpreterTest {
     }
 
     @Test
+    void xmiXMLTest() throws URISyntaxException, IOException {
+        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/XMI.template").toURI())));
+        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/XMI.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
+        assertEquals(4, result.getClasses().size());
+        assertEquals("Itype", result.getClasses().get(0).getName());
+        assertEquals(1, result.getClasses().get(2).getProperties().size());
+        assertEquals(VisibilityEnum.Public, result.getClasses().get(2).getProperties().get(0).getVisibility());
+        assertEquals("Attribute1", result.getClasses().get(2).getProperties().get(0).getName());
+    }
+
+    @Test
     void visibilityMappingTest() throws URISyntaxException, IOException {
         Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/visibility.template").toURI())));
         String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/visibility.xml").toURI())));
