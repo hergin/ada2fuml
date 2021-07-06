@@ -1,5 +1,6 @@
 /compilation_unit                                                   -- UML
 > @def_name                                                         -- name
+# comment test
 > unit_declaration_q/package_declaration                            -- Package in packages
 >> names_ql/defining_identifier/@def_name                           -- name
 >> visible_part_declarative_items_ql/ordinary_type_declaration      -- Class in classes

@@ -17,6 +17,7 @@ public class TemplateParser {
         Template result = new Template();
 
         for (String line : lines) {
+            if(line.trim().startsWith("#")) continue; // comment
             String[] tokens = line.split("--");
             String lhs = tokens[0].trim();
             String rhs = tokens[1].trim();
