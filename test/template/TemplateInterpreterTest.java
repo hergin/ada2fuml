@@ -1,6 +1,5 @@
 package template;
 
-import model.AbstractParameter;
 import model.UML;
 import model.enums.VisibilityEnum;
 import model.parameters.Parameter;
@@ -102,9 +101,9 @@ class TemplateInterpreterTest {
     }
 
     @Test
-    void puttingUnderTest() throws URISyntaxException, IOException {
-        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/putUnderParent.template").toURI())));
-        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/putUnderParent.xml").toURI())));
+    void getTagFromSameLevelTest() throws URISyntaxException, IOException {
+        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/getTagFromSameLevel.template").toURI())));
+        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/getTagFromSameLevel.xml").toURI())));
         UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
         assertEquals(2, result.getClasses().size());
         assertEquals("helloWorld", result.getClasses().get(0).getName());

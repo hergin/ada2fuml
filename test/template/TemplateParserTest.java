@@ -1,10 +1,8 @@
 package template;
 
-import Integration.RoyTests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import template.model.*;
-import utils.XMLUtils;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -63,7 +61,7 @@ class TemplateParserTest {
 
     @Test
     void parseAncestorPath() throws URISyntaxException, IOException {
-        Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateParserTest.class.getClassLoader().getResource("template/putUnderParent.template").toURI())));
+        Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateParserTest.class.getClassLoader().getResource("template/getTagFromSameLevel.template").toURI())));
         assertEquals(1, ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).getLevel());
         assertEquals("operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).getTag());
         assertEquals("../operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).toString());
