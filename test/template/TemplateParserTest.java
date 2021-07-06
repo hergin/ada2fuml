@@ -60,4 +60,15 @@ class TemplateParserTest {
         assertEquals(((LHSAttributeWithPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs()).getAttributeName(), "def_name");
         assertEquals(adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(0).getLhs().toString(), "names_ql/defining_identifier/@def_name");
     }
+
+    @Test
+    void parseAncestorPath() throws URISyntaxException, IOException {
+        Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateParserTest.class.getClassLoader().getResource("template/putUnderParent.template").toURI())));
+        assertEquals(1, ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).getLevel());
+        assertEquals("operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).getTag());
+        assertEquals("../operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).toString());
+        assertEquals(0, ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(3).getLhs()).getLevel());
+        assertEquals("operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(3).getLhs()).getTag());
+        assertEquals("./operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(3).getLhs()).toString());
+    }
 }

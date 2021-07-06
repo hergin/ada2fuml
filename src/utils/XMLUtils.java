@@ -12,6 +12,24 @@ import java.io.StringReader;
 
 public class XMLUtils {
 
+    public static NodeList getAllAncestorNodesWithThePath(Node xmlNode, String path, int levelAbove) {
+        XPathFactory xPathfactory = XPathFactory.newInstance();
+        XPath xpath = xPathfactory.newXPath();
+        XPathExpression expr = null;
+        Node startNode = xmlNode;
+        for (int i = 0; i <= levelAbove; i++) {
+            startNode = startNode.getParentNode();
+        }
+        try {
+            expr = xpath.compile(stripNamespace(path));
+            NodeList nl = (NodeList) expr.evaluate(startNode, XPathConstants.NODESET);
+            return nl;
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static NodeList getAllNodesWithThePath(Node xmlNode, String path) {
         XPathFactory xPathfactory = XPathFactory.newInstance();
         XPath xpath = xPathfactory.newXPath();

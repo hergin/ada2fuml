@@ -109,6 +109,8 @@ class TemplateInterpreterTest {
         assertEquals(2, result.getClasses().size());
         assertEquals("helloWorld", result.getClasses().get(0).getName());
         assertEquals(VisibilityEnum.Protected, result.getClasses().get(0).getVisibility());
+        assertEquals(1, result.getClasses().get(0).getOperations().size());
+        assertEquals(1, result.getClasses().get(1).getOperations().size());
     }
 
     @Test

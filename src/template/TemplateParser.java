@@ -5,6 +5,8 @@ import template.model.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TemplateParser {
 
@@ -22,7 +24,15 @@ public class TemplateParser {
             String lhsWithoutLevel = lhs.replace(">", "").trim();
 
             LHS lhsOfTheItem = null;
-            if (lhsWithoutLevel.contains("[")) { // literal
+            if (lhsWithoutLevel.startsWith("../") || lhsWithoutLevel.startsWith("./")) { // ancestor paths
+                Matcher dotMatcher = Pattern.compile("[.][.]").matcher(lhsWithoutLevel);
+                int ancestorLevel = 0;
+                while (dotMatcher.find()) {
+                    ancestorLevel++;
+                }
+                String tag = lhsWithoutLevel.substring(lhsWithoutLevel.lastIndexOf("/")+1);
+                lhsOfTheItem = new LHSAncestorPath(tag,ancestorLevel);
+            } else if (lhsWithoutLevel.startsWith("[")) { // literal
                 String valueOfTheLiteral = lhsWithoutLevel.replace("[", "").replace("]", "");
                 lhsOfTheItem = new LHSLiteral(valueOfTheLiteral);
             } else if (lhsWithoutLevel.contains("@")) { // attribute

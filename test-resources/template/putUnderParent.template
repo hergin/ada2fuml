@@ -3,7 +3,8 @@
 > class                                         -- Class in classes
 >> @title                                       -- name
 >> @visible                                     -- visibility
->> ../operation[param/classRef/@name=name]      -- Operation in operations
+>> ../operation                                 -- Operation in operations
+>> ./operation                                  -- Operation in operations
 >>> @name                                       -- name
 >>>> param                                      -- Parameter in parameters
 >>>>> @name                                     -- name

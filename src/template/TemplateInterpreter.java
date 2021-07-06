@@ -1,12 +1,10 @@
 package template;
 
-import extractor.Extractor;
 import model.Package;
 import model.UML;
 import model.auxiliary.HierarchicalElement;
 import model.enums.DirectionEnum;
 import model.enums.VisibilityEnum;
-import model.properties.PrimitiveProperty;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -17,7 +15,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
 
 public class TemplateInterpreter {
@@ -72,6 +69,17 @@ public class TemplateInterpreter {
                 String value = ((LHSLiteral) item.getLhs()).getValue();
                 if (item.getRhs() instanceof RHSAttribute) {
                     setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
+                }
+            } else if(item.getLhs() instanceof LHSAncestorPath) {
+                String path = ((LHSAncestorPath) item.getLhs()).getTag();
+                NodeList nodes = XMLUtils.getAllAncestorNodesWithThePath(parentNode, ((LHSAncestorPath) item.getLhs()).getTag(),((LHSAncestorPath) item.getLhs()).getLevel());
+                for (int i = 0; i < nodes.getLength(); i++) {
+                    Node currentNode = nodes.item(i);
+                    if (item.getRhs() instanceof RHSAttributeInClass) {
+                        HierarchicalElement element = createTheElement(((RHSAttributeInClass) item.getRhs()).getClassName());
+                        addElementToTheList(element, parentElement, ((RHSAttributeInClass) item.getRhs()).getAttributeName());
+                        processFurther(currentNode, element, item.getSubItems());
+                    }
                 }
             }
         }

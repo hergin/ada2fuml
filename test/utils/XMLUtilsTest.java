@@ -3,6 +3,7 @@ package utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,9 +48,13 @@ class XMLUtilsTest {
     @Test
     void getAllNodesWithThePathTest() {
         Document xmlDocument = XMLUtils.convertStringToDocument(xmlString);
-        assertEquals(1, XMLUtils.getAllNodesWithThePath(xmlDocument.getDocumentElement(), "/bookstore").getLength());
-        assertEquals(4, XMLUtils.getAllNodesWithThePath(xmlDocument, "/bookstore/book").getLength());
-        assertEquals(4, XMLUtils.getAllNodesWithThePath(XMLUtils.getAllNodesWithThePath(xmlDocument.getDocumentElement(), "/bookstore").item(0), "book").getLength());
+        NodeList bookstore = XMLUtils.getAllNodesWithThePath(xmlDocument.getDocumentElement(), "/bookstore");
+        assertEquals(1, bookstore.getLength());
+        NodeList books = XMLUtils.getAllNodesWithThePath(xmlDocument, "/bookstore/book");
+        assertEquals(4, books.getLength());
+        NodeList titleInOneOfBooks = XMLUtils.getAllNodesWithThePath(books.item(0),"year");
+        assertEquals(1, titleInOneOfBooks.getLength());
+        assertEquals(4, XMLUtils.getAllNodesWithThePath(bookstore.item(0), "book").getLength());
     }
 
     @Test
@@ -63,5 +68,17 @@ class XMLUtilsTest {
         assertEquals("/compilation_unit", XMLUtils.stripNamespace("/compilation_unit"));
         assertEquals("/schema", XMLUtils.stripNamespace("/xsd:schema"));
         assertEquals("/schema/anothertag", XMLUtils.stripNamespace("/xsd:schema/xsd:anothertag"));
+    }
+
+    @Test
+    void getAllAncestorNodesWithThePath() {
+        Document xmlDocument = XMLUtils.convertStringToDocument(xmlString);
+        NodeList books = XMLUtils.getAllNodesWithThePath(xmlDocument, "/bookstore/book");
+        assertEquals(4, books.getLength());
+        NodeList titleInOneOfBooks = XMLUtils.getAllNodesWithThePath(books.item(0),"year");
+        assertEquals(1, titleInOneOfBooks.getLength());
+
+        NodeList booksFromTitle = XMLUtils.getAllAncestorNodesWithThePath(titleInOneOfBooks.item(0),"book",1);
+        assertEquals(4, booksFromTitle.getLength());
     }
 }
