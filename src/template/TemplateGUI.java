@@ -417,7 +417,7 @@ public class TemplateGUI extends JFrame implements ActionListener {
         Template template = TemplateParser.parseTemplateFromString(templateArea.getText());
         Document xmlDocument = XMLUtils.convertStringToDocument(xmlArea.getText());
         UML result = TemplateInterpreter.interpret(xmlDocument, template);
-
+        result.replaceReferences();
         try {
             String resultXMI = Processor.processUML(result, StillHavePlaceholderExceptionPolicy.ByPass);
             Files.write(Paths.get("Overall.xmi"), resultXMI.getBytes());

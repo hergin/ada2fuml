@@ -42,13 +42,13 @@ public class Class extends HierarchicalElement implements IPlaceholderReplacemen
         List<HierarchicalElement> result = new ArrayList<>();
 
         for (AbstractProperty property:properties) {
-            if(property instanceof Property && !((Property) property).getReference().isEmpty())
+            if(property instanceof Property && ((Property) property).getReference()!=null && !((Property) property).getReference().isEmpty())
                 result.add(((HierarchicalElement) property));
         }
 
         for (Operation operation:operations) {
             for (AbstractParameter parameter:operation.getParameters()) {
-                if(parameter instanceof Parameter && !((Parameter) parameter).getReference().isEmpty())
+                if(parameter instanceof Parameter && ((Parameter) parameter).getReference()!=null && !((Parameter) parameter).getReference().isEmpty())
                     result.add(((HierarchicalElement) parameter));
             }
         }
