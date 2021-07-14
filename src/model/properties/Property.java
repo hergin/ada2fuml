@@ -37,6 +37,19 @@ public class Property extends AbstractProperty {
         }
     }
 
+    public void convertToClassProperty(Class type) {
+        HierarchicalElement parent = getParent();
+        if(parent instanceof Enumeration) {
+            Enumeration castedParent = ((Enumeration) parent);
+            castedParent.addProperty(new ClassProperty(getName(),getVisibility(), type));
+            castedParent.getProperties().remove(this);
+        } else if(parent instanceof Class) {
+            Class castedParent = ((Class) parent);
+            castedParent.addProperty(new ClassProperty(getName(),getVisibility(), type));
+            castedParent.getProperties().remove(this);
+        }
+    }
+
     public Object getValue() {
         return value;
     }

@@ -29,6 +29,13 @@ public class Parameter extends AbstractParameter {
         castedParent.getParameters().remove(this);
     }
 
+    public void convertToClassParameter(Class type) {
+        HierarchicalElement parent = getParent();
+        Operation castedParent = ((Operation) parent);
+        castedParent.addParameter(new ClassParameter(getName(),getDirection(),type));
+        castedParent.getParameters().remove(this);
+    }
+
     public String getReference() {
         return reference;
     }

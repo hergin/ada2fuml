@@ -111,11 +111,24 @@ public class UML extends HierarchicalElement {
     private void replaceReference(HierarchicalElement element) {
         try {
             String reference = (String) TemplateInterpreter.getMethod(element.getClass(),"getReference").invoke(element);
+
+            // Try to fix primitives first
             for(TypeEnum primitive:TypeEnum.values()) {
                 if (reference.contains(primitive.toString())) {
                     TemplateInterpreter.getMethod(element.getClass(), "convertToPrimitive" + element.getClass().getSimpleName()).invoke(element, primitive);
+                    return;
                 }
             }
+
+            // Try to fix classes
+            List<Class> allClasses = collectAllClasses();
+            for(Class aClass:allClasses) {
+                if(reference.contains(aClass.getName())) {
+                    TemplateInterpreter.getMethod(element.getClass(), "convertToClass" + element.getClass().getSimpleName()).invoke(element, aClass);
+                    return;
+                }
+            }
+
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }

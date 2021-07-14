@@ -10,6 +10,8 @@
             </param2>
             <param2 name="thirdParam" type="Real">
             </param2>
+            <param2 name="fourthParam" type="Whatever/Whatever/String/Whatever">
+            </param2>
         </operation>
     </class>
 </uml>
