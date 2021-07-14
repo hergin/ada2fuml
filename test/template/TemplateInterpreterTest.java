@@ -151,4 +151,11 @@ class TemplateInterpreterTest {
         assertEquals(4, result.getClasses().get(0).getProperties().size());
         assertEquals("endcol", result.getClasses().get(0).getProperties().get(3).getName());
     }
+
+    @Test
+    void sameTagDifferentReferencesExampleTest() throws URISyntaxException, IOException {
+        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/sameTagDifferentReferences.template").toURI())));
+        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/sameTagDifferentReferences.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
+    }
 }
