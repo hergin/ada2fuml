@@ -2,7 +2,7 @@
    <class title="helloWorld" visible="Protected">
       <operation name="myOp">
          <param name="oneParam">
-            <classRef name="helloWorld"></classRef>
+            <classRef name="helloWorld2"></classRef>
          </param>
       </operation>
    </class>

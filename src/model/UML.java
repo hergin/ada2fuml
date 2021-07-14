@@ -122,12 +122,14 @@ public class UML extends HierarchicalElement {
 
             // Try to fix classes
             List<Class> allClasses = collectAllClasses();
+            Class longestMatchingClass = new Class("");
             for(Class aClass:allClasses) {
-                if(reference.contains(aClass.getName())) {
-                    TemplateInterpreter.getMethod(element.getClass(), "convertToClass" + element.getClass().getSimpleName()).invoke(element, aClass);
-                    return;
+                if(reference.contains(aClass.getName()) && aClass.getName().length()>longestMatchingClass.getName().length()) {
+                    longestMatchingClass = aClass;
                 }
             }
+            if(longestMatchingClass.getName().length()>0)
+                TemplateInterpreter.getMethod(element.getClass(), "convertToClass" + element.getClass().getSimpleName()).invoke(element, longestMatchingClass);
 
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();

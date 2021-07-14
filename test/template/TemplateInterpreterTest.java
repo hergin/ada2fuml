@@ -2,6 +2,7 @@ package template;
 
 import model.UML;
 import model.enums.VisibilityEnum;
+import model.parameters.ClassParameter;
 import model.parameters.Parameter;
 import model.properties.Property;
 import org.junit.jupiter.api.Test;
@@ -135,9 +136,13 @@ class TemplateInterpreterTest {
         assertEquals("myOp", result.getClasses().get(0).getOperations().get(0).getName());
         assertEquals(1, result.getClasses().get(0).getOperations().get(0).getParameters().size());
         assertEquals("oneParam", result.getClasses().get(0).getOperations().get(0).getParameters().get(0).getName());
-        assertEquals("helloWorld", ((Parameter) result.getClasses().get(0).getOperations().get(0).getParameters().get(0)).getReference());
+        assertEquals("helloWorld2", ((Parameter) result.getClasses().get(0).getOperations().get(0).getParameters().get(0)).getReference());
         assertEquals("helloWorld2", result.getClasses().get(1).getName());
         assertEquals(0, result.getClasses().get(1).getOperations().size());
+
+        result.replaceReferences();
+        assertEquals(ClassParameter.class,result.getClasses().get(0).getOperations().get(0).getParameters().get(0).getClass());
+        assertEquals("helloWorld2", ((ClassParameter) result.getClasses().get(0).getOperations().get(0).getParameters().get(0)).getType().getName());
     }
 
     @Test
