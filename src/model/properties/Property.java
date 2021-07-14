@@ -1,6 +1,10 @@
 package model.properties;
 
 import model.AbstractProperty;
+import model.Class;
+import model.Enumeration;
+import model.auxiliary.HierarchicalElement;
+import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
 
 public class Property extends AbstractProperty {
@@ -18,6 +22,19 @@ public class Property extends AbstractProperty {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public void convertToPrimitiveProperty(TypeEnum type) {
+        HierarchicalElement parent = getParent();
+        if (parent instanceof Enumeration) {
+            Enumeration castedParent = ((Enumeration) parent);
+            castedParent.addProperty(new PrimitiveProperty(getName(), VisibilityEnum.Public, type,null));
+            castedParent.getProperties().remove(this);
+        } else if (parent instanceof Class) {
+            Class castedParent = ((Class) parent);
+            castedParent.addProperty(new PrimitiveProperty(getName(), VisibilityEnum.Public, type,null));
+            castedParent.getProperties().remove(this);
+        }
     }
 
     public Object getValue() {

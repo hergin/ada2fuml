@@ -4,14 +4,19 @@ import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.PlaceholderPreferenceEnum;
+import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
 import model.parameters.ClassParameter;
 import model.parameters.EnumerationParameter;
 import model.properties.AssociationProperty;
 import model.properties.ClassProperty;
 import model.properties.EnumerationProperty;
+import template.TemplateInterpreter;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,6 +98,41 @@ public class UML extends HierarchicalElement {
         }
 
         return false;
+    }
+
+    public void replaceReferences() {
+        List<HierarchicalElement> allElementsWithReferences = collectAllElementsWithReferences();
+
+        for(HierarchicalElement element:allElementsWithReferences) {
+            replaceReference(element);
+        }
+    }
+
+    private void replaceReference(HierarchicalElement element) {
+        try {
+            String reference = (String) TemplateInterpreter.getMethod(element.getClass(),"getReference").invoke(element);
+            for(TypeEnum primitive:TypeEnum.values()) {
+                if (reference.contains(primitive.toString())) {
+                    TemplateInterpreter.getMethod(element.getClass(), "convertToPrimitive" + element.getClass().getSimpleName()).invoke(element, primitive);
+                }
+            }
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<HierarchicalElement> collectAllElementsWithReferences() {
+        List<HierarchicalElement> result = new ArrayList<>();
+
+        for (Class aClass:classes) {
+            result.addAll(aClass.getElementsWithReferences());
+        }
+
+        for(Package aPackage:packages) {
+            result.addAll(Package.getAllElementsWithReferencesRecursively(aPackage));
+        }
+
+        return result;
     }
 
     public void fixPlaceholders(PlaceholderPreferenceEnum preference) {

@@ -100,7 +100,8 @@ public class TemplateInterpreter {
                 if (theField.getType().getSimpleName().equals("VisibilityEnum")) {
                     theField.set(parentElement, Enum.valueOf(VisibilityEnum.class, valueOfTheAttribute.substring(0, 1).toUpperCase() + valueOfTheAttribute.substring(1).toLowerCase()));
                 } else if (theField.getType().getSimpleName().equals("DirectionEnum")) {
-                    theField.set(parentElement, Enum.valueOf(DirectionEnum.class, valueOfTheAttribute.substring(0, 1).toUpperCase() + valueOfTheAttribute.substring(1).toLowerCase()));
+                    String strippedValue = valueOfTheAttribute.toUpperCase().replace("AN_","").replace("_MODE","");
+                    theField.set(parentElement, Enum.valueOf(DirectionEnum.class, strippedValue.substring(0, 1).toUpperCase() + strippedValue.substring(1).toLowerCase()));
                 } else {
                     // TODO other enum types either in reflection way or else-if way
                 }

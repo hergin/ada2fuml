@@ -1,0 +1,13 @@
+/uml                                                      -- UML
+> @title                                                  -- name
+> class                                                   -- Class in classes
+>> @title                                                 -- name
+>> @visible                                               -- visibility
+>> operation                                              -- Operation in operations
+>>> @name                                                 -- name
+>>> param1                                                -- Parameter in parameters
+>>>> @name                                                -- name
+>>>> classRef/@name                                       -- reference
+>>> param2                                                -- Parameter in parameters
+>>>> @name                                                -- name
+>>>> @type                                                -- reference

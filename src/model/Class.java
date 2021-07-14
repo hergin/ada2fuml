@@ -4,6 +4,8 @@ import model.auxiliary.HierarchicalElement;
 import model.auxiliary.IPlaceholderReplacement;
 import model.auxiliary.IPlaceholderedElement;
 import model.enums.VisibilityEnum;
+import model.parameters.Parameter;
+import model.properties.Property;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,24 @@ public class Class extends HierarchicalElement implements IPlaceholderReplacemen
 
     public void setVisibility(VisibilityEnum visibility) {
         this.visibility = visibility;
+    }
+
+    public List<HierarchicalElement> getElementsWithReferences() {
+        List<HierarchicalElement> result = new ArrayList<>();
+
+        for (AbstractProperty property:properties) {
+            if(property instanceof Property && !((Property) property).getReference().isEmpty())
+                result.add(((HierarchicalElement) property));
+        }
+
+        for (Operation operation:operations) {
+            for (AbstractParameter parameter:operation.getParameters()) {
+                if(parameter instanceof Parameter && !((Parameter) parameter).getReference().isEmpty())
+                    result.add(((HierarchicalElement) parameter));
+            }
+        }
+
+        return result;
     }
 
     public List<IPlaceholderedElement> getElementsWithPlaceholder() {

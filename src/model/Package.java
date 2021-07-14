@@ -48,6 +48,20 @@ public class Package extends HierarchicalElement {
         return result;
     }
 
+    public static List<HierarchicalElement> getAllElementsWithReferencesRecursively(Package aPackage) {
+        List<HierarchicalElement> result = new ArrayList<>();
+
+        for (Class aClass:aPackage.getClasses()) {
+            result.addAll(aClass.getElementsWithReferences());
+        }
+
+        for (Package subPackage:aPackage.getSubPackages()) {
+            result.addAll(Package.getAllElementsWithReferencesRecursively(subPackage));
+        }
+
+        return result;
+    }
+
     public static List<IPlaceholderedElement> getAllElementsWithPlaceholdersRecursively(Package aPackage) {
         List<IPlaceholderedElement> result = new ArrayList<>();
 

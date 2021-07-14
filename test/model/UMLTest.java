@@ -8,15 +8,26 @@ import gnat2xml.Gnat2XmlRunner;
 import model.enums.PlaceholderPreferenceEnum;
 import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
+import model.parameters.ClassParameter;
+import model.parameters.Parameter;
+import model.parameters.PrimitiveParameter;
 import model.properties.ClassProperty;
 import model.properties.EnumerationProperty;
+import model.properties.PrimitiveProperty;
+import model.properties.Property;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import template.TemplateInterpreter;
+import template.TemplateParser;
+import template.model.Template;
+import utils.XMLUtils;
 import xmlparsing.AdaXmlParser;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -340,5 +351,26 @@ public class UMLTest {
         assertEquals(2,uml1.getPackages().get(0).getClasses().size());
         assertEquals(1,uml1.getPackages().get(0).getEnumerations().size());
         assertEquals(1,uml1.getPackages().get(0).getCustomPrimitives().size());
+    }
+
+    @Test
+    void replaceReferences() throws URISyntaxException, IOException {
+        Template adaTemplate = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(UMLTest.class.getClassLoader().getResource("template/fixReferences.template").toURI())));
+        String adaXML = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(UMLTest.class.getClassLoader().getResource("template/fixReferences.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(adaXML), adaTemplate);
+        assertEquals(2, result.getClasses().size());
+        assertEquals(1, result.getClasses().get(1).getOperations().size());
+        assertEquals(3, result.getClasses().get(1).getOperations().get(0).getParameters().size());
+
+        result.replaceReferences();
+
+        assertEquals(PrimitiveParameter.class, result.getClasses().get(1).getOperations().get(0).getParameters().get(1).getClass());
+        assertEquals(TypeEnum.Integer, ((PrimitiveParameter) result.getClasses().get(1).getOperations().get(0).getParameters().get(1)).getType());
+
+        assertEquals(PrimitiveParameter.class, result.getClasses().get(1).getOperations().get(0).getParameters().get(2).getClass());
+        assertEquals(TypeEnum.Real, ((PrimitiveParameter) result.getClasses().get(1).getOperations().get(0).getParameters().get(2)).getType());
+
+        assertEquals(ClassParameter.class, result.getClasses().get(1).getOperations().get(0).getParameters().get(0).getClass());
+        assertEquals("helloWorld", ((ClassParameter) result.getClasses().get(1).getOperations().get(0).getParameters().get(0)).getType().getName());
     }
 }
