@@ -49,6 +49,11 @@ public class UML extends HierarchicalElement {
         this.fileName = fileName;
     }
 
+    public void addInterface(Interface interfacee) {
+        interfacee.setParent(this);
+        this.interfaces.add(interfacee);
+    }
+
     public List<IPlaceholderedElement> getItemsWithPlaceholders() {
         List<Class> allClasses = collectAllClasses();
         List<Class> classesThatHavePlaceholders = allClasses.stream().filter(c->c.hasPlaceholders()).collect(Collectors.toList());
@@ -63,6 +68,7 @@ public class UML extends HierarchicalElement {
         otherUML.getClasses().forEach(c->addClass(c));
         otherUML.getEnumerations().forEach(e->addEnumeration(e));
         otherUML.getCustomPrimitives().forEach(cp->addCustomPrimitive(cp));
+        otherUML.getInterfaces().forEach(i->addInterface(i));
 
         for(Package otherPackage:otherUML.getPackages()) {
             List<Package> sameNamedPackages = packages.stream().filter(p->p.getName().equals(otherPackage.getName())).collect(Collectors.toList());

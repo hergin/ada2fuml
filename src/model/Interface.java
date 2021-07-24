@@ -16,6 +16,10 @@ public class Interface extends HierarchicalElement {
     private List<Interface> superInterfaces;
     private List<Enumeration> enumerations;
 
+    public Interface() {
+        this("");
+    }
+
     public Interface(String name) {
         super(name);
         properties = new ArrayList<>();

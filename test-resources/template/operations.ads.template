@@ -19,3 +19,11 @@
 >>>>> [Return]                                                      -- direction
 >>> ./procedure_declaration                                         -- Operation in operations
 >>>> names_ql/defining_identifier/@def_name                         -- name
+>>>> parameter_profile_ql/parameter_specification                   -- Parameter in parameters
+>>>>> @mode                                                         -- direction
+>>>>> names_ql/defining_identifier/@def_name                        -- name
+>>>>> object_declaration_view_q/identifier/@ref_name                -- reference
+>>>> result_profile_q                                               -- Parameter in parameters
+>>>>> identifier/@ref_name                                          -- name
+>>>>> identifier/@ref                                               -- reference
+>>>>> [Return]                                                      -- direction
