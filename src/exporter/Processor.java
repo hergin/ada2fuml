@@ -225,6 +225,12 @@ public class Processor {
                 		+ "' xmi:id='" + Processor.uuidGenerator()
                 		+ "' value='" + v.getDefaultValue().toString() + "'/>");
             }
+            if(p.getLower()!=null && !p.getLower().isEmpty()) {
+                string.append("<lowerValue xmi:type='uml:LiteralInteger' xmi:id='"+Processor.uuidGenerator()+"' value='"+p.getLower()+"'/>");
+            }
+            if(p.getUpper()!=null && !p.getUpper().isEmpty()) {
+                string.append("<upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:id='"+Processor.uuidGenerator()+"' value='"+p.getUpper()+"'/>");
+            }
             string.append("</ownedAttribute>");
         }
 
@@ -401,7 +407,6 @@ public class Processor {
                 		+ "' xmi:id='" + Processor.uuidGenerator()
                 		+ "' value='" + v.getDefaultValue().toString() + "'/>");
             }
-            string.append("</ownedAttribute>");
         } else if (p instanceof PrimitiveProperty) {
             PrimitiveProperty pp = (PrimitiveProperty) p;
             string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName()
@@ -410,39 +415,48 @@ public class Processor {
             if (pp.hasDefault()) {
                 string.append("<defaultValue xmi:type='uml:Literal" + pp.getType().toString() + "' xmi:id='" + Processor.uuidGenerator() + "' value='" + pp.getDefaultValue().toString() + "'/>");
             }
-            string.append("</ownedAttribute>");
         } else if (p instanceof AssociationProperty) {
             AssociationProperty ap = (AssociationProperty) p;
             String selfId = ((Class) ap.getParent()).getId();
             List<String> typeIds = ap.getAssociation().getProperties().stream().map(prop-> ((Class) prop.getParent()).getId()).filter(prop->!prop.equals(selfId)).collect(Collectors.toList());
-            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + typeIds.get(0) + "' association='" + ap.getAssociation().getId() + "'/>");
+            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + typeIds.get(0) + "' association='" + ap.getAssociation().getId() + "'>");
         } else if (p instanceof ClassProperty) {
             ClassProperty cp = (ClassProperty) p;
             if(cp.hasPlaceholder()) {
-                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getPlaceholder() + "'/>");
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getPlaceholder() + "'>");
             } else {
-                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getType().getId() + "'/>");
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cp.getType().getId() + "'>");
             }
         } else if (p instanceof EnumerationProperty) {
             EnumerationProperty ep = (EnumerationProperty) p;
             if(ep.hasPlaceholder()) {
-                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + ep.getPlaceholder() + "'/>");
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + ep.getPlaceholder() + "'>");
             } else {
-                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + ep.getType().getId() + "'/>");
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + ep.getType().getId() + "'>");
             }
         } else if (p instanceof CustomPrimitiveProperty) {
             CustomPrimitiveProperty cpp1 = (CustomPrimitiveProperty) p;
             if(cpp1.hasPlaceholder()) {
-                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cpp1.getPlaceholder() + "'/>");
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cpp1.getPlaceholder() + "'>");
             } else {
-                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cpp1.getType().getId() + "'/>");
+                string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + cpp1.getType().getId() + "'>");
             }
         } else if(p instanceof Property) {
             Property p1 = (Property) p;
-            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + p1.getReference() + "'/>");
+            string.append("<ownedAttribute xmi:type='uml:Property' xmi:id='" + p.getId() + "' name='" + p.getName() + "' visibility='" + p.getVisibility().toString().toLowerCase() + "' type='" + p1.getReference() + "'>");
         } else {
             throw new UnknownPropertyException("An unknown parameter (than Primitive, Class, or Association) showed up. Signature: "+p.getSignature());
         }
+
+        if(p.getLower()!=null && !p.getLower().isEmpty()) {
+            string.append("<lowerValue xmi:type='uml:LiteralInteger' xmi:id='"+Processor.uuidGenerator()+"' value='"+p.getLower()+"'/>");
+        }
+        if(p.getUpper()!=null && !p.getUpper().isEmpty()) {
+            string.append("<upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:id='"+Processor.uuidGenerator()+"' value='"+p.getUpper()+"'/>");
+        }
+
+        string.append("</ownedAttribute>");
+
 
         return string.toString();
     }

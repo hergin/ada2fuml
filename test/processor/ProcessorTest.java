@@ -385,5 +385,34 @@ class ProcessorTest {
         //Assertions.assertEquals(expected,result);
     }
 
+    @Test
+    void UpperAndLowerInXMItest() throws UnknownParameterException, StillHavePlaceHolderException, UnknownPropertyException {
+        UML uml = new UML("uml");
+        Package package1 = new Package("package1");
+        Class Class1 = new Class("Class1");
+        Operation someOperation = new Operation("someOperation", VisibilityEnum.Private);
+        PrimitiveProperty pp = new PrimitiveProperty("someProperty", VisibilityEnum.Private, TypeEnum.String, "hellomate");
+        pp.setUpper("*");
+        pp.setLower("1");
+        PrimitiveParameter unnamed1 = new PrimitiveParameter("unnamed1", DirectionEnum.InOut, TypeEnum.Integer);
+        PrimitiveParameter returnValue = new PrimitiveParameter("return", DirectionEnum.Return, TypeEnum.Boolean);
+
+        uml.addPackage(package1);
+        package1.addClass(Class1);
+        Class1.addOperation(someOperation);
+        Class1.addProperty(pp);
+
+        someOperation.addParameter(unnamed1);
+        someOperation.addParameter(returnValue);
+
+        String result = Processor.processUML(uml, StillHavePlaceholderExceptionPolicy.Throw);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmi:XMI xmlns:uml=\"http://www.omg.org/spec/UML/20131001\" xmlns:StandardProfile=\"http://www.omg.org/spec/UML/20131001/StandardProfile\" xmlns:xmi=\"http://www.omg.org/spec/XMI/20131001\"><uml:Model xmi:type=\"uml:Model\" xmi:id=\"ID0\" name=\"uml\"><packagedElement xmi:type=\"uml:Package\" xmi:id=\"ID1\" name=\"package1\"><packagedElement xmi:type=\"uml:Class\" xmi:id=\"ID2\" name=\"Class1\"><ownedAttribute xmi:type=\"uml:Property\" xmi:id=\"ID4\" name=\"someProperty\" visibility=\"private\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String\"/><defaultValue xmi:type=\"uml:LiteralString\" xmi:id=\"ID7\" value=\"hellomate\"/><lowerValue value=\"1\" xmi:id=\"ID8\" xmi:type=\"uml:LiteralInteger\"/><upperValue value=\"*\" xmi:id=\"ID9\" xmi:type=\"uml:LiteralUnlimitedNatural\"/></ownedAttribute><ownedOperation xmi:type=\"uml:Operation\" xmi:id=\"ID3\" name=\"someOperation\" visibility=\"private\"><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID5\" name=\"unnamed1\" visibility=\"public\" direction=\"inout\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer\"/></ownedParameter><ownedParameter xmi:type=\"uml:Parameter\" xmi:id=\"ID6\" name=\"return\" visibility=\"public\" direction=\"return\"><type href=\"http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Boolean\"/></ownedParameter></ownedOperation></packagedElement></packagedElement></uml:Model></xmi:XMI>";
+
+        XmlAssert.assertThat(expected)
+                .and(StringUtils.sanitize(result))
+                .ignoreWhitespace()
+                .areIdentical();
+    }
+
 
 }
