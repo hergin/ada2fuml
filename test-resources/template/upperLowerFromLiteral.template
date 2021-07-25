@@ -1,0 +1,9 @@
+/uml                  -- UML
+> @title              -- name
+> class               -- Class in classes
+>> @title             -- name
+>> @visible           -- visibility
+>> operation          -- Property in properties
+>>> @name             -- name
+>>> [*]               -- upper
+>>> lowerLimit/@lower -- lower

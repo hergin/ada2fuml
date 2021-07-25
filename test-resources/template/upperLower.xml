@@ -1,0 +1,14 @@
+<uml title="helloUML">
+   <class title="helloWorld" visible="Protected">
+      <operation name="myOp">
+         <param name="oneParam">
+            <classRef name="helloWorld2"></classRef>
+         </param>
+         <upperLimit>5</upperLimit>
+         <lowerLimit lower="2"></lowerLimit>
+      </operation>
+   </class>
+   <class title="helloWorld2" visible="Private">
+   </class>
+
+</uml>

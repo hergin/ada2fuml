@@ -163,4 +163,26 @@ class TemplateInterpreterTest {
         String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/sameTagDifferentReferences.xml").toURI())));
         UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
     }
+
+    @Test
+    void upperAndLowerTest() throws URISyntaxException, IOException {
+        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/upperLower.template").toURI())));
+        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/upperLower.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
+        assertEquals(2,result.getClasses().size());
+        assertEquals(1,result.getClasses().get(0).getProperties().size());
+        assertEquals("5",result.getClasses().get(0).getProperties().get(0).getUpper());
+        assertEquals("2",result.getClasses().get(0).getProperties().get(0).getLower());
+    }
+
+    @Test
+    void upperAndLowerFromLiteralTest() throws URISyntaxException, IOException {
+        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/upperLowerFromLiteral.template").toURI())));
+        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/upperLower.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
+        assertEquals(2,result.getClasses().size());
+        assertEquals(1,result.getClasses().get(0).getProperties().size());
+        assertEquals("*",result.getClasses().get(0).getProperties().get(0).getUpper());
+        assertEquals("2",result.getClasses().get(0).getProperties().get(0).getLower());
+    }
 }
