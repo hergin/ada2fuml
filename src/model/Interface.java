@@ -13,6 +13,7 @@ public class Interface extends HierarchicalElement {
     private List<Operation> operations;
     private List<Except> exceptions;
     private List<Struct> structs;
+    private List<Array> arrays;
     private List<Interface> superInterfaces;
     private List<Enumeration> enumerations;
 
@@ -25,6 +26,7 @@ public class Interface extends HierarchicalElement {
         properties = new ArrayList<>();
         operations = new ArrayList<>();
         structs = new ArrayList<>();
+        arrays = new ArrayList<>();
         exceptions = new ArrayList<>();
         superInterfaces = new ArrayList<>();
         enumerations = new ArrayList<>();
@@ -84,6 +86,11 @@ public class Interface extends HierarchicalElement {
         structs.add(inputStruct);
     }
 
+    public void addArray(Array inputArray) {
+    	inputArray.setParent(this);
+        arrays.add(inputArray);
+    }
+
     public void addEnumeration(Enumeration inputEnumeration) {
     	inputEnumeration.setParent(this);
         enumerations.add(inputEnumeration);
@@ -107,6 +114,10 @@ public class Interface extends HierarchicalElement {
 
     public List<Struct> getStructs() {
         return structs;
+    }
+
+    public List<Array> getArrays() {
+        return arrays;
     }
 
     public List<Interface> getSuperInterfaces() {

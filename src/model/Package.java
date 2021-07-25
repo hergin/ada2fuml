@@ -13,6 +13,7 @@ public class Package extends HierarchicalElement {
     private List<Class> classes;
     private List<Struct> structs;
     private List<Except> exceptions;
+    private List<Array> arrays;
     private List<Enumeration> enumerations;
     private List<Interface> interfaces;
     private List<Package> subPackages;
@@ -26,6 +27,7 @@ public class Package extends HierarchicalElement {
         super(name);
         classes = new ArrayList<>();
         structs = new ArrayList<>();
+        arrays = new ArrayList<>();
         enumerations = new ArrayList<>();
         exceptions = new ArrayList<>();
         interfaces = new ArrayList<>();
@@ -197,9 +199,250 @@ public class Package extends HierarchicalElement {
         return structs.stream().filter(c->c.getName().equals(structName)).findFirst().get();
     }
 
+
+
+    public Struct findStructByName(String structName, String delimiter) {
+        if (structs.stream().filter(c->c.getName().equals(structName)).count()!=0) {
+            return structs.stream().filter(c->c.getName().equals(structName)).findFirst().get();
+        }
+
+        if ( (delimiter == null) || (delimiter.isEmpty()) ) {
+        	return null;
+        }
+
+	    String[] components = structName.split(delimiter);
+	    int numComponents = components.length;  // all are package names except last, which is the type name
+	    if (numComponents <= 1) {
+	    	// There is only one component in structName, but the above search did not it
+	    	// Return null to indicate that it didn't find structName
+	    	return null;
+	    }
+
+	    // There must be multiple components in struct name
+	    String baseComponent = components[0];
+	    String typeName = components[numComponents - 1];
+	    String ourName = this.getName();
+
+	    if (baseComponent.equals(ourName)) {
+	        if (structs.stream().filter(c->c.getName().equals(typeName)).count()!=0) {
+	            return structs.stream().filter(c->c.getName().equals(typeName)).findFirst().get();
+	        }
+
+	        if (numComponents == 2) {
+		        // There are only two components so typeName must be in this package
+	        	// We reached here only because typeName wasn't found. Thus it is null
+		        return null;
+	        }
+
+	        List<String> stringList = new ArrayList<>();
+	        for (int i = 2; i<numComponents; i++) {
+	        	stringList.add(components[i]);
+	        }
+
+	        String partialName = String.join(delimiter, stringList);
+	    	try {
+	            Package subPackage = getSubPackageByName(components[1]);
+	            if (subPackage != null) {
+	            	return subPackage.findStructByName(partialName, delimiter);
+	            }
+
+	    	} catch (java.util.NoSuchElementException bitBucket) {
+			}	        
+	    }
+
+    	try {
+            Package subPackage = getSubPackageByName(baseComponent);
+            if (subPackage != null) {
+            	return subPackage.findStructByName(structName, delimiter);
+            }
+
+    	} catch (java.util.NoSuchElementException bitBucket) {
+		}
+
+        // This component is not baseComponent and subPackage is not baseComponent
+        // Let's hope that baseComponent can be found in parent hierarchy
+	    HierarchicalElement parentElement = getParent();
+    	if (parentElement == null) {
+    		return null;
+    	}
+
+    	try {
+        	Package parentPackage = (Package) parentElement;
+        	return parentPackage.findStructByName(structName, delimiter);
+
+    	} catch (java.util.NoSuchElementException bitBucket) {
+			return null;
+		}
+    }
+
+
+
+
+    public Array getArrayByName(String arrayName) {
+        return arrays.stream().filter(c->c.getName().equals(arrayName)).findFirst().get();
+    }
+
+
+
+    public Array findArrayByName(String arrayName, String delimiter) {
+        if (arrays.stream().filter(c->c.getName().equals(arrayName)).count()!=0) {
+            return arrays.stream().filter(c->c.getName().equals(arrayName)).findFirst().get();
+        }
+
+        if ( (delimiter == null) || (delimiter.isEmpty()) ) {
+        	return null;
+        }
+
+	    String[] components = arrayName.split(delimiter);
+	    int numComponents = components.length;  // all are package names except last, which is the type name
+	    if (numComponents <= 1) {
+	    	// There is only one component in arrayName, but the above search did not it
+	    	// Return null to indicate that it didn't find arrayName
+	    	return null;
+	    }
+
+	    // There must be multiple components in array name
+	    String baseComponent = components[0];
+	    String typeName = components[numComponents - 1];
+	    String ourName = this.getName();
+
+	    if (baseComponent.equals(ourName)) {
+	        if (arrays.stream().filter(c->c.getName().equals(typeName)).count()!=0) {
+	            return arrays.stream().filter(c->c.getName().equals(typeName)).findFirst().get();
+	        }
+
+	        if (numComponents == 2) {
+		        // There are only two components so typeName must be in this package
+	        	// We reached here only because typeName wasn't found. Thus it is null
+		        return null;
+	        }
+
+	        List<String> stringList = new ArrayList<>();
+	        for (int i = 2; i<numComponents; i++) {
+	        	stringList.add(components[i]);
+	        }
+
+	        String partialName = String.join(delimiter, stringList);
+	    	try {
+	            Package subPackage = getSubPackageByName(components[1]);
+	            if (subPackage != null) {
+	            	return subPackage.findArrayByName(partialName, delimiter);
+	            }
+
+	    	} catch (java.util.NoSuchElementException bitBucket) {
+			}	        
+	    }
+
+    	try {
+            Package subPackage = getSubPackageByName(baseComponent);
+            if (subPackage != null) {
+            	return subPackage.findArrayByName(arrayName, delimiter);
+            }
+
+    	} catch (java.util.NoSuchElementException bitBucket) {
+		}
+
+        // This component is not baseComponent and subPackage is not baseComponent
+        // Let's hope that baseComponent can be found in parent hierarchy
+	    HierarchicalElement parentElement = getParent();
+    	if (parentElement == null) {
+    		return null;
+    	}
+
+    	try {
+        	Package parentPackage = (Package) parentElement;
+        	return parentPackage.findArrayByName(arrayName, delimiter);
+
+    	} catch (java.util.NoSuchElementException bitBucket) {
+			return null;
+		}
+    }
+
+
+
+
     public Enumeration getEnumByName(String enumName) {
         return enumerations.stream().filter(c->c.getName().equals(enumName)).findFirst().get();
     }
+
+
+
+    public Enumeration findEnumByName(String enumName, String delimiter) {
+        if (enumerations.stream().filter(c->c.getName().equals(enumName)).count()!=0) {
+            return enumerations.stream().filter(c->c.getName().equals(enumName)).findFirst().get();
+        }
+
+        if ( (delimiter == null) || (delimiter.isEmpty()) ) {
+        	return null;
+        }
+
+	    String[] components = enumName.split(delimiter);
+	    int numComponents = components.length;  // all are package names except last, which is the type name
+	    if (numComponents <= 1) {
+	    	// There is only one component in enumName, but the above search did not it
+	    	// Return null to indicate that it didn't find enumName
+	    	return null;
+	    }
+
+	    // There must be multiple components in enum name
+	    String baseComponent = components[0];
+	    String typeName = components[numComponents - 1];
+	    String ourName = this.getName();
+
+	    if (baseComponent.equals(ourName)) {
+	        if (enumerations.stream().filter(c->c.getName().equals(typeName)).count()!=0) {
+	            return enumerations.stream().filter(c->c.getName().equals(typeName)).findFirst().get();
+	        }
+
+	        if (numComponents == 2) {
+		        // There are only two components so typeName must be in this package
+	        	// We reached here only because typeName wasn't found. Thus it is null
+		        return null;
+	        }
+
+	        List<String> stringList = new ArrayList<>();
+	        for (int i = 2; i<numComponents; i++) {
+	        	stringList.add(components[i]);
+	        }
+
+	        String partialName = String.join(delimiter, stringList);
+	    	try {
+	            Package subPackage = getSubPackageByName(components[1]);
+	            if (subPackage != null) {
+	            	return subPackage.findEnumByName(partialName, delimiter);
+	            }
+
+	    	} catch (java.util.NoSuchElementException bitBucket) {
+			}	        
+	    }
+
+    	try {
+            Package subPackage = getSubPackageByName(baseComponent);
+            if (subPackage != null) {
+            	return subPackage.findEnumByName(enumName, delimiter);
+            }
+
+    	} catch (java.util.NoSuchElementException bitBucket) {
+		}
+
+        // This component is not baseComponent and subPackage is not baseComponent
+        // Let's hope that baseComponent can be found in parent hierarchy
+	    HierarchicalElement parentElement = getParent();
+    	if (parentElement == null) {
+    		return null;
+    	}
+
+    	try {
+        	Package parentPackage = (Package) parentElement;
+        	return parentPackage.findEnumByName(enumName, delimiter);
+
+    	} catch (java.util.NoSuchElementException bitBucket) {
+			return null;
+		}
+    }
+
+
+
 
     public Interface getInterfaceByName(String interfaceName) {
         return interfaces.stream().filter(c->c.getName().equals(interfaceName)).findFirst().get();
@@ -223,6 +466,11 @@ public class Package extends HierarchicalElement {
     public void addExcept(Except inputExcept) {
         inputExcept.setParent(this);
         exceptions.add(inputExcept);
+    }
+
+    public void addArray(Array inputArray) {
+    	inputArray.setParent(this);
+        arrays.add(inputArray);
     }
 
     public void addEnumeration(Enumeration inputEnumeration) {
@@ -282,6 +530,10 @@ public class Package extends HierarchicalElement {
 
     public List<Except> getExceptions() {
         return exceptions;
+    }
+
+    public List<Array> getArrays() {
+        return arrays;
     }
 
     public List<Enumeration> getEnumerations() {
