@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class TemplateItem {
 
     List<TemplateItem> subItems;
+    List<LHS> alternateLhs;
     LHS lhs;
     RHS rhs;
 
@@ -14,6 +15,7 @@ public class TemplateItem {
         subItems = new ArrayList<>();
         this.lhs = lhs;
         this.rhs = rhs;
+        this.alternateLhs = new ArrayList<>();
     }
 
     public void addSubItem(TemplateItem subItem) {
@@ -32,11 +34,22 @@ public class TemplateItem {
         return rhs;
     }
 
+    public List<LHS> getAlternateLhs() {
+        return alternateLhs;
+    }
+
+    public void addAlternateLhs(LHS lhs) {
+        this.alternateLhs.add(lhs);
+    }
+
     public List<String> getLines() {
         List<String> subs = new ArrayList<>();
         subs.add(lhs.toString() + " -- " + rhs.toString());
         for (TemplateItem subItem : subItems) {
             subs.addAll(subItem.getLines().stream().map(l -> ">" + l).collect(Collectors.toList()));
+        }
+        for (LHS lhs:alternateLhs) {
+            subs.add(lhs.toString() + " -- " + rhs.toString());
         }
         return subs;
     }

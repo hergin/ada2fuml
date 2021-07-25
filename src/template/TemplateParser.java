@@ -16,6 +16,9 @@ public class TemplateParser {
 
         Template result = new Template();
 
+        RHS previousRhs = null;
+        int previousLevel = -1;
+
         for (String line : lines) {
             if(line.trim().startsWith("#")) continue; // comment
             String[] tokens = line.split("--");
@@ -60,13 +63,20 @@ public class TemplateParser {
                 rhsOfTheItem = new RHSAttribute(rhs);
             }
 
-            TemplateItem current = new TemplateItem(lhsOfTheItem, rhsOfTheItem);
-            lastItemsForLevel.put(level, current);
-            if (level > 0) {
-                lastItemsForLevel.get(level - 1).addSubItem(current);
-            } else if (level == 0) {
-                result.addItem(current);
+            if(previousRhs!=null && previousRhs.equals(rhsOfTheItem) && previousLevel==level) { // rhs equals to previous means that it has an alternate lhs
+                lastItemsForLevel.get(level).addAlternateLhs(lhsOfTheItem);
+            } else {
+                TemplateItem current = new TemplateItem(lhsOfTheItem, rhsOfTheItem);
+                lastItemsForLevel.put(level, current);
+                if (level > 0) {
+                    lastItemsForLevel.get(level - 1).addSubItem(current);
+                } else if (level == 0) {
+                    result.addItem(current);
+                }
             }
+
+            previousLevel = level;
+            previousRhs = rhsOfTheItem;
         }
         return result;
     }

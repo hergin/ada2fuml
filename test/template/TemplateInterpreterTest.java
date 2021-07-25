@@ -1,9 +1,11 @@
 package template;
 
 import model.UML;
+import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
 import model.parameters.ClassParameter;
 import model.parameters.Parameter;
+import model.parameters.PrimitiveParameter;
 import model.properties.Property;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
@@ -16,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TemplateInterpreterTest {
 
@@ -162,6 +165,14 @@ class TemplateInterpreterTest {
         Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/sameTagDifferentReferences.template").toURI())));
         String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/sameTagDifferentReferences.xml").toURI())));
         UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
+        result.replaceReferences();
+        assertEquals(2,result.getClasses().size());
+        assertEquals(1,result.getClasses().get(1).getOperations().size());
+        assertEquals(2,result.getClasses().get(1).getOperations().get(0).getParameters().size());
+        assertTrue(result.getClasses().get(1).getOperations().get(0).getParameters().get(0) instanceof ClassParameter);
+        assertEquals("helloWorld",((ClassParameter) result.getClasses().get(1).getOperations().get(0).getParameters().get(0)).getType().getName());
+        assertTrue(result.getClasses().get(1).getOperations().get(0).getParameters().get(1) instanceof PrimitiveParameter);
+        assertEquals(TypeEnum.Integer,((PrimitiveParameter) result.getClasses().get(1).getOperations().get(0).getParameters().get(1)).getType());
     }
 
     @Test

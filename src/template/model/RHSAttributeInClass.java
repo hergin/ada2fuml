@@ -1,5 +1,7 @@
 package template.model;
 
+import java.util.Objects;
+
 public class RHSAttributeInClass extends RHS {
 
     String className;
@@ -16,6 +18,19 @@ public class RHSAttributeInClass extends RHS {
 
     public String getAttributeName() {
         return attributeName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RHSAttributeInClass that = (RHSAttributeInClass) o;
+        return Objects.equals(className, that.className) && Objects.equals(attributeName, that.attributeName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(className, attributeName);
     }
 
     @Override

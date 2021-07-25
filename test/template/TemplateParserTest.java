@@ -65,8 +65,9 @@ class TemplateParserTest {
         assertEquals(1, ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).getLevel());
         assertEquals("operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).getTag());
         assertEquals("../operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).toString());
-        assertEquals(0, ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(3).getLhs()).getLevel());
-        assertEquals("operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(3).getLhs()).getTag());
-        assertEquals("./operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(3).getLhs()).toString());
+        assertEquals(1, ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).getLevel());
+        assertEquals("operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getLhs()).getTag());
+        assertEquals(1, adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getAlternateLhs().size());
+        assertEquals("./operation", ((LHSAncestorPath) adaTemplate.getItems().get(0).getSubItems().get(1).getSubItems().get(2).getAlternateLhs().get(0)).toString());
     }
 }

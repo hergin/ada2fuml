@@ -6,6 +6,6 @@
 >> ../operation                                 -- Operation in operations
 >> ./operation                                  -- Operation in operations
 >>> @name                                       -- name
->>>> param                                      -- Parameter in parameters
->>>>> @name                                     -- name
->>>>> classRef/@name                            -- reference
+>>> param                                      -- Parameter in parameters
+>>>> @name                                     -- name
+>>>> classRef/@name                            -- reference

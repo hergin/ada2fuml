@@ -1,5 +1,6 @@
 package template;
 
+import exceptions.AttributeNotFoundException;
 import model.Package;
 import model.UML;
 import model.auxiliary.HierarchicalElement;
@@ -14,6 +15,7 @@ import utils.XMLUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class TemplateInterpreter {
     public static UML interpret(Document xmlDocument, Template template) {
         UML uml = new UML("overall");
         for (TemplateItem item : template.getItems()) {
-            if (item.getLhs() instanceof LHSTag) {
+            if (item.getLhs() instanceof LHSTag) { // TODO this assumes the first template item is always a tag (mostly root tag), what if it is not?
                 NodeList nodes = XMLUtils.getAllNodesWithThePath(xmlDocument, ((LHSTag) item.getLhs()).getTag());
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node currentNode = nodes.item(i);
@@ -42,53 +44,71 @@ public class TemplateInterpreter {
     }
 
     private static void processFurther(Node parentNode, HierarchicalElement parentElement, List<TemplateItem> subItems) {
-        for (TemplateItem item : subItems) {
-            if (item.getLhs() instanceof LHSTag) {
-                NodeList nodes = XMLUtils.getAllNodesWithThePath(parentNode, ((LHSTag) item.getLhs()).getTag());
-                for (int i = 0; i < nodes.getLength(); i++) {
-                    Node currentNode = nodes.item(i);
-                    if (item.getRhs() instanceof RHSAttributeInClass) {
-                        HierarchicalElement element = createTheElement(((RHSAttributeInClass) item.getRhs()).getClassName());
-                        addElementToTheList(element, parentElement, ((RHSAttributeInClass) item.getRhs()).getAttributeName());
-                        processFurther(currentNode, element, item.getSubItems());
+        for (TemplateItem templateItem : subItems) {
+            List<LHS> allLhss = new ArrayList<>();
+            allLhss.add(templateItem.getLhs());
+            allLhss.addAll(templateItem.getAlternateLhs());
+            for(LHS lhs:allLhss) {
+                if (lhs instanceof LHSTag) {
+                    NodeList nodes = XMLUtils.getAllNodesWithThePath(parentNode, ((LHSTag) lhs).getTag());
+                    for (int i = 0; i < nodes.getLength(); i++) {
+                        Node currentNode = nodes.item(i);
+                        if (templateItem.getRhs() instanceof RHSAttributeInClass) {
+                            HierarchicalElement element = createTheElement(((RHSAttributeInClass) templateItem.getRhs()).getClassName());
+                            addElementToTheList(element, parentElement, ((RHSAttributeInClass) templateItem.getRhs()).getAttributeName());
+                            processFurther(currentNode, element, templateItem.getSubItems());
+                        }
                     }
-                }
-            } else if (item.getLhs() instanceof LHSAttribute) {
-                String value = getAttributeValueOfNode(parentNode, ((LHSAttribute) item.getLhs()).getName());
-                if (item.getRhs() instanceof RHSAttribute) {
-                    setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
-                }
-            } else if (item.getLhs() instanceof LHSAttributeWithPath) {
-                Node currentNode = XMLUtils.getAllNodesWithThePath(parentNode, ((LHSAttributeWithPath) item.getLhs()).getPath()).item(0);
-                // TODO this assumes we will only have 1 sub-nodes. Should be researched more.
-                String value = getAttributeValueOfNode(currentNode, ((LHSAttributeWithPath) item.getLhs()).getAttributeName());
-                if (item.getRhs() instanceof RHSAttribute) {
-                    setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
-                }
-            } else if (item.getLhs() instanceof LHSLiteral) {
-                String value = ((LHSLiteral) item.getLhs()).getValue();
-                if (item.getRhs() instanceof RHSAttribute) {
-                    setAttributeValueOfParentElement(parentElement, ((RHSAttribute) item.getRhs()).getName(), value);
-                }
-            } else if(item.getLhs() instanceof LHSAncestorPath) {
-                String path = ((LHSAncestorPath) item.getLhs()).getTag();
-                NodeList nodes = XMLUtils.getAllAncestorNodesWithThePath(parentNode, ((LHSAncestorPath) item.getLhs()).getTag(),((LHSAncestorPath) item.getLhs()).getLevel());
-                for (int i = 0; i < nodes.getLength(); i++) {
-                    Node currentNode = nodes.item(i);
-                    if (item.getRhs() instanceof RHSAttributeInClass) {
-                        HierarchicalElement element = createTheElement(((RHSAttributeInClass) item.getRhs()).getClassName());
-                        addElementToTheList(element, parentElement, ((RHSAttributeInClass) item.getRhs()).getAttributeName());
-                        processFurther(currentNode, element, item.getSubItems());
+                } else if (lhs instanceof LHSAttribute) {
+                    try {
+                        String value = getAttributeValueOfNode(parentNode, ((LHSAttribute) lhs).getName());
+                        if (templateItem.getRhs() instanceof RHSAttribute) {
+                            setAttributeValueOfParentElement(parentElement, ((RHSAttribute) templateItem.getRhs()).getName(), value);
+                        }
+                    } catch (AttributeNotFoundException e) {
+                        continue;
+                    }
+                } else if (lhs instanceof LHSAttributeWithPath) {
+                    try {
+                        Node currentNode = XMLUtils.getAllNodesWithThePath(parentNode, ((LHSAttributeWithPath) lhs).getPath()).item(0);
+                        // TODO this assumes we will only have 1 sub-nodes. Should be researched more.
+                        if(currentNode==null) // If node is null, we still continue, because this RHS might be mapped to an alternate LHS
+                            continue;
+                        String value = getAttributeValueOfNode(currentNode, ((LHSAttributeWithPath) lhs).getAttributeName());
+                        if (templateItem.getRhs() instanceof RHSAttribute) {
+                            setAttributeValueOfParentElement(parentElement, ((RHSAttribute) templateItem.getRhs()).getName(), value);
+                        }
+                    } catch (AttributeNotFoundException e) {
+                        continue;
+                    }
+                } else if (lhs instanceof LHSLiteral) {
+                    String value = ((LHSLiteral) lhs).getValue();
+                    if (templateItem.getRhs() instanceof RHSAttribute) {
+                        setAttributeValueOfParentElement(parentElement, ((RHSAttribute) templateItem.getRhs()).getName(), value);
+                    }
+                } else if (lhs instanceof LHSAncestorPath) {
+                    String path = ((LHSAncestorPath) lhs).getTag();
+                    NodeList nodes = XMLUtils.getAllAncestorNodesWithThePath(parentNode, ((LHSAncestorPath) lhs).getTag(), ((LHSAncestorPath) lhs).getLevel());
+                    for (int i = 0; i < nodes.getLength(); i++) {
+                        Node currentNode = nodes.item(i);
+                        if (templateItem.getRhs() instanceof RHSAttributeInClass) {
+                            HierarchicalElement element = createTheElement(((RHSAttributeInClass) templateItem.getRhs()).getClassName());
+                            addElementToTheList(element, parentElement, ((RHSAttributeInClass) templateItem.getRhs()).getAttributeName());
+                            processFurther(currentNode, element, templateItem.getSubItems());
+                        }
                     }
                 }
             }
         }
     }
 
-    private static String getAttributeValueOfNode(Node parentNode, String attributeName) {
+    private static String getAttributeValueOfNode(Node parentNode, String attributeName) throws AttributeNotFoundException {
         if (attributeName.equals("value")) {
             return parentNode.getFirstChild().getNodeValue();
         } else {
+            if(parentNode.getAttributes().getNamedItem(attributeName)==null) {
+                throw new AttributeNotFoundException();
+            }
             return parentNode.getAttributes().getNamedItem(attributeName).getNodeValue();
         }
     }
