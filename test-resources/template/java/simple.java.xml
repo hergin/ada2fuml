@@ -1,0 +1,17 @@
+<root>
+    <types>
+        <type isInterface='false'>
+            <name identifier='X'></name>
+            <members>
+                <member>
+                    <variables>
+                        <variable>
+                            <name identifier='x'></name>
+                            <type type='INT'></type>
+                        </variable>
+                    </variables>
+                </member>
+            </members>
+        </type>
+    </types>
+</root>

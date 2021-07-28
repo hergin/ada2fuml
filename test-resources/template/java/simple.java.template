@@ -1,0 +1,6 @@
+/root                                -- UML
+> types/type                         -- Class in classes
+>> name/@identifier                  -- name
+>> members/member/variables/variable -- Property in properties
+>>> name/@identifier                 -- name
+>>> type/@type                       -- reference
