@@ -360,7 +360,7 @@ public class UMLTest {
         UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(adaXML), adaTemplate);
         assertEquals(2, result.getClasses().size());
         assertEquals(1, result.getClasses().get(1).getOperations().size());
-        assertEquals(4, result.getClasses().get(1).getOperations().get(0).getParameters().size());
+        assertEquals(5, result.getClasses().get(1).getOperations().get(0).getParameters().size());
 
         result.replaceReferences();
 
@@ -375,5 +375,9 @@ public class UMLTest {
 
         assertEquals(ClassParameter.class, result.getClasses().get(1).getOperations().get(0).getParameters().get(0).getClass());
         assertEquals("helloWorld", ((ClassParameter) result.getClasses().get(1).getOperations().get(0).getParameters().get(0)).getType().getName());
+
+        assertEquals(PrimitiveParameter.class, result.getClasses().get(1).getOperations().get(0).getParameters().get(3).getClass());
+        assertEquals(TypeEnum.Integer, ((PrimitiveParameter) result.getClasses().get(1).getOperations().get(0).getParameters().get(4)).getType());
+
     }
 }

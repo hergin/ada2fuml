@@ -12,6 +12,8 @@
             </param2>
             <param2 name="fourthParam" type="Whatever/Whatever/String/Whatever">
             </param2>
+            <param2 name="fifthParam" type="int">
+            </param2>
         </operation>
     </class>
 </uml>

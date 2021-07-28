@@ -15,9 +15,7 @@ import template.TemplateInterpreter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UML extends HierarchicalElement {
@@ -123,6 +121,15 @@ public class UML extends HierarchicalElement {
                 if (reference.contains(primitive.toString())) {
                     TemplateInterpreter.getMethod(element.getClass(), "convertToPrimitive" + element.getClass().getSimpleName()).invoke(element, primitive);
                     return;
+                }
+            }
+
+            // Try shorthands for primitives
+            Map<String, TypeEnum> shortHands = new HashMap<>();
+            shortHands.put("int",TypeEnum.Integer);
+            for(Map.Entry<String,TypeEnum> entry : shortHands.entrySet()) {
+                if(entry.getKey().toLowerCase().equals(reference.toLowerCase())) {
+                    TemplateInterpreter.getMethod(element.getClass(), "convertToPrimitive" + element.getClass().getSimpleName()).invoke(element, entry.getValue());
                 }
             }
 
