@@ -1,11 +1,16 @@
 package template;
 
+import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.printer.XmlPrinter;
+import model.AbstractProperty;
 import model.UML;
 import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
 import model.parameters.ClassParameter;
 import model.parameters.Parameter;
 import model.parameters.PrimitiveParameter;
+import model.properties.PrimitiveProperty;
 import model.properties.Property;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
@@ -195,5 +200,50 @@ class TemplateInterpreterTest {
         assertEquals(1,result.getClasses().get(0).getProperties().size());
         assertEquals("*",result.getClasses().get(0).getProperties().get(0).getUpper());
         assertEquals("2",result.getClasses().get(0).getProperties().get(0).getLower());
+    }
+
+    @Test
+    void testSimpleJava() {
+        CompilationUnit cu = StaticJavaParser.parse("class X { int x; }");
+        XmlPrinter printer = new XmlPrinter(false);
+        String xml = printer.output(cu);
+        /*
+        <root>
+            <types>
+                <type isInterface='false'>
+                    <name identifier='X'></name>
+                    <members>
+                        <member>
+                            <variables>
+                                <variable>
+                                    <name identifier='x'></name>
+                                    <type type='INT'></type>
+                                </variable>
+                            </variables>
+                        </member>
+                    </members>
+                </type>
+            </types>
+        </root>
+         */
+        Template template = TemplateParser.parseTemplateFromString("" +
+                "/root -- UML\n" +
+                "> types/type -- Class in classes\n" +
+                ">> name/@identifier -- name\n" +
+                ">> members/member/variables/variable -- Property in properties\n" +
+                ">>> name/@identifier -- name\n" +
+                ">>> type/@type -- reference");
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml),template);
+
+        assertEquals(1,result.getClasses().size());
+        assertEquals("X",result.getClasses().get(0).getName());
+        assertEquals(1,result.getClasses().get(0).getProperties().size());
+        assertEquals("x",result.getClasses().get(0).getProperties().get(0).getName());
+        assertEquals("INT", ((Property) result.getClasses().get(0).getProperties().get(0)).getReference());
+
+        result.replaceReferences();
+
+        assertTrue(result.getClasses().get(0).getProperties().get(0) instanceof PrimitiveProperty);
+        assertEquals(TypeEnum.Integer, ((PrimitiveProperty) result.getClasses().get(0).getProperties().get(0)).getType());
     }
 }
