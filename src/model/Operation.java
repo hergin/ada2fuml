@@ -42,6 +42,7 @@ public class Operation extends HierarchicalElement {
     }
 
     public void cutIfConditionNotMet() {
+        // TODO create the flexible condition structure that uses reflection
         if (condition.equals("parameters.first.reference==parent.name")) {
             if (!(parameters.size() > 0 && ((Parameter) parameters.get(0)).getReference().equals(getParent().getName()))) {
                 ((Class) getParent()).getOperations().remove(this);
