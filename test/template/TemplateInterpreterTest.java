@@ -267,4 +267,17 @@ class TemplateInterpreterTest {
         assertEquals(1, result.getClasses().get(0).getOperations().size());
         assertEquals(0, result.getClasses().get(1).getOperations().size());
     }
+
+    @Test
+    void enumerationTest() throws URISyntaxException, IOException {
+        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/enumerations.template").toURI())));
+        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/enumerations.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
+        assertEquals(0,result.getClasses().size());
+        assertEquals(2,result.getEnumerations().size());
+        assertEquals("VisibilityEnum",result.getEnumerations().get(0).getName());
+        assertEquals("DirectionEnum",result.getEnumerations().get(1).getName());
+        assertEquals(3,result.getEnumerations().get(0).getLiterals().size());
+        assertEquals(4,result.getEnumerations().get(1).getLiterals().size());
+    }
 }

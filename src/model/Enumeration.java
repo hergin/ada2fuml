@@ -15,6 +15,10 @@ public class Enumeration extends HierarchicalElement implements IPlaceholderRepl
     private List<EnumerationLiteral> literals;
     private static final VisibilityEnum visibility = VisibilityEnum.Public;
 
+    public Enumeration() {
+        this("");
+    }
+
     public Enumeration (String name) {
         super(name);
         properties = new ArrayList<>();
@@ -35,7 +39,7 @@ public class Enumeration extends HierarchicalElement implements IPlaceholderRepl
         properties.add(aProperty);
     }
 
-    public void addLiteral(EnumerationLiteral aLiteral) {
+    public void addEnumerationLiteral(EnumerationLiteral aLiteral) {
         aLiteral.setParent(this);
         literals.add(aLiteral);
     }

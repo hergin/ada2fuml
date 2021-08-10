@@ -1,0 +1,5 @@
+/uml       -- UML
+> enum     -- Enumeration in enumerations
+>> @title  -- name
+>> literal -- EnumerationLiteral in enumerationLiterals
+>>> @val   -- name

@@ -1,0 +1,13 @@
+<uml title="EnumUML">
+    <enum title="VisibilityEnum">
+        <literal val="PROTECTED" />
+        <literal val="PRIVATE" />
+        <literal val="PACKAGE" />
+    </enum>
+    <enum title="DirectionEnum">
+        <literal val="IN" />
+        <literal val="OUT" />
+        <literal val="INOUT" />
+        <literal val="RETURN" />
+    </enum>
+</uml>

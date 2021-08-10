@@ -1,7 +1,6 @@
 package extractor;
 
 import adaschema.*;
-import exceptions.InvalidSignatureException;
 import exceptions.NamingException;
 import exceptions.PartialUMLException;
 import exceptions.UnhandledTypeException;
@@ -18,8 +17,6 @@ import model.parameters.ClassParameter;
 import model.parameters.PrimitiveParameter;
 import model.properties.ClassProperty;
 import model.properties.PrimitiveProperty;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -129,7 +126,7 @@ public class Extractor {
                 }
 
                 for (String anEnumLiteral : theEnumerationOrdinaryType.getEnumLiterals()) {
-                    theEnum.addLiteral(new EnumerationLiteral(anEnumLiteral));
+                    theEnum.addEnumerationLiteral(new EnumerationLiteral(anEnumLiteral));
                 }
 
             }
