@@ -310,6 +310,20 @@ public class UML extends HierarchicalElement {
         return result;
     }
 
+    public void applyConditions() {
+        List<Class> allClasses = collectAllClasses();
+        List<Operation> allOperations = new ArrayList<>();
+        for (Class clasz : allClasses) {
+            for (Operation operation : clasz.getOperations()) {
+                allOperations.add(operation);
+            }
+        }
+
+        for (Operation operation : allOperations) {
+            operation.cutIfConditionNotMet();
+        }
+    }
+
     public List<Class> collectAllClasses() {
         List<Class> result = new ArrayList<Class>();
 

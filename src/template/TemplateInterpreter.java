@@ -1,6 +1,7 @@
 package template;
 
 import exceptions.AttributeNotFoundException;
+import model.Operation;
 import model.Package;
 import model.UML;
 import model.auxiliary.HierarchicalElement;
@@ -55,6 +56,9 @@ public class TemplateInterpreter {
                         Node currentNode = nodes.item(i);
                         if (templateItem.getRhs() instanceof RHSAttributeInClass) {
                             HierarchicalElement element = createTheElement(((RHSAttributeInClass) templateItem.getRhs()).getClassName());
+                            if(element instanceof Operation) {
+                                ((Operation) element).setCondition(((RHSAttributeInClass) templateItem.getRhs()).getCondition());
+                            }
                             addElementToTheList(element, parentElement, ((RHSAttributeInClass) templateItem.getRhs()).getAttributeName());
                             processFurther(currentNode, element, templateItem.getSubItems());
                         }
@@ -93,6 +97,9 @@ public class TemplateInterpreter {
                         Node currentNode = nodes.item(i);
                         if (templateItem.getRhs() instanceof RHSAttributeInClass) {
                             HierarchicalElement element = createTheElement(((RHSAttributeInClass) templateItem.getRhs()).getClassName());
+                            if(element instanceof Operation) {
+                                ((Operation) element).setCondition(((RHSAttributeInClass) templateItem.getRhs()).getCondition());
+                            }
                             addElementToTheList(element, parentElement, ((RHSAttributeInClass) templateItem.getRhs()).getAttributeName());
                             processFurther(currentNode, element, templateItem.getSubItems());
                         }

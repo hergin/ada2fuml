@@ -5,6 +5,7 @@ import adaschema.CompilationUnit;
 import exceptions.*;
 import extractor.Extractor;
 import gnat2xml.Gnat2XmlRunner;
+import model.enums.DirectionEnum;
 import model.enums.PlaceholderPreferenceEnum;
 import model.enums.TypeEnum;
 import model.enums.VisibilityEnum;
@@ -379,5 +380,31 @@ public class UMLTest {
         assertEquals(PrimitiveParameter.class, result.getClasses().get(1).getOperations().get(0).getParameters().get(3).getClass());
         assertEquals(TypeEnum.Integer, ((PrimitiveParameter) result.getClasses().get(1).getOperations().get(0).getParameters().get(4)).getType());
 
+    }
+
+    @Test
+    void applyConditionsTest() {
+        UML uml = new UML("UML1");
+        Class C1 = new Class("C1");
+        Operation O1 = new Operation("O1");
+        Parameter PR1 = new Parameter("PR1", DirectionEnum.In);
+        PR1.setReference("C2");
+        O1.addParameter(PR1);
+        C1.addOperation(O1);
+        Operation O2 = new Operation("O2");
+        Parameter PR2 = new Parameter("PR2", DirectionEnum.In);
+        PR2.setReference("C1");
+        O2.addParameter(PR2);
+        C1.addOperation(O2);
+        assertEquals(2, C1.getOperations().size());
+        O2.setCondition("parameters.first.reference==parent.name");
+        //O2.cutIfConditionNotMet();
+        assertEquals(2, C1.getOperations().size());
+        O1.setCondition("parameters.first.reference==parent.name");
+        //O1.cutIfConditionNotMet();
+        uml.addClass(C1);
+        assertEquals(2, C1.getOperations().size());
+        uml.applyConditions();
+        assertEquals(1, C1.getOperations().size());
     }
 }

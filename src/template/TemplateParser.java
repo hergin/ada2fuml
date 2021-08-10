@@ -56,7 +56,15 @@ public class TemplateParser {
             RHS rhsOfTheItem = null;
             if (rhs.contains(" in ")) {
                 tokens = rhs.split(" in ");
-                rhsOfTheItem = new RHSAttributeInClass(tokens[0].trim(), tokens[1].trim());
+                if (rhs.contains("when(")) {
+                    String className = tokens[0].trim();
+                    String[] innerTokens = tokens[1].split(" when\\(");
+                    String attrName = innerTokens[0].trim();
+                    String condition = innerTokens[1].trim().substring(0, innerTokens[1].length() - 1);
+                    rhsOfTheItem = new RHSAttributeInClass(className, attrName, condition);
+                } else {
+                    rhsOfTheItem = new RHSAttributeInClass(tokens[0].trim(), tokens[1].trim());
+                }
             } else if (Character.isUpperCase(rhs.charAt(0))) {
                 rhsOfTheItem = new RHSClass(rhs);
             } else if (Character.isLowerCase(rhs.charAt(0))) {

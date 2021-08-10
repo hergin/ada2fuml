@@ -1,11 +1,11 @@
-/uml                                                      -- UML
-> @title                                                  -- name
-> class                                                   -- Class in classes
->> @title                                                 -- name
->> @visible                                               -- visibility
->> ./operation[parameters.first.reference==parent.name]   -- Operation in operations
+/uml                                       -- UML
+> @title                                   -- name
+> class                                    -- Class in classes
+>> @title                                  -- name
+>> @visible                                -- visibility
+>> ./operation                             -- Operation in operations when(parameters.first.reference==parent.name)
 #    [property-of-the-newly-created(.first|last|all(default)).inner-properties==(|!=)parent.property-of-parent]
->>> @name                                                 -- name
->>>> param                                                -- Parameter in parameters
->>>>> @name                                               -- name
->>>>> classRef/@name                                      -- reference
+>>> @name                                  -- name
+>>> param                                 -- Parameter in parameters
+>>>> @name                                -- name
+>>>> classRef/@name                       -- reference

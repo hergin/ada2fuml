@@ -4,6 +4,7 @@ package model;
 
 import model.auxiliary.HierarchicalElement;
 import model.enums.VisibilityEnum;
+import model.parameters.Parameter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Operation extends HierarchicalElement {
     private List<AbstractParameter> parameters;
     private List<Except> exceptions;
     private VisibilityEnum visibility;
+    private String condition;
 
     public Operation() {
         this("");
@@ -29,6 +31,22 @@ public class Operation extends HierarchicalElement {
         parameters = new ArrayList<>();
         exceptions = new ArrayList<>();
         this.visibility = visibility;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public void cutIfConditionNotMet() {
+        if (condition.equals("parameters.first.reference==parent.name")) {
+            if (!(parameters.size() > 0 && ((Parameter) parameters.get(0)).getReference().equals(getParent().getName()))) {
+                ((Class) getParent()).getOperations().remove(this);
+            }
+        }
     }
 
     public Operation addParameter(AbstractParameter parameter) {

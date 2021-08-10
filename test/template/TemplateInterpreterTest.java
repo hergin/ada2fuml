@@ -246,4 +246,25 @@ class TemplateInterpreterTest {
         assertTrue(result.getClasses().get(0).getProperties().get(0) instanceof PrimitiveProperty);
         assertEquals(TypeEnum.Integer, ((PrimitiveProperty) result.getClasses().get(0).getProperties().get(0)).getType());
     }
+
+    @Test
+    void conditionalTemplateTest() throws URISyntaxException, IOException {
+        Template template = TemplateParser.parseTemplateFromString(Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/getTagFromSameLevelConditional.template").toURI())));
+        String xml = String.join(System.lineSeparator(), Files.readAllLines(Paths.get(TemplateInterpreterTest.class.getClassLoader().getResource("template/getTagFromSameLevel.xml").toURI())));
+        UML result = TemplateInterpreter.interpret(XMLUtils.convertStringToDocument(xml), template);
+
+        assertEquals(2, result.getClasses().size());
+        assertEquals("helloWorld", result.getClasses().get(0).getName());
+        assertEquals(VisibilityEnum.Protected, result.getClasses().get(0).getVisibility());
+        assertEquals(1, result.getClasses().get(0).getOperations().size());
+        assertEquals(1, result.getClasses().get(1).getOperations().size());
+
+        result.applyConditions();
+
+        assertEquals(2, result.getClasses().size());
+        assertEquals("helloWorld", result.getClasses().get(0).getName());
+        assertEquals(VisibilityEnum.Protected, result.getClasses().get(0).getVisibility());
+        assertEquals(1, result.getClasses().get(0).getOperations().size());
+        assertEquals(0, result.getClasses().get(1).getOperations().size());
+    }
 }
