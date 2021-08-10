@@ -11,6 +11,10 @@ public class Struct extends HierarchicalElement {
     private List<AbstractProperty> properties;
     private VisibilityEnum visibility;
 
+    public Struct() {
+        this("");
+    }
+
     public Struct (String name) {
         super(name);
         properties = new ArrayList<>();

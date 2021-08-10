@@ -445,6 +445,8 @@
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="3" second="10">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Bidirectional</Direction>
@@ -1129,6 +1131,8 @@
         <EndMultiplicity>*</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="19" second="12">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Bidirectional</Direction>
@@ -1425,13 +1429,15 @@
         <Name>Property</Name>
         <Access>Public</Access>
         <Location left="598" top="487" />
-        <Size width="163" height="162" />
+        <Size width="163" height="196" />
         <Collapsed>False</Collapsed>
         <Member type="Field">String name</Member>
         <Member type="Field">VisibilityEnum visibility</Member>
         <Member type="Field">String reference</Member>
         <Member type="Field">Object value</Member>
         <Member type="Field">String tag</Member>
+        <Member type="Field">String lower</Member>
+        <Member type="Field">String upper</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">

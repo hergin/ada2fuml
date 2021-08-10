@@ -28,11 +28,11 @@ public class Property extends AbstractProperty {
         HierarchicalElement parent = getParent();
         if (parent instanceof Enumeration) {
             Enumeration castedParent = ((Enumeration) parent);
-            castedParent.addProperty(new PrimitiveProperty(getName(), VisibilityEnum.Public, type,null));
+            castedParent.addProperty(new PrimitiveProperty(getName(), VisibilityEnum.Public, type,value));
             castedParent.getProperties().remove(this);
         } else if (parent instanceof Class) {
             Class castedParent = ((Class) parent);
-            castedParent.addProperty(new PrimitiveProperty(getName(), VisibilityEnum.Public, type,null));
+            castedParent.addProperty(new PrimitiveProperty(getName(), VisibilityEnum.Public, type,value));
             castedParent.getProperties().remove(this);
         }
     }
