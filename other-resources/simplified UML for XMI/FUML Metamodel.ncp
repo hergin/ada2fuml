@@ -445,8 +445,6 @@
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="3" second="10">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Bidirectional</Direction>
@@ -1131,8 +1129,6 @@
         <EndMultiplicity>*</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="19" second="12">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Bidirectional</Direction>
@@ -1492,6 +1488,25 @@
         <Value>Out</Value>
         <Value>Return</Value>
       </Entity>
+      <Entity type="Class">
+        <Name>Enumeration</Name>
+        <Access>Public</Access>
+        <Location left="273" top="314" />
+        <Size width="163" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Member type="Field">VisibilityEnum visibility</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>EnumerationLiteral</Name>
+        <Access>Public</Access>
+        <Location left="273" top="521" />
+        <Size width="163" height="94" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Modifier>None</Modifier>
+      </Entity>
     </Entities>
     <Containers />
     <Relationships>
@@ -1532,6 +1547,35 @@
       </Relationship>
       <Relationship type="Association" first="3" second="4">
         <Label>parameters</Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="0" second="8">
+        <Label>enumerations</Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>521</X>
+          <Y>65</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="5" second="8">
+        <Label>enumerations</Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>807</X>
+          <Y>65</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="8" second="9">
+        <Label>enumerationLiterals</Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
