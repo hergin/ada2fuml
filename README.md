@@ -1,6 +1,6 @@
 # ada2fuml
 
-This project reads Ada specification files (*.ads) or XML equivalents in a folder and produces fUML XMI that is compatible with MagicDraw.
+This project reads Ada specification files (*.ads) or XML equivalents in a folder and produces fUML XMI that is compatible with MagicDraw. The project currently has two parts. The second part of the project visualizes any XML document via a template file. More documentation is upcoming.
 
 ## Prerequisites
 
