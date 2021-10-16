@@ -1405,7 +1405,7 @@
       <Entity type="Class">
         <Name>UML</Name>
         <Access>Public</Access>
-        <Location left="432" top="122" />
+        <Location left="535" top="44" />
         <Size width="163" height="94" />
         <Collapsed>False</Collapsed>
         <Member type="Field">String name</Member>
@@ -1414,7 +1414,7 @@
       <Entity type="Class">
         <Name>Class</Name>
         <Access>Public</Access>
-        <Location left="598" top="314" />
+        <Location left="766" top="206" />
         <Size width="163" height="111" />
         <Collapsed>False</Collapsed>
         <Member type="Field">String name</Member>
@@ -1424,7 +1424,7 @@
       <Entity type="Class">
         <Name>Property</Name>
         <Access>Public</Access>
-        <Location left="598" top="487" />
+        <Location left="624" top="396" />
         <Size width="163" height="196" />
         <Collapsed>False</Collapsed>
         <Member type="Field">String name</Member>
@@ -1439,7 +1439,7 @@
       <Entity type="Class">
         <Name>Operation</Name>
         <Access>Public</Access>
-        <Location left="888" top="314" />
+        <Location left="888" top="363" />
         <Size width="163" height="111" />
         <Collapsed>False</Collapsed>
         <Member type="Field">String name</Member>
@@ -1449,7 +1449,7 @@
       <Entity type="Class">
         <Name>Parameter</Name>
         <Access>Public</Access>
-        <Location left="888" top="487" />
+        <Location left="888" top="536" />
         <Size width="163" height="128" />
         <Collapsed>False</Collapsed>
         <Member type="Field">String name</Member>
@@ -1460,7 +1460,7 @@
       <Entity type="Class">
         <Name>Package</Name>
         <Access>Public</Access>
-        <Location left="762" top="122" />
+        <Location left="535" top="206" />
         <Size width="163" height="94" />
         <Collapsed>False</Collapsed>
         <Member type="Field">String name</Member>
@@ -1469,7 +1469,7 @@
       <Entity type="Enum">
         <Name>VisibilityEnum</Name>
         <Access>Public</Access>
-        <Location left="1150" top="122" />
+        <Location left="453" top="689" />
         <Size width="163" height="129" />
         <Collapsed>False</Collapsed>
         <Value>Private</Value>
@@ -1480,7 +1480,7 @@
       <Entity type="Enum">
         <Name>DirectionEnum</Name>
         <Access>Public</Access>
-        <Location left="1150" top="294" />
+        <Location left="710" top="689" />
         <Size width="163" height="129" />
         <Collapsed>False</Collapsed>
         <Value>In</Value>
@@ -1491,7 +1491,7 @@
       <Entity type="Class">
         <Name>Enumeration</Name>
         <Access>Public</Access>
-        <Location left="273" top="314" />
+        <Location left="359" top="327" />
         <Size width="163" height="111" />
         <Collapsed>False</Collapsed>
         <Member type="Field">String name</Member>
@@ -1501,7 +1501,7 @@
       <Entity type="Class">
         <Name>EnumerationLiteral</Name>
         <Access>Public</Access>
-        <Location left="273" top="521" />
+        <Location left="359" top="521" />
         <Size width="163" height="94" />
         <Collapsed>False</Collapsed>
         <Member type="Field">String name</Member>
@@ -1512,22 +1512,42 @@
     <Relationships>
       <Relationship type="Association" first="0" second="5">
         <Label>packages</Label>
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>611</X>
+          <Y>163</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>611</X>
+          <Y>180</Y>
+        </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
       </Relationship>
       <Relationship type="Association" first="0" second="1">
         <Label>classes</Label>
-        <StartOrientation>Vertical</StartOrientation>
+        <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>733</X>
+          <Y>79</Y>
+        </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
       </Relationship>
       <Relationship type="Association" first="5" second="1">
         <Label>classes</Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>732</X>
+          <Y>257</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>741</X>
+          <Y>257</Y>
+        </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
@@ -1541,7 +1561,11 @@
       <Relationship type="Association" first="1" second="3">
         <Label>operations</Label>
         <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1002</X>
+          <Y>319</Y>
+        </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
       </Relationship>
@@ -1554,22 +1578,22 @@
       </Relationship>
       <Relationship type="Association" first="0" second="8">
         <Label>enumerations</Label>
-        <StartOrientation>Vertical</StartOrientation>
+        <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>521</X>
-          <Y>65</Y>
+          <X>436</X>
+          <Y>90</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
       </Relationship>
       <Relationship type="Association" first="5" second="8">
         <Label>enumerations</Label>
-        <StartOrientation>Vertical</StartOrientation>
+        <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>807</X>
-          <Y>65</Y>
+          <X>436</X>
+          <Y>244</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
@@ -1578,6 +1602,227 @@
         <Label>enumerationLiterals</Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.ClassDiagram" assembly="NClass.DiagramEditor, Version=2.8.0.1, Culture=neutral, PublicKeyToken=null">
+    <Name>TemplateCondensed</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>EnumerationLiteral</Name>
+        <Access>Public</Access>
+        <Location left="495" top="563" />
+        <Size width="163" height="94" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Enumeration</Name>
+        <Access>Public</Access>
+        <Location left="495" top="370" />
+        <Size width="163" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Member type="Field">VisibilityEnum visibility</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Enum">
+        <Name>DirectionEnum</Name>
+        <Access>Public</Access>
+        <Location left="753" top="707" />
+        <Size width="163" height="129" />
+        <Collapsed>False</Collapsed>
+        <Value>In</Value>
+        <Value>InOut</Value>
+        <Value>Out</Value>
+        <Value>Return</Value>
+      </Entity>
+      <Entity type="Enum">
+        <Name>VisibilityEnum</Name>
+        <Access>Public</Access>
+        <Location left="572" top="707" />
+        <Size width="163" height="129" />
+        <Collapsed>False</Collapsed>
+        <Value>Private</Value>
+        <Value>Public</Value>
+        <Value>PackagePrivate</Value>
+        <Value>Protected</Value>
+      </Entity>
+      <Entity type="Class">
+        <Name>Package</Name>
+        <Access>Public</Access>
+        <Location left="555" top="226" />
+        <Size width="163" height="94" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Parameter</Name>
+        <Access>Public</Access>
+        <Location left="846" top="563" />
+        <Size width="163" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Member type="Field">DirectionEnum direction</Member>
+        <Member type="Field">String reference</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Operation</Name>
+        <Access>Public</Access>
+        <Location left="846" top="393" />
+        <Size width="163" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Member type="Field">VisibilityEnum visibility</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Property</Name>
+        <Access>Public</Access>
+        <Location left="672" top="422" />
+        <Size width="163" height="196" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Member type="Field">VisibilityEnum visibility</Member>
+        <Member type="Field">String reference</Member>
+        <Member type="Field">Object value</Member>
+        <Member type="Field">String tag</Member>
+        <Member type="Field">String lower</Member>
+        <Member type="Field">String upper</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Class</Name>
+        <Access>Public</Access>
+        <Location left="786" top="226" />
+        <Size width="163" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Member type="Field">VisibilityEnum visibility</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>UML</Name>
+        <Access>Public</Access>
+        <Location left="555" top="64" />
+        <Size width="163" height="94" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">String name</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Containers />
+    <Relationships>
+      <Relationship type="Association" first="1" second="0">
+        <Label>enumerationLiterals</Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>535</X>
+          <Y>506</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="4" second="1">
+        <Label>enumerations</Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>612</X>
+          <Y>350</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="9" second="1">
+        <Label>enumerations</Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>527</X>
+          <Y>187</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>527</X>
+          <Y>240</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="6" second="5">
+        <Label>parameters</Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="8" second="6">
+        <Label>operations</Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>901</X>
+          <Y>362</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>963</X>
+          <Y>362</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="8" second="7">
+        <Label>properties</Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="4" second="8">
+        <Label>classes</Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>752</X>
+          <Y>277</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>761</X>
+          <Y>277</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="9" second="8">
+        <Label>classes</Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>753</X>
+          <Y>99</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="9" second="4">
+        <Label>packages</Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>631</X>
+          <Y>183</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>631</X>
+          <Y>200</Y>
+        </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
       </Relationship>

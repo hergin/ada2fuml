@@ -204,7 +204,14 @@ class TemplateInterpreterTest {
 
     @Test
     void testSimpleJava() {
-        CompilationUnit cu = StaticJavaParser.parse("class X { int x; }");
+        CompilationUnit cu = StaticJavaParser.parse("class SomeClass {\n" +
+                "    protected int anAttribute = 5;\n" +
+                "\n" +
+                "    public int someMethod(int someParam) {\n" +
+                "        return 0;\n" +
+                "    }\n" +
+                "}\n" +
+                "\n");
         XmlPrinter printer = new XmlPrinter(false);
         String xml = printer.output(cu);
         /*

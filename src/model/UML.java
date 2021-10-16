@@ -118,7 +118,7 @@ public class UML extends HierarchicalElement {
 
             // Try to fix primitives first
             for(TypeEnum primitive:TypeEnum.values()) {
-                if (reference.contains(primitive.toString())) {
+                if (reference.toLowerCase().contains(primitive.toString().toLowerCase())) {
                     TemplateInterpreter.getMethod(element.getClass(), "convertToPrimitive" + element.getClass().getSimpleName()).invoke(element, primitive);
                     return;
                 }
